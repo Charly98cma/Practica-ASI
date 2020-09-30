@@ -1,0 +1,116 @@
+\documentclass[12pt,a4paper, spanish]{article}
+\usepackage[spanish]{babel}
+\usepackage{setspace}
+\usepackage{float}
+
+% Enter the name/s of the author/s, the document title and his subject
+\usepackage[
+  pdftex,
+  pdfauthor={Carlos Miguel, Antonio Ramírez, Younes Aouad},
+  pdftitle={Memoria Práctica ASI - Grupo 30},
+  pdfsubject={Memoria práctica ASI}]{hyperref}
+
+
+% --- IMAGES ---
+\usepackage[pdftex]{graphicx}
+\usepackage{subfig}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\DeclareGraphicsExtensions{.png,.jpg,.pdf,.mps,.gif,.bmp}
+% --- IMAGES ---
+
+% --- MARGIN DIMENSIONS ---
+\frenchspacing \addtolength{\hoffset}{-1.5cm}
+\addtolength{\textwidth}{3cm} \addtolength{\voffset}{-2.5cm}
+\addtolength{\textheight}{4cm}
+\setlength{\headheight}{15pt}
+% --- MARGIN DIMENSIONS ---
+
+% --- HEADLINE ---
+\usepackage{fancyhdr}
+% Name of the subject this work is for
+\fancyhead[R]{Administración de Sistemas Informáticos}\fancyhead[L]{\today}
+\fancyfoot[C]{\rule{1cm}{0.5mm}\\\thepage} \pagestyle{fancy}
+% --- HEADLINE ---
+
+
+
+% --- DOCUMENT ---
+\begin{document}
+
+% --- TITLE PAGE ---
+\begin{titlepage}
+  \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+  \centering
+
+  % --- SECONDARY TITLES ---
+   \textsc{}\\[0.25cm]
+
+   % Name of your university
+   \textsc{\huge{Universidad Politécnica de Madrid}}\\[0.5cm]
+
+   % Name of your faculty
+   \textsc{\LARGE Escuela Técnica Superior\\de Ingeniería Informática}\\[0.3cm]
+
+   \begin{figure}[H]
+     % Replace this with your university logo
+     \centering
+     \subfloat{{\includegraphics[width=7cm]{Images/LogoUPM}}}
+     % Replace this with you faculty logo
+     \qquad
+     \subfloat{{\includegraphics[width=2.75cm]{Images/LogoFI}}}\\[0.5cm]
+   \end{figure}
+
+   % Name of the department to which the subject belongs.
+   \textsc{\Large Departamento de Lenguajes, Sistemas Informáticos e Ingeniería de Software}\\[0.25cm]
+
+   % Name of the subject
+   \textsc{\large Administración de Sistemas Informáticos}\\[0.25cm]
+  % --- SECONDARY TITLES ---
+
+  % --- MAIN TITLE ---
+   \HRule\\[0.4cm]
+
+   % Title of this work
+   {\huge\textbf{Memoria de Proyecto Práctico}\\[0.4cm] \textit{Script maestro para la config. de un cluster Linux}}\\[0.4cm]
+   \HRule\\[1.25cm]
+
+   % --- SEMESTER and SCHOLAR YEAR ---
+    \textsc{\large 4º Curso | 7º Semestre}\\[1.5cm]
+   % --- SEMESTER and SCHOLAR YEAR
+
+   % --- AUTHORS ---
+    {\large\underline{\textit{Autores}}}\\[0.2cm]
+       \textsc{Ramírez Solans, Antonio}\\
+               Nº Matrícula: 170035\\[0.2cm]
+       \textsc{Miguel Alonso, Carlos}\\
+               Nº Matrícula: 170243\\[0.2cm]
+       \textsc{Aouad Idrissi Boulid, Younes}\\
+               Nº Matrícula: 170155\\[0.2cm]
+   % --- AUTHORS ---
+
+   % --- DATE ---
+    \vfill\vfill\vfill
+    {\large\today}
+   % --- DATE ---
+
+  % --- MAIN TITLE ---
+
+\end{titlepage}
+% --- TITLE PAGE ---
+
+
+\newpage
+% --- INDEX ---
+\thispagestyle{empty}
+\pagenumbering{gobble}
+\renewcommand*\contentsname{Índice de Contenidos}
+\tableofcontents
+% --- INDEX ---
+
+\newpage
+\pagenumbering{arabic}
+
+
+\end{document}
+% --- DOCUMENT ---
