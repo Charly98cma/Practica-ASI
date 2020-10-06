@@ -16,3 +16,5 @@ then
     echoerr "El archivo '$1' no existe."
     exit
 fi
+
+filename = "$1"
