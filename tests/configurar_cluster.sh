@@ -1,0 +1,1 @@
+../scripts/configurar_cluster.sh
