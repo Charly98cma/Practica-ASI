@@ -6,14 +6,14 @@ echoerr() { echo "$@" 1>&2; }
 # Argument check
 if [[ "$#" -ne 1 ]]; then
     echoerr "Use: $0 fichero_configuracion"
-    exit -1
+    exit 1
 fi
 
 # Check if config file exists
 # TODO: See if it's required to test also if it's a file or a dir
 if [[ ! -e "$@" ]]; then
     echoerr "El archivo '$1' no existe"
-    exit -1
+    exit 2
 fi
 
 # Name of the config file
@@ -34,7 +34,7 @@ while read line; do
     # Check for wrong line format
     if [[ "${#args[@]}" -ne 3 ]]; then
 	echoerr "$FILE: linea $LINE: Error de formato en linea de configuracion"
-	exit -1
+	exit 3
     fi
 
     # Configuration parameters
@@ -45,7 +45,7 @@ while read line; do
     # Check if config file for that service exists
     if [[ ! -e "$CONFIG" ]]; then
 	echoerr "$FILE: linea $LINE: El archivo '$CONFIG' no existe"
-	exit -1
+	exit 4
     fi
 
 
