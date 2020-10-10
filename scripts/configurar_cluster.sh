@@ -80,10 +80,11 @@ while read line; do
 		fi
 	    fi
 
-	    # TODO: Montaje ya que la POINT es una dir vacioa (creada o ya estaba asi)
-
-
-
+	    # TODO: Check the next two cmd results (in case of unexpected error)
+	    # Mount of the device
+	    sshcmd "$DIR mount -t ext4 $DEVICE $POINT"
+	    # Auto-mount on start-up ("default 0 0" are options for the mounts, which are irrelevant now)
+	    sshcmd "$DIR echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab"
 	    ;;
 	*)
 	    # Unknown service detected on the config file
