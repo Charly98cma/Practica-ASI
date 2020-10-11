@@ -19,9 +19,12 @@ if [[ "$#" -ne 1 ]]; then
 fi
 
 # Check if config file exists
-# TODO: See if it's required to test also if it's a file or a dir
 if [[ ! -e "$@" ]]; then
-    echoerr "El archivo '$1' no existe"
+    echoerr "ERROR - El archivo '$1' no existe"
+    exit 2
+fi
+if [[ ! -f "$@" ]]; then
+    echoerr "ERROR - '$1' es un directorio y no un archivo"
     exit 2
 fi
 
@@ -61,6 +64,8 @@ while read line; do
 
     # Switch case of the service (diff services have diff behavior)
     case $SERV in
+
+	# MOUNT service
 	"mount")
 	    # Read DEVICE and mount POINT
 	    read DEVICE;
@@ -80,25 +85,26 @@ while read line; do
 		fi
 	    fi
 
-	    # TODO: Check the next two cmd results (in case of unexpected error)
 	    # Mount of the device
 	    sshcmd "$DIR mount -t ext4 $DEVICE $POINT"
+	    if [[ "$1" -ne 0 ]]; then
+		echoerr "$FILE: Error inesperado durante el montaje de '$DEVICE' en '$POINT'"
+		exit 7
+	    fi
 	    # Auto-mount on start-up ("default 0 0" are options for the mounts, which are irrelevant now)
 	    sshcmd "$DIR echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab"
+	    if [[ "$1" -ne 0 ]]; then
+		echoerr "$FILE: Error inesperado durante el montaje de '$DEVICE' en '$POINT'"
+		exit 7
+	    fi
 	    ;;
+
 	*)
 	    # Unknown service detected on the config file
 	    echoerr "$FILE: linea $LINE: No se reconce el servicio '$SERV'"
 	    exit 5
 	    ;;
     esac
-
-
-
-
-
-
-
     LINE=$(($LINE + 1))
 done < $FILE
 # Length of the array --> ${#args[@]}
