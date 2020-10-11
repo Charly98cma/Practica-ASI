@@ -3,6 +3,12 @@
 # Easy error printing function
 echoerr() { echo "$@" 1>&2; }
 
+
+# Assoaciates file (arg 2) to file descriptor (arg 1
+assocDesc() { exec "$1<$2"; }
+# Free the descriptor (arg 1
+freeDesc() { exec "$1<&-"; }
+
 # Method to easy execution of commands on other host through SSH
 # REVIEW: Check if changes are required to run the different commands we will be handling
 sshcmd() {
@@ -68,13 +74,16 @@ while read line; do
 	# MOUNT service
 	"mount")
 	    # Read DEVICE and mount POINT using the file descriptor 3 temporarly
-	    exec 3<"$CONFIG"
+	    assocDesc "3 $CONFIG"
 	    read DEVICE <&3 && read POINT <&3;
-	    exec 3<&-
+	    freeDesc "3"
+
 	    # Check  if POINT exists
 	    sshcmd "$DIR find --maxdepth 0 $POINT"
+
 	    if [[ "$?" -ne 0 ]]; then
 		# POINT dir doesnt exist, we create it
+		# REVIEW: See if's necessary to check for error on the mkdir
 		sshcmd "$DIR mkdir $POINT"
 	    else
 		# POINT dir exists, check if its empty
@@ -98,6 +107,10 @@ while read line; do
 		echoerr "$FILE: Error inesperado durante el montaje de '$DEVICE' en '$POINT'"
 		exit 7
 	    fi
+
+	    # Clear variables used
+	    unset DEVICE
+	    unset POINT
 	    ;;
 
 
