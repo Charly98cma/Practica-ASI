@@ -67,9 +67,10 @@ while read line; do
 
 	# MOUNT service
 	"mount")
-	    # Read DEVICE and mount POINT
-	    read DEVICE;
-	    read POINT;
+	    # Read DEVICE and mount POINT using the file descriptor 3 temporarly
+	    exec 3<"$CONFIG"
+	    read DEVICE <&3 && read POINT <&3;
+	    exec 3<&-
 	    # Check  if POINT exists
 	    sshcmd "$DIR find --maxdepth 0 $POINT"
 	    if [[ "$?" -ne 0 ]]; then
@@ -98,6 +99,19 @@ while read line; do
 		exit 7
 	    fi
 	    ;;
+
+
+	# "raid")
+	#     # Read parameters (lines) of the config file
+	#     read RAID_DEV;
+	#     read LEVEL;
+	#     # List of devices -> dev1 dev2 ...
+	#     read DEVICES;
+	#     # dev1 dev2 dev3 ... --> {dev1, dev2, dev3, ...}
+	#     IFS = " " read -a DEVICE_ARR <<< "$DEVICES"
+
+	#     sshcmd "$DIR mdadm --create $RAID_DEV $DEVICES --level=$LEVEL --raid-devices=${DEVICE_ARR[@]}"
+	#     ;;
 
 	*)
 	    # Unknown service detected on the config file
