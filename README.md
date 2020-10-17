@@ -7,10 +7,14 @@
 - **3**: Una de las líneas del fichero de configuración no sigue el formato adecuado (DIR SERVICIO FICH_CONFIG)
 - **4**: Uno de los ficheros de configuración de un servicio no existe
 - **5**: Uno de los servicios en el fichero de configuracion es desconocido
+- **6**: Error en el formato del archivo de configuración
 
 ### Códigos de error de *mount*
-- **6**: El directorio de montaje no es un directorio vacío
-- **7**: Error inesperado durante el montaje
+- **7**: El directorio de montaje no es un directorio vacío
+- **8**: Error inesperado durante el montaje
+
+### Códigos de error de *raid*
+
 
 ## Tests
 - fichero_config no se pasa como argumento
