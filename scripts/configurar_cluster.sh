@@ -18,6 +18,12 @@ assocDesc() { exec "$1<$2"; }
 freeDesc() { exec "$1<&-"; }
 
 
+
+# Assoaciates file (arg 2) to file descriptor (arg 1
+assocDesc() { exec "$1<$2"; }
+# Free the descriptor (arg 1
+freeDesc() { exec "$1<&-"; }
+
 # Method to easy execution of commands on other host through SSH
 # REVIEW: Check if changes are required to run the different commands we will be handling
 sshcmd() {
