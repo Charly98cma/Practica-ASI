@@ -8,8 +8,8 @@ source "aux_functions.sh"
 #  $3 = $CONFIG file
 #  $4 = $LINE
 # Returns:
-#  0         - Success
-#  Otherwise - Error code
+#  0          - Success
+#  Error code - Otherwise
 
 raidFunc() {
     # Read parameters (lines) of the config file
@@ -30,7 +30,14 @@ raidFunc() {
 
     # Raid creation command through ssh
     sshcmd "$2" "mdadm --create $RAID_DEV $DEVICES --level=$LEVEL --raid-devices=${DEVICE_ARR[@]}";
+    if [[ "$?" -eq 255 ]]; then
+	echoerr "ERROR - Se ha producido un error inesperado en el servicio 'ssh'";
+	exit 7;
+    fi
+    if [[ "$?" -ne 0 ]]; then
+	echoerr "$1: linea $4: Error al configurar el servicio 'raid'";
+	exit 11;
+    fi
 
-    # TODO: Add error checks of mdadm
     exit 0;
 }

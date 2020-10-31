@@ -1,7 +1,14 @@
 #!/bin/bash
+
+####################
+# CUSTOM LIBRARIES #
+####################
+
 source "lib/aux_functions.sh"
 source "lib/serv_mount.sh"
 source "lib/serv_raid.sh"
+source "lib/serv_lvm.sh"
+
 
 #################
 # MAIN FUNCTION #

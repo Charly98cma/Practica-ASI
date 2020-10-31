@@ -5,19 +5,34 @@
 ######################
 
 # Messages management functions
-echoerr() { echo "$1" 1>&2; }
+echoerr() {
+    echo "$1" 1>&2;
+}
 export -f echoerr
-echoConfig() { echo "   -> Configurando servicio '$1' en '$2'"; }
+
+echoConfig() {
+    echo "   -> Configurando servicio '$1' en '$2'";
+}
 export -f echoConfig
-echoDone() { echo "      DONE"; }
+
+echoDone() {
+    echo "      DONE";
+}
 export -f echoDone
 
+
 # Assoaciates file (arg 2) to file descriptor (arg 1
-assocDesc() { exec "$1<$2"; }
+assocDesc() {
+    exec "$1<$2";
+}
 export -f assocDesc
+
 # Free the descriptor (arg 1
-freeDesc() { exec "$1<&-"; }
+freeDesc() {
+    exec "$1<&-";
+}
 export -f freeDesc
+
 
 # Method to easy execution of commands on other host through SSH
 # REVIEW: Check if changes are required to run the different commands we will be handling
