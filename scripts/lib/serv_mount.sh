@@ -23,7 +23,7 @@ mountFunc() {
 	exit 6;
     fi
 
-    # Checl if DEVICE exists
+    # Check if DEVICE exists
     sshcmd "$2" "find $DEVICE -maxdepth 0";
     if [[ "$?" -ne 0 ]]; then
 	echoerr "$1: linea $4: Error en el dispositivo a montar";
@@ -34,9 +34,12 @@ mountFunc() {
     # Check if POINT exists
     sshcmd "$2" "find $POINT -maxdepth 0";
     if [[ "$?" -ne 0 ]]; then
-	# POINT dir doesnt exist, we create it
-	# TODO: See if's necessary to check for error on the mkdir
+	# POINT dir doesnt exist, so we create it
 	sshcmd "$2" "mkdir $POINT";
+	if [[ "$?" -ne 0 ]]; then
+	    echoerr "$1: Error inesperado al crear el directorio '$POINT' en el host '$2'"
+	    exit 11;
+	fi
     else
 	# POINT dir exists, check if its empty
 	sshcmd "$2" "ls -A $POINT";
@@ -49,14 +52,14 @@ mountFunc() {
 
     # Mount of the device
     sshcmd "$2" "mount -t ext4 $DEVICE $POINT";
-    if [[ "$1" -ne 0 ]]; then
+    if [[ "$?" -ne 0 ]]; then
 	echoerr "$1: Error inesperado durante el montaje de '$DEVICE' en '$POINT'";
 	exit 10;
     fi
 
     # Auto-mount on start-up ("default 0 0" are options for the mounts, which are irrelevant now)
     sshcmd "$2" "echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab";
-    if [[ "$1" -ne 0 ]]; then
+    if [[ "$?" -ne 0 ]]; then
 	echoerr "$1: Error inesperado durante el montaje de '$DEVICE' en '$POINT'";
 	exit 10;
     fi

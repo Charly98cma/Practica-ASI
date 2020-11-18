@@ -27,7 +27,7 @@ assocDesc() {
 }
 export -f assocDesc
 
-# Free the descriptor (arg 1
+# Free the descriptor (arg 1)
 freeDesc() {
     exec "$1<&-";
 }

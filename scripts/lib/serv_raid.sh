@@ -1,6 +1,9 @@
 #!/bin/bash
 source "aux_functions.sh"
 
+# Raid leveks allowed
+RAID_LEVELS=("0" "1" "4" "5");
+
 # RAID
 # Params:
 #  $1 = $FILE
@@ -10,7 +13,6 @@ source "aux_functions.sh"
 # Returns:
 #  0          - Success
 #  Error code - Otherwise
-
 raidFunc() {
     # Read parameters (lines) of the config file
     assocDesc "3" "$3";
@@ -25,6 +27,8 @@ raidFunc() {
 	exit 6;
     fi
 
+    # TODO: Add RAID checks for non-supported LEVELs
+
     # dev1 dev2 dev3 ... --> {dev1, dev2, dev3, ...}
     IFS=" " read -a DEVICE_ARR <<< "$DEVICES";
 
@@ -36,7 +40,7 @@ raidFunc() {
     fi
     if [[ "$?" -ne 0 ]]; then
 	echoerr "$1: linea $4: Error al configurar el servicio 'raid'";
-	exit 11;
+	exit 12;
     fi
 
     exit 0;
