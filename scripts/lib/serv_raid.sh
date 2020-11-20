@@ -23,7 +23,7 @@ raidFunc() {
 
     # Check if some of the required information is missing
     if [[ "$RAID_DEV" == "" || "$LEVEL" == "" || "$DEVICES" == "" ]]; then
-	echoerr "$1: linea $4: Error en el formato del archivo de configuración '$3'";
+	echoWrongParams "$1" "$4" "$3";
 	exit 6;
     fi
 

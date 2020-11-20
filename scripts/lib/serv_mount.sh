@@ -19,7 +19,7 @@ mountFunc() {
 
     # Check if both lines exist
     if [[ "$DEVICE" == "" || "$POINT" == "" ]]; then
-	echoerr "$1: linea $4: Error en el formato del archivo de configuración '$3'";
+	echoWrongParams "$1" "$4" "$3";
 	exit 6;
     fi
 
