@@ -18,7 +18,7 @@ lvmFunc() {
     read line <&3;
 
     if [[ "$NAME" == "" || "$DEVS" == "" || "$line" == "" ]]; then
-	echoerr "$1: linea $4: Error en el formato del archivo de configuración '$3'";
+	echoWrongParams "$1" "$4" "$3";
 	exit 6;
     fi
 
@@ -38,7 +38,7 @@ lvmFunc() {
     sshcmd "$2" "vgcreate $NAME $DEVS";
     if [[ "$?" -ne 0 ]]; then
 	echoerr "$1: Error inesperado al crear el grupo '$NAME'.";
-	exit 13;
+	exit 14;
     fi
 
     while read line; do

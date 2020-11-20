@@ -1,9 +1,6 @@
 #!/bin/bash
 source "aux_functions.sh"
 
-# Raid leveks allowed
-RAID_LEVELS=("0" "1" "4" "5");
-
 # RAID
 # Params:
 #  $1 = $FILE
@@ -14,6 +11,11 @@ RAID_LEVELS=("0" "1" "4" "5");
 #  0          - Success
 #  Error code - Otherwise
 raidFunc() {
+    # Package management
+    packageMng "$2" "raid"
+    if [[ "$?" -ne 0 ]]; then
+	exit -1;
+    fi
     # Read parameters (lines) of the config file
     assocDesc "3" "$3";
     read RAID_DEV <&3;
@@ -23,11 +25,21 @@ raidFunc() {
 
     # Check if some of the required information is missing
     if [[ "$RAID_DEV" == "" || "$LEVEL" == "" || "$DEVICES" == "" ]]; then
-	echoerr "$1: linea $4: Error en el formato del archivo de configuración '$3'";
+	echoWrongParams "$1" "$4" "$3";
 	exit 6;
     fi
 
-    # TODO: Add RAID checks for non-supported LEVELs
+    # Check for non-supported RAID level
+    case "$LEVEL" in
+	0|1|5|6|10)
+	    : # Null statement
+	    ;;
+	*)
+	    echoerr "$1: linea $4: Error al configurar el servicio 'raid'"
+	    echoerr "El nivel RAID '$LEVEL' no esa soportado"
+	    exit 13;
+	    ;;
+    esac
 
     # dev1 dev2 dev3 ... --> {dev1, dev2, dev3, ...}
     IFS=" " read -a DEVICE_ARR <<< "$DEVICES";
@@ -39,7 +51,7 @@ raidFunc() {
 	exit 7;
     fi
     if [[ "$?" -ne 0 ]]; then
-	echoerr "$1: linea $4: Error al configurar el servicio 'raid'";
+	echoerr "$1: linea $4: Error inesperado al configurar el servicio 'raid'";
 	exit 12;
     fi
 

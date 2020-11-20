@@ -2,11 +2,14 @@
 
 ## TODOs
 - Añadir comprobación (e instalación) de librerías
-- *raid*: Añadir comprobación para niveles de RAID
-- **Revisar los detalles y argumentos de cada parámetros tras leerme las diapos**
+  + [ ] mount -> No lo veo muy necesario (por defecto en cualquier sistema GNU)
+  + [ ] lvm   -> Igual que *mount*
+  + [x] raid  -> **DUDA**: Se requiere la pwd para instalar algo (ya que se usa *sudo apt install*)
+- Revisar *raid* por si faltan parámetros o comprobaciones
 
 ## Códigos de error
 ### Códigos de error generales
+- **255**: Error inesperado al intentar instalar el paquete X en el host Y
 - **1**: No se proporciona el fichero de configuración como argumento
 - **2**: El fichero de configuración no existe o es un directorio
 - **3**: Una de las líneas del fichero de configuración no sigue el formato adecuado (DIR SERVICIO FICH_CONFIG)
@@ -22,8 +25,9 @@
 - **11**: Error inesperado al crear el directorio
 
 ### Códigos de error de *raid*
-- **12**: Error al configurar el servicio
+- **12**: Error al inesperado configurar el servicio
+- **13**: Error en el nivel de RAID proporcionado
 
 ### Códigos de error de *lvm*
 - **8**: El dispositivo X en la máquina Y no existe.
-- **13**: Error inesperado al crear el grupo X
+- **14**: Error inesperado al crear el grupo X
