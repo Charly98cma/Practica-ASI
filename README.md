@@ -1,4 +1,17 @@
 # Practica-ASI
+## Servicios
+- [ ] mount
+- [ ] raid
+- [ ] lvm
+- [ ] nis
+  + [ ] server
+  + [ ] client
+- [ ] nfs
+  + [ ] server
+  + [ ] client
+- [ ] backup
+  + [ ] server
+  + [ ] client
 
 ## TODOs
 - Añadir comprobación (e instalación) de librerías
@@ -9,6 +22,7 @@
 
 ## Códigos de error
 ### Códigos de error generales
+
 - **255**: Error inesperado al intentar instalar el paquete X en el host Y
 - **1**: No se proporciona el fichero de configuración como argumento
 - **2**: El fichero de configuración no existe o es un directorio
@@ -19,15 +33,18 @@
 - **7**: Error inesperado en 'ssh'
 
 ### Códigos de error de *mount*
+
 - **8**: El dispositivo a montar no existe.
 - **9**: El directorio de montaje no es un directorio vacío
 - **10**: Error inesperado durante el montaje
 - **11**: Error inesperado al crear el directorio
 
 ### Códigos de error de *raid*
+
 - **12**: Error al inesperado configurar el servicio
 - **13**: Error en el nivel de RAID proporcionado
 
 ### Códigos de error de *lvm*
+
 - **8**: El dispositivo X en la máquina Y no existe.
 - **14**: Error inesperado al crear el grupo X
