@@ -36,7 +36,7 @@ raidFunc() {
 	    ;;
 	*)
 	    echoerr "$1: linea $4: Error al configurar el servicio 'raid'"
-	    echoerr "El nivel RAID '$LEVEL' no esa soportado"
+	    echoerr "El nivel RAID '$LEVEL' no esta soportado"
 	    exit 13;
 	    ;;
     esac

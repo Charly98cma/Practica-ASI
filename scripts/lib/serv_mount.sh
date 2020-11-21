@@ -37,7 +37,7 @@ mountFunc() {
 	# POINT dir doesnt exist, so we create it
 	sshcmd "$2" "mkdir $POINT";
 	if [[ "$?" -ne 0 ]]; then
-	    echoerr "$1: Error inesperado al crear el directorio '$POINT' en el host '$2'"
+	    echoerr "$1: linea $4: Error inesperado al crear el directorio '$POINT' en el host '$2'"
 	    exit 11;
 	fi
     else
@@ -53,14 +53,14 @@ mountFunc() {
     # Mount of the device
     sshcmd "$2" "mount -t ext4 $DEVICE $POINT";
     if [[ "$?" -ne 0 ]]; then
-	echoerr "$1: Error inesperado durante el montaje de '$DEVICE' en '$POINT'";
+	echoerr "$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'";
 	exit 10;
     fi
 
     # Auto-mount on start-up ("default 0 0" are options for the mounts, which are irrelevant now)
     sshcmd "$2" "echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab";
     if [[ "$?" -ne 0 ]]; then
-	echoerr "$1: Error inesperado durante el montaje de '$DEVICE' en '$POINT'";
+	echoerr "$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'";
 	exit 10;
     fi
 
