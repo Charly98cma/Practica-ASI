@@ -45,7 +45,7 @@ raidFunc() {
     IFS=" " read -a DEVICE_ARR <<< "$DEVICES";
 
     # Raid creation command through ssh
-    sshcmd "$2" "mdadm --create $RAID_DEV $DEVICES --level=$LEVEL --raid-devices=${DEVICE_ARR[@]}";
+    sshcmd "$2" "mdadm --create --level=$LEVEL --raid-devices=${#DEVICE_ARR[@]}  $RAID_DEV $DEVICES";
     if [[ "$?" -eq 255 ]]; then
 	echoerr "ERROR - Se ha producido un error inesperado en el servicio 'ssh'";
 	exit 7;
