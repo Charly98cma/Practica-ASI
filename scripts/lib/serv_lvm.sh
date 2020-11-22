@@ -11,7 +11,6 @@ export "aux_functions.sh"
 #  0          - Success
 #  Error code - Otherwise
 lvmFunc() {
-
     assocDesc "3" "$3";
     read NAME <&3;
     read DEVS <&3;
@@ -19,6 +18,7 @@ lvmFunc() {
 
     if [[ "$NAME" == "" || "$DEVS" == "" || "$line" == "" ]]; then
 	echoWrongParams "$1" "$4" "$3";
+	freeDesc "3";
 	exit 6;
     fi
 
@@ -28,22 +28,51 @@ lvmFunc() {
     for DEV in "${DEVS_ARR[@]}"; do
 	sshcmd "$2" "find $DEV -maxdepth 0";
 	if [[ "$?" -ne 0 ]]; then
-	    echoerr "$1: linea $4: Error en el dispositivo a montar";
-	    echoerr "El dispositivo '$DEV' en la máquina '$2' no existe."
+	    echoerr "$1: linea $4: El dispositivo '$DEV' en la máquina '$2' no existe.";
+	    freeDesc "3";
 	    exit 8;
 	fi
     done;
 
-    # Creation of the devices group
-    sshcmd "$2" "vgcreate $NAME $DEVS";
+    # Initialization of the physical volumes
+    sshcmd "$2" "pvcreate $DEVS"
     if [[ "$?" -ne 0 ]]; then
-	echoerr "$1: Error inesperado al crear el grupo '$NAME'.";
+	echoerr "$1: linea $4: Error al inicializar los volúmenes físicos"
+	freeDesc "3";
 	exit 14;
     fi
 
+    # Creation of the devices group
+    sshcmd "$2" "vgcreate $NAME $DEVS";
+    if [[ "$?" -ne 0 ]]; then
+	echoerr "$1: linea $4: Error inesperado al crear el grupo '$NAME' de volumenes fisicos";
+	freeDesc "3";
+	exit 15;
+    fi
+
+    I=1;
+    # Creation of each logical volume
     while read line; do
-	echo;
+	# Check if there are more logical volumes that physical volumes on the group
+	if [[ $((I)) -gt ${#DEVS_ARR[@]} ]]; then
+	    echoerr "$1: linea $4: Se ha excedido el tamaño del grupo al crear los volúmenes lógicos";
+	    freeDesc "3";
+	    exit 16;
+	fi
+
+	# Read name and size of the logical volume
+	IFS=" " read -a LINE <<< "$line";
+
+	# Creation of the logical volume
+	sshcmd "$3" "lvcreate --name $LINE[0] --size $LINE[1] $NAME";
+	if [[ "$?" -ne 0 ]]; then
+	    echoerr "$1: linea $4: Error inesperado al crear el volúmen lógico '$LINE[0]'"
+	    freeDesc "3";
+	    exit 17;
+	fi
+	I=$((I+1));
     done <&3;
 
-
+    freeDesc "3";
+    exit 0;
 }
