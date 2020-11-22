@@ -91,24 +91,66 @@ while read line; do
 
 
 	"lvm")
+	    RES=lvmFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ "$RES" -ne 0 ]]; then
+		exit RES;
+	    fi
+	    unset RES;
+	    echoDone;
 	    ;;
 
 	"nis-server")
+	    RES=nisServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ "$RES" -ne 0 ]]; then
+		exit RES;
+	    fi
+	    unset RES;
+	    echoDone;
 	    ;;
 
 	"nis-client")
+	    RES=nisClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ "$RES" -ne 0 ]]; then
+		exit RES;
+	    fi
+	    unset RES;
+	    echoDone;
 	    ;;
 
 	"nfs_server")
+	    RES=nfsServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ "$RES" -ne 0 ]]; then
+		exit RES;
+	    fi
+	    unset RES;
+	    echoDone;
 	    ;;
 
 	"nfs_client")
+	    RES=nfsClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ "$RES" -ne 0 ]]; then
+		exit RES;
+	    fi
+	    unset RES;
+	    echoDone;
 	    ;;
 
 	"backup_server")
+	    RES=backupServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ "$RES" -ne 0 ]]; then
+		exit RES;
+	    fi
+	    unset RES;
+	    echoDone;
 	    ;;
 
 	"backup_client")
+	    RES=backupClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ "$RES" -ne 0 ]]; then
+		exit RES;
+	    fi
+	    unset RES;
+	    echoDone;
 	    ;;
 
 	*)
