@@ -1,0 +1,5 @@
+# Comentario que no se debe leer
+# Falta un argumento en la primera línea
+192.168.0.1 raid
+192.168.0.1 mount mount_raid.conf
+192.168.0.1 nfs_server nfs_server.conf

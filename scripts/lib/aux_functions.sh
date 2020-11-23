@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ############
 # MESSAGES #
@@ -11,7 +11,6 @@
 echoerr() {
     echo "$1" 1>&2;
 }
-export -f echoerr
 
 
 # Message through the stderr (using 'echoerr') because the expected
@@ -24,7 +23,6 @@ export -f echoerr
 echoWrongParams() {
     echoerr "$1: linea $2: Error en el formato del archivo de configuración '$3'";
 }
-export -f echoWrongParams
 
 
 # Message showing the service being configured
@@ -34,13 +32,12 @@ export -f echoWrongParams
 echoConfig() {
     echo "   -> Configurando servicio '$1' en '$2'";
 }
-export -f echoConfig
+
 
 # Message showing a service has been configured properly
 echoDone() {
     echo "      DONE";
 }
-export -f echoDone
 
 
 ###############
@@ -54,7 +51,6 @@ export -f echoDone
 assocDesc() {
     exec "$1<$2";
 }
-export -f assocDesc
 
 
 # Free the descriptor (arg 1)
@@ -63,7 +59,6 @@ export -f assocDesc
 freeDesc() {
     exec "$1<&-";
 }
-export -f freeDesc
 
 
 ###############
@@ -80,7 +75,6 @@ sshcmd() {
     # ssh USER@dir command1 | command2 ...
     eval "ssh practicas@$1 ${@:2}";
 }
-export -f sshcmd
 
 
 ##################
@@ -98,7 +92,9 @@ packageMng() {
 	"raid")
 	    PKG="mdadm";
 	    ;;
-
+	"lvm")
+	    PKG="lvm";
+	    ;;
 	*)  exit;
 	    ;;
     esac
@@ -110,9 +106,8 @@ packageMng() {
 	sshcmd "$1" "sudo apt install $PKG";
 	if [[ "$?" -ne 0 ]]; then
 	    echoerr "Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'"
-	    exit -1;
+	    exit 1;
 	fi
     fi
-
     exit 0;
 }

@@ -1,4 +1,0 @@
-# Test con un error en una de las lineas de configuracion
-
-# Falta proporcionar el fichero de config
-192.168.0.1 raid

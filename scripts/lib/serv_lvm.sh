@@ -1,5 +1,5 @@
-#!/bin/bash
-export "aux_functions.sh"
+#!/usr/bin/env bash
+source lib/aux_functions.sh
 
 # LVM
 # Params:
@@ -11,17 +11,26 @@ export "aux_functions.sh"
 #  0          - Success
 #  Error code - Otherwise
 lvmFunc() {
+    # Package management
+    packageMng "$2" "lvm"
+    if [[ "$?" -ne 0 ]]; then
+	exit -1;
+    fi
+
+    # Read the parameters of the service
     assocDesc "3" "$3";
     read NAME <&3;
     read DEVS <&3;
     read line <&3;
 
+    # Check all parameters exist
     if [[ "$NAME" == "" || "$DEVS" == "" || "$line" == "" ]]; then
 	echoWrongParams "$1" "$4" "$3";
 	freeDesc "3";
 	exit 6;
     fi
 
+    # Turn the DEVS string to an array
     IFS=" " read -a DEVS_ARR <<< "$DEVS";
 
     # Check that each of the dirs/devices exists on the host
@@ -37,7 +46,7 @@ lvmFunc() {
     # Initialization of the physical volumes
     sshcmd "$2" "pvcreate $DEVS"
     if [[ "$?" -ne 0 ]]; then
-	echoerr "$1: linea $4: Error al inicializar los volúmenes físicos"
+	echoerr "$1: linea $4: Error inesperado inicializar los volúmenes físicos"
 	freeDesc "3";
 	exit 14;
     fi
@@ -66,11 +75,13 @@ lvmFunc() {
 	# Creation of the logical volume
 	sshcmd "$3" "lvcreate --name $LINE[0] --size $LINE[1] $NAME";
 	if [[ "$?" -ne 0 ]]; then
-	    echoerr "$1: linea $4: Error inesperado al crear el volúmen lógico '$LINE[0]'"
+	    echoerr "$1: linea $4: Error inesperado al crear el volúmen lógico '$LINE[0]' de tamaño '$LINE[1]'";
 	    freeDesc "3";
 	    exit 17;
 	fi
+
 	I=$((I+1));
+
     done <&3;
 
     freeDesc "3";

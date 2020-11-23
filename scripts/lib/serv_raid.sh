@@ -1,5 +1,5 @@
-#!/bin/bash
-source "aux_functions.sh"
+#!/usr/bin/env bash
+source lib/aux_functions.sh
 
 # RAID
 # Params:
@@ -45,7 +45,7 @@ raidFunc() {
     IFS=" " read -a DEVICE_ARR <<< "$DEVICES";
 
     # Raid creation command through ssh
-    sshcmd "$2" "mdadm --create --level=$LEVEL --raid-devices=${#DEVICE_ARR[@]}  $RAID_DEV $DEVICES";
+    sshcmd "$2" "mdadm --create --level=$LEVEL --raid-devices=${#DEVICE_ARR[@]} $RAID_DEV $DEVICES";
     if [[ "$?" -eq 255 ]]; then
 	echoerr "ERROR - Se ha producido un error inesperado en el servicio 'ssh'";
 	exit 7;
@@ -57,3 +57,5 @@ raidFunc() {
 
     exit 0;
 }
+
+export -f raidFunc

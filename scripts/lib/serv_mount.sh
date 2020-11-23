@@ -1,5 +1,5 @@
-#!/bin/bash
-export "aux_functions.sh"
+#!/usr/bin/env bash
+source lib/aux_functions.sh
 
 # MOUNT
 # Params:
@@ -66,3 +66,4 @@ mountFunc() {
 
     exit 0;
 }
+export -f mountFunc
