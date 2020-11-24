@@ -1,0 +1,8 @@
+# El primer fichero no existe
+
+
+192.168.0.1 raid fich-que-no-existe.conf
+
+192.168.0.1 mount mount_raid.conf
+
+192.168.0.1 nfs_server nfs_server.conf
