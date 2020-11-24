@@ -3,13 +3,13 @@
 - [ ] mount -> *Pendiente de testear*
 - [ ] raid -> *Pendiente de testear*
 - [ ] lvm -> *Pendiente de testear*
-- [ ] nis
+- [ ] nis =>
   + [ ] server
   + [ ] client
-- [ ] nfs
+- [ ] nfs =>
   + [ ] server
   + [ ] client
-- [ ] backup
+- [ ] backup => CARLOS
   + [ ] server
   + [ ] client
 
@@ -44,7 +44,7 @@
 
 ### Códigos de error de *lvm*
 - **8**: El dispositivo X en la máquina Y no existe.
-- **14**: Error al inicializar los volúmenes físicos
+- **14**: Error inesperado al inicializar los volúmenes físicos
 - **15**: Error inesperado al crear el grupo X
 - **16**: Se ha excedido el tamaño del grupo al crear los volúmenes lógicos
 - **17**: Error inesperado al crear el volúmen lógico X
