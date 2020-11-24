@@ -11,6 +11,12 @@
   pdfsubject={Memoria práctica ASI}]{hyperref}
 
 
+% --- TIKZ ---
+\usepackage{tikz}
+\usepackage[edges]{forest}
+% --- TIKZ ---
+
+
 % --- IMAGES ---
 \usepackage[pdftex]{graphicx}
 \usepackage{subfig}
@@ -44,57 +50,57 @@
   \centering
 
   % --- SECONDARY TITLES ---
-   \textsc{}\\[0.25cm]
+  \textsc{}\\[0.25cm]
 
-   % Name of your university
-   \textsc{\huge{Universidad Politécnica de Madrid}}\\[0.5cm]
+  % Name of your university
+  \textsc{\huge{Universidad Politécnica de Madrid}}\\[0.5cm]
 
-   % Name of your faculty
-   \textsc{\LARGE Escuela Técnica Superior\\de Ingeniería Informática}\\[0.3cm]
+  % Name of your faculty
+  \textsc{\LARGE Escuela Técnica Superior\\de Ingeniería Informática}\\[0.3cm]
 
-   \begin{figure}[H]
-     % Replace this with your university logo
-     \centering
-     \subfloat{{\includegraphics[width=7cm]{Images/LogoUPM}}}
-     % Replace this with you faculty logo
-     \qquad
-     \subfloat{{\includegraphics[width=2.75cm]{Images/LogoFI}}}\\[0.5cm]
-   \end{figure}
+  \begin{figure}[H]
+    % Replace this with your university logo
+    \centering
+    \subfloat{{\includegraphics[width=7cm]{Images/LogoUPM}}}
+    % Replace this with you faculty logo
+    \qquad
+    \subfloat{{\includegraphics[width=2.75cm]{Images/LogoFI}}}\\[0.5cm]
+  \end{figure}
 
-   % Name of the department to which the subject belongs.
-   \textsc{\Large Departamento de Lenguajes, Sistemas Informáticos e Ingeniería de Software}\\[0.25cm]
+  % Name of the department to which the subject belongs.
+  \textsc{\Large Departamento de Lenguajes, Sistemas Informáticos e Ingeniería de Software}\\[0.25cm]
 
-   % Name of the subject
-   \textsc{\large Administración de Sistemas Informáticos}\\[0.25cm]
+  % Name of the subject
+  \textsc{\large Administración de Sistemas Informáticos}\\[0.25cm]
   % --- SECONDARY TITLES ---
 
   % --- MAIN TITLE ---
-   \HRule\\[0.4cm]
+  \HRule\\[0.4cm]
 
-   % Title of this work
-   {\huge\textbf{Memoria de Proyecto Práctico}\\[0.4cm] \textit{Script maestro para la config. de un cluster Linux}}\\[0.4cm]
-   \HRule\\[1.25cm]
+  % Title of this work
+  {\huge\textbf{Memoria de Proyecto Práctico}\\[0.4cm] \textit{Script maestro para la configuración\\de un cluster Linux}}\\[0.4cm]
+  \HRule\\[1.25cm]
 
-   % --- SEMESTER and SCHOLAR YEAR ---
-    \textsc{\large 4º Curso | 7º Semestre}\\[1.5cm]
-   % --- SEMESTER and SCHOLAR YEAR
+  % --- SEMESTER and SCHOLAR YEAR ---
+  \textsc{\large 4º Curso | 7º Semestre}\\[1cm]
+  % --- SEMESTER and SCHOLAR YEAR
 
-   % --- AUTHORS ---
-    {\large\underline{\textit{Autores}}}\\[0.2cm]
-       \textsc{Ramírez Solans, Antonio}\\
-               Nº Matrícula: 170035\\[0.2cm]
-       \textsc{Miguel Alonso, Carlos}\\
-               Nº Matrícula: 170243\\[0.2cm]
-       \textsc{Aouad Idrissi Boulid, Younes}\\
-               Nº Matrícula: 170155\\[0.2cm]
-   % --- AUTHORS ---
+  % --- AUTHORS ---
+  {\large\underline{\textit{Autores}}}\\[0.2cm]
+  \textsc{Ramírez Solans, Antonio}\\
+  Nº Matrícula: 170035\\[0.2cm]
+  \textsc{Miguel Alonso, Carlos}\\
+  Nº Matrícula: 170243\\[0.2cm]
+  \textsc{Aouad Idrissi Boulid, Younes}\\
+  Nº Matrícula: 170155\\[0.2cm]
+  % --- AUTHORS ---
 
-   % --- DATE ---
-    \vfill\vfill\vfill
-    {\large\today}
-   % --- DATE ---
+  % --- DATE ---
+  \vfill\vfill\vfill
+      {\large\today}
+      % --- DATE ---
 
-  % --- MAIN TITLE ---
+      % --- MAIN TITLE ---
 
 \end{titlepage}
 % --- TITLE PAGE ---
@@ -110,7 +116,60 @@
 
 \newpage
 \pagenumbering{arabic}
+\section{Introducción del proyecto}
+Este proyecto se basa en el desarrollo de un \textit{script} (o conjunto de ellos) en Bash que permitan la configuración de diferentes servicios en un \textit{cluster} formado por múltiples máquinas ejecutando un sistema Linux.\\
 
+De esta forma, el administrador puede configurar diferentes servicios en diferentes máquinas de forma simultánea, teniendo que escribir solo los archivos de configuración de cada servicio y el archivo de configuración general.\\
+
+\noindent Los servicios que soportados por el \textit{script} de configuración son:
+\begin{itemize}
+\item mount
+\item raid
+\item lvm
+\item NIS (cliente + servidor)
+\item NFS (cliente + servidor)
+\item backup (cliente + servidor)
+\end{itemize}
+
+\section{Desarrollo del proyecto}
+\subsection{Decisiones de diseño}
+
+Durante el desarrollo de la práctica, vimos que había ciertos aspectos de ella que podían realizarse de diferentes maneras, tales como la ejecución de los comandos en la máquina destino, el formato del/los \textit{script/s}, etc\ldots\\
+
+\noindent Por ello, se han tomado la siguientes decisiones:
+\begin{itemize}
+\item Tener un \textit{script} central, que será el que ejecutará el administrador (\texttt{configurar\_cluster.sh}), que leerá línea a línea el fichero de configuración que se proporciona como argumento, y llamará a la función perteneciente a cada servicio, que están localizadas en la carpeta \texttt{lib}. Además, ciertas funciones comunes se han puesto en común el el archivo \texttt{aux\_functions.sh}, de forma que todos los ficheros que lo requieras puedan acceder a estas funciones de forma sencilla, sin tener código repetido multitud de veces.
+  \newpage
+  A continuación se especifica el árbol de directorios de los \textit{scripts} del proyecto:\\
+  \begin{center}
+    \begin{forest}
+      for tree={%
+        folder,
+        grow'=0,
+        fit=band,
+      }
+      [/scripts
+        [configurar\_scripts.sh]
+        [lib
+          [aux\_functions.sh]
+          [serv\_mount.sh]
+          [serv\_raid.sh]
+          [serv\_lvm]
+          [serv\_nisS.sh]
+          [serv\_nisC.sh]
+          [serv\_nfsS.sh]
+          [serv\_nfsC.sh]
+          [serv\_backupS.sh]
+          [serv\_backupC.sh]
+        ]
+      ]
+    \end{forest}
+  \end{center}
+
+\item Para facilitar la ejecución e implementación, se ha decidido que los comandos se ejecutarán a través de \texttt{SSH}, en vez de enviar un fichero de configuración. Esta decisión aumenta el tráfico de la red, ya que se tienen que enviar los comandos uno a uno, tanto para comprobaciones como para configuraciones, pero permite un control más preciso de la ejecución.
+
+
+\end{itemize}
 
 \end{document}
 % --- DOCUMENT ---
