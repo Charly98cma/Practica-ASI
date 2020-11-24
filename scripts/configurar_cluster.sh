@@ -1,14 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ####################
 # CUSTOM LIBRARIES #
 ####################
 
-source "lib/aux_functions.sh"
-source "lib/serv_mount.sh"
-source "lib/serv_raid.sh"
-source "lib/serv_lvm.sh"
-
+source lib/aux_functions.sh
+source lib/serv_mount.sh
+source lib/serv_raid.sh
+source lib/serv_lvm.sh
+# source lib/serv_nisC.sh
+# source lib/serv_nisS.sh
+# source lib/serv_nfsC.sh
+# source lib/serv_nfsS.sh
+# source lib/serv_backupC.sh
+# source lib/serv_backupS.sh
 
 #################
 # MAIN FUNCTION #
@@ -20,11 +25,12 @@ if [[ "$#" -ne 1 ]]; then
     exit 1;
 fi
 
-# Check if config file exists
+# Check if the config file exists
 if [[ ! -e "$1" ]]; then
     echoerr "ERROR - El archivo '$1' no existe";
     exit 2;
 fi
+# Check if the config file is a file
 if [[ ! -f "$1" ]]; then
     echoerr "ERROR - '$1' es un directorio y no un archivo";
     exit 2;
@@ -59,7 +65,7 @@ while read line; do
     CONFIG="${args[2]}";
 
     # Message of service being executed
-    echoConfig "$SERV" "$CONFIG";
+    echoConfig "$SERV" "$DIR";
 
     # Check if config file for that service exists
     if [[ ! -e "$CONFIG" ]]; then
@@ -161,3 +167,4 @@ while read line; do
     esac
     LINE=$(($LINE + 1))
 done < $FILE
+exit 0;
