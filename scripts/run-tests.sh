@@ -8,9 +8,9 @@ TESTS=(
     ""
     "fich-que-no-existe"
     "tmp"
-    "tests-triviales/wrong-format.txt"
-    "tests-triviales/missing-file.txt"
-    "tests-triviales/unknown-service.txt"
+    "tests/tests-triviales/wrong-format.txt"
+    "tests/tests-triviales/missing-file.txt"
+    "tests/tests-triviales/unknown-service.txt"
 )
 
 # Expected results of each test
@@ -25,7 +25,17 @@ TEST_EXRES=(
 
 # Main loop
 for (( i=0; i<"${#TESTS[@]}"; i++ )); do
+
+    case $i in
+	6)
+	    echo "--- TESTS DE MOUNT ---";
+	    ;;
+	*)
+	    :
+	    ;;
+    esac
     echo -n "Test $i... ";
+
     eval "$CMD ${TESTS[i]} &> /dev/null";
     if [[ "$?" -ne "${TEST_EXRES[i]}" ]]; then
 	echo "FAILED! --> \"$CMD ${TESTS[i]} &> /dev/null\" => Error code received: $?";

@@ -16,22 +16,24 @@ X. *TEST* -> [**FICHERO/S**] *Código de error*
 
 ---
 
-## Test comunes de cada servicio
+## Tests de 'mount'
 1. El formato del fichero de config de un servicio es incorrecto -> 6
    (el número de campos no es el esperado)
-
-## Tests de 'mount'
-1. El dispositivo a montar no existe -> 8
-2. El dispositivo a montar no es un directorio vacío -> 9
-3. El punto de montaje no existe (se tiene que crear) -> 0
-4. El punto de montaje existe y todo funciona correctamente. -> 0
+2. El dispositivo a montar no existe -> 8
+3. El dispositivo a montar no es un directorio vacío -> 9
+4. El punto de montaje no existe (se tiene que crear) -> 0
+5. El punto de montaje existe y todo funciona correctamente. -> 0
 
 ## Tests de 'raid'
-1. El nivel de RAID proporcionado no está soportado (!= 0|1|5|6|10) -> 13
-2. Todos los campos son correctos y todo funciona correctamente. -> 0
+1. El formato del fichero de config de un servicio es incorrecto -> 6
+   (el número de campos no es el esperado)
+2. El nivel de RAID proporcionado no está soportado (!= 0|1|5|6|10) -> 13
+3. Todos los campos son correctos y todo funciona correctamente. -> 0
 
 ## Tests de 'lvm'
-1. Uno de los dispositivos a montar no existe -> 8
-2. Exceder el tamaño del grupo al crear los volúmenes lógicos -> 16
+1. El formato del fichero de config de un servicio es incorrecto -> 6
+   (el número de campos no es el esperado)
+2. Uno de los dispositivos a montar no existe -> 8
+3. Exceder el tamaño del grupo al crear los volúmenes lógicos -> 16
    (Vol.Lógicos > Vol. Físicos)
-3. Todo funciona correctamente. -> 0
+4. Todo funciona correctamente. -> 0
