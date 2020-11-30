@@ -11,7 +11,7 @@
   + [ ] client
 - [ ] backup => CARLOS
   + [ ] server
-  + [ ] client
+  + [ ] client -> *Pendiente de escribir test*
 
 ## TODOs
 - Añadir comprobación (e instalación) de librerías
@@ -59,5 +59,8 @@
 ## Códigos de error de *nfsServer* [70 - 80)
 
 ### Códigos de error de *backupClient* [80 - 90)
+- **80**: La dirección de la que hacer el backup no existe
+- **81**: La frecuencia de los backups tiene que ser mayor que 0
+- **82**: Error inesperado al crear el cliente de backup
 
 ### Códigos de error de *backupServer* [90 - 100)
