@@ -14,7 +14,7 @@ lvmFunc() {
     # Package management
     packageMng "$2" "lvm"
     if [[ "$?" -ne 0 ]]; then
-	exit -1;
+	exit 255;
     fi
 
     # Read the parameters of the service
@@ -39,7 +39,7 @@ lvmFunc() {
 	if [[ "$?" -ne 0 ]]; then
 	    echoerr "$1: linea $4: El dispositivo '$DEV' en la máquina '$2' no existe.";
 	    freeDesc "3";
-	    exit 8;
+	    exit 30;
 	fi
     done;
 
@@ -48,7 +48,7 @@ lvmFunc() {
     if [[ "$?" -ne 0 ]]; then
 	echoerr "$1: linea $4: Error inesperado inicializar los volúmenes físicos"
 	freeDesc "3";
-	exit 14;
+	exit 31;
     fi
 
     # Creation of the devices group
@@ -56,7 +56,7 @@ lvmFunc() {
     if [[ "$?" -ne 0 ]]; then
 	echoerr "$1: linea $4: Error inesperado al crear el grupo '$NAME' de volumenes fisicos";
 	freeDesc "3";
-	exit 15;
+	exit 32;
     fi
 
     I=1;
@@ -66,7 +66,7 @@ lvmFunc() {
 	if [[ $((I)) -gt ${#DEVS_ARR[@]} ]]; then
 	    echoerr "$1: linea $4: Se ha excedido el tamaño del grupo al crear los volúmenes lógicos";
 	    freeDesc "3";
-	    exit 16;
+	    exit 33;
 	fi
 
 	# Read name and size of the logical volume
@@ -77,11 +77,10 @@ lvmFunc() {
 	if [[ "$?" -ne 0 ]]; then
 	    echoerr "$1: linea $4: Error inesperado al crear el volúmen lógico '$LINE[0]' de tamaño '$LINE[1]'";
 	    freeDesc "3";
-	    exit 17;
+	    exit 34;
 	fi
 
 	I=$((I+1));
-
     done <&3;
 
     freeDesc "3";

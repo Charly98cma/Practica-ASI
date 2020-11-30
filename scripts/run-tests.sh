@@ -27,18 +27,18 @@ TEST_EXRES=(
     4
     5
     6
-    8
-    9
+    10
+    11
     0
     0
 )
 
 # Main loop
 for (( i=0; i<"${#TESTS[@]}"; i++ )); do
-
     case $i in
 	6)  echo "--- TESTS DE MOUNT ---"; ;;
-	11) echo "--- TESTS DE RAID ---"; ;;
+	11) echo "--- TESTS DE RAID  ---"; ;;
+	14) echo "--- TESTS DE LVM   ---"; ;;
 	*)  : ;;
     esac
     echo -n "Test $i... ";
