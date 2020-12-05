@@ -77,85 +77,76 @@ while read line; do
     case $SERV in
 	# MOUNT service
 	"mount")
-	    RES=mountFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    mountFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 
 	# RAID service
 	"raid")
-	    RES=raidFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    raidFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 
 
 	"lvm")
-	    RES=lvmFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    lvmFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 
 	"nis-server")
-	    RES=nisServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    nisServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 
 	"nis-client")
-	    RES=nisClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    nisClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 
 	"nfs_server")
-	    RES=nfsServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    nfsServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 
 	"nfs_client")
-	    RES=nfsClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    nfsClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 
 	"backup_server")
-	    RES=backupServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    backupServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 
 	"backup_client")
-	    RES=backupClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
-	    if [[ "$RES" -ne 0 ]]; then
-		exit RES;
+	    backupClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	    if [[ $? -ne 0 ]]; then
+		exit $?;
 	    fi
-	    unset RES;
 	    echoDone;
 	    ;;
 

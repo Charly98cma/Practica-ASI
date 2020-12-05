@@ -18,12 +18,12 @@ backupClientFunc() {
     fi
 
     # Read the parameters of the service
-    assocDesc "3" "$3";
+    exec 3<> $2;
     read BACKUP_SOURCE <&3; # Dir. to backup
     read DIR_SERVER <&3;    # Dir. of the host to store backups
     read BACKUP_DEST <&3;   # Dir. of the backup on the DIR_SERVER
     read FREQUENCY <&3;     # Freq. of the backup (hours)
-    freeDesc "3";
+    exec 3<&-;
 
     # Check all arguments appear on the file
     if [[ "$BACKUP_SOURCE" == "" || "$DIR_SERVER" == "" || "$BACKUP_DEST" == "" || "$FREQUENCY" == "" ]]; then

@@ -41,27 +41,6 @@ echoDone() {
 
 
 ###############
-# DESCRIPTORS #
-###############
-
-# Assoaciates file (arg 2) to file descriptor (arg 1
-# Params:
-#  $1 -> File descriptor
-#  $2 -> Free descriptor (number)
-assocDesc() {
-    exec "$1<$2";
-}
-
-
-# Free the descriptor (arg 1)
-# Params:
-#  $1 -> File descriptor
-freeDesc() {
-    exec "$1<&-";
-}
-
-
-###############
 # SSH COMMAND #
 ###############
 

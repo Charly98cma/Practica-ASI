@@ -17,11 +17,11 @@ raidFunc() {
 	exit -1;
     fi
     # Read parameters (lines) of the config file
-    assocDesc "3" "$3";
+    exec 3<> $2;
     read RAID_DEV <&3;
     read LEVEL <&3;
     read DEVICES <&3; # List of devices -> dev1 dev2 ...
-    freeDesc "3";
+    exec 3<&-;
 
     # Check if some of the required information is missing
     if [[ "$RAID_DEV" == "" || "$LEVEL" == "" || "$DEVICES" == "" ]]; then

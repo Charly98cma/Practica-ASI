@@ -12,10 +12,10 @@ source lib/aux_functions.sh
 #  Error code - Otherwise
 mountFunc() {
     # Read DEVICE and mount POINT using the file descriptor 3 temporarly
-    assocDesc "3" "$3";
+    exec 3<> $2;
     read DEVICE <&3;
     read POINT  <&3;
-    freeDesc "3";
+    exec 3<&-;
 
     # Check if both lines exist
     if [[ "$DEVICE" == "" || "$POINT" == "" ]]; then

@@ -1,3 +1,3 @@
 # Montaje de una dir existente en un punto de montaje con archivos
 
-10.0.2.16 mount tests/tests-mount/point-not-empty.conf
+10.0.2.4 mount tests/tests-mount/point-not-empty.conf
