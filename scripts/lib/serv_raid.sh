@@ -17,7 +17,7 @@ raidFunc() {
 	exit -1;
     fi
     # Read parameters (lines) of the config file
-    exec 3<> $2;
+    exec 3<> $3;
     read RAID_DEV <&3;
     read LEVEL <&3;
     read DEVICES <&3; # List of devices -> dev1 dev2 ...

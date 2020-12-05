@@ -18,7 +18,7 @@ lvmFunc() {
     fi
 
     # Read the parameters of the service
-    exec 3<> $2;
+    exec 3<> $3;
     read NAME <&3;
     read DEVS <&3;
     read line <&3;

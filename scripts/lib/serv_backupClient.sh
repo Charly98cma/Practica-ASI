@@ -18,7 +18,7 @@ backupClientFunc() {
     fi
 
     # Read the parameters of the service
-    exec 3<> $2;
+    exec 3<> $3;
     read BACKUP_SOURCE <&3; # Dir. to backup
     read DIR_SERVER <&3;    # Dir. of the host to store backups
     read BACKUP_DEST <&3;   # Dir. of the backup on the DIR_SERVER
