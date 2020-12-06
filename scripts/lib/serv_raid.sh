@@ -35,10 +35,7 @@ raidFunc() {
 	    : # Correct RAID level
 	    ;;
 	*)
-	    echoerr "
-		    $1: linea $4: Error al configurar el servicio 'raid'
-		    El nivel RAID '$LEVEL' no esta soportado
-		    ";
+	    echoerr "\n$1: linea $4: Error al configurar el servicio 'raid'\nEl nivel RAID '$LEVEL' no esta soportado\n";
 	    exit 21;
 	    ;;
     esac
@@ -50,9 +47,7 @@ raidFunc() {
     sshcmd "$2" "mdadm --create --level=$LEVEL --raid-devices=${#DEVICE_ARR[@]} $RAID_DEV $DEVICES";
     case $? in
 	255)
-	    echoerr "
-		    ERROR - Se ha producido un error inesperado en el servicio 'ssh'
-		    ";
+	    echoerr "\nERROR - Se ha producido un error inesperado en el servicio 'ssh'\n";
 	    exit 7;
 	    ;;
 
@@ -61,9 +56,7 @@ raidFunc() {
 	    ;;
 
 	*)
-	    echoerr "
-		    $1: linea $4: Error inesperado al configurar el servicio 'raid'
-		    ";
+	    echoerr "\n$1: linea $4: Error inesperado al configurar el servicio 'raid'\n";
 	    exit 20;
 	    ;;
     esac

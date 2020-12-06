@@ -36,18 +36,19 @@ TEST_EXRES=(
 # Main loop
 for (( i=0; i<"${#TESTS[@]}"; i++ )); do
     case $i in
-	6)  echo "--- TESTS DE MOUNT ---"; ;;
-	11) echo "--- TESTS DE RAID  ---"; ;;
-	14) echo "--- TESTS DE LVM   ---"; ;;
+	0)  echo -e "\n--- TESTS COMUNES   ---\n"; ;;
+	3)  echo -e "\n--- TESTS TRIVIALES ---\n"; ;;
+	6)  echo -e "\n--- TESTS DE MOUNT  ---\n"; ;;
+	11) echo -e "\n--- TESTS DE RAID   ---\n"; ;;
+	14) echo -e "\n--- TESTS DE LVM    ---\n"; ;;
 	*)  : ;;
     esac
     echo -n "Test $i... ";
 
     eval "$CMD ${TESTS[i]} &> /dev/null";
-    if [[ "$?" -ne "${TEST_EXRES[i]}" ]]; then
-	echo "FAILED! --> \"$CMD ${TESTS[i]} &> /dev/null \"
-	     Error code expected: ${TEST_EXRES[i]}
-	     Error code received: $?";
+    RES=$?
+    if [[ "$RES" -ne "${TEST_EXRES[i]}" ]]; then
+	echo -e "\n\tFAILED! --> \"$CMD ${TESTS[i]} &> /dev/null\\n\tError code expected: ${TEST_EXRES[i]}\n\tError code received: $RES";
 	exit "$?";
     fi
     echo "SUCCESS";

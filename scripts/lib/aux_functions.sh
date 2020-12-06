@@ -9,7 +9,7 @@
 # Params:
 #  $1 -> Message to show
 echoerr() {
-    echo "$1" 1>&2;
+    echo -e "$1" 1>&2;
 }
 
 
@@ -21,9 +21,7 @@ echoerr() {
 #  $2 -> Line on the config. file
 #  $3 -> Service config. file
 echoWrongParams() {
-    echoerr "
-	    $1: linea $2: Error en el formato del archivo de configuración '$3'
-	    ";
+    echoerr "\n$1: linea $2: Error en el formato del archivo de configuración '$3'\n";
 }
 
 
@@ -86,9 +84,7 @@ packageMng() {
 	# If the oacket isn't installed, send the command to install it
 	sshcmd "$1" "sudo apt install $PKG";
 	if [[ "$?" -ne 0 ]]; then
-	    echoerr "
-		    ERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'
-		    ";
+	    echoerr "\nERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'\n";
 	    exit 1;
 	fi
     fi

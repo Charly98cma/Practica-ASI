@@ -37,9 +37,7 @@ lvmFunc() {
     for DEV in "${DEVS_ARR[@]}"; do
 	sshcmd "$2" "find $DEV -maxdepth 0";
 	if [[ "$?" -ne 0 ]]; then
-	    echoerr "
-		    $1: linea $4: El dispositivo '$DEV' en la máquina '$2' no existe
-		    ";
+	    echoerr "\n$1: linea $4: El dispositivo '$DEV' en la máquina '$2' no existe\n";
 	    exec 3<&-;
 	    exit 30;
 	fi
@@ -48,9 +46,7 @@ lvmFunc() {
     # Initialization of the physical volumes
     sshcmd "$2" "pvcreate $DEVS"
     if [[ "$?" -ne 0 ]]; then
-	echoerr "
-		$1: linea $4: Error inesperado inicializar los volúmenes físicos
-		";
+	echoerr "\n$1: linea $4: Error inesperado inicializar los volúmenes físicos\n";
 	exec 3<&-;
 	exit 31;
     fi
@@ -58,9 +54,7 @@ lvmFunc() {
     # Creation of the devices group
     sshcmd "$2" "vgcreate $NAME $DEVS";
     if [[ "$?" -ne 0 ]]; then
-	echoerr "
-		 $1: linea $4: Error inesperado al crear el grupo '$NAME' de volumenes fisicos
-		 ";
+	echoerr "\n$1: linea $4: Error inesperado al crear el grupo '$NAME' de volumenes fisicos\n";
 	exec 3<&-;
 	exit 32;
     fi
@@ -70,9 +64,7 @@ lvmFunc() {
     while read line; do
 	# Check if there are more logical volumes that physical volumes on the group
 	if [[ $((I)) -gt ${#DEVS_ARR[@]} ]]; then
-	    echoerr "
-		    $1: linea $4: Se ha excedido el tamaño del grupo al crear los volúmenes lógicos
-		    ";
+	    echoerr "\n$1: linea $4: Se ha excedido el tamaño del grupo al crear los volúmenes lógicos\n";
 	    exec 3<&-;
 	    exit 33;
 	fi
@@ -83,9 +75,7 @@ lvmFunc() {
 	# Creation of the logical volume
 	sshcmd "$3" "lvcreate --name $LINE[0] --size $LINE[1] $NAME";
 	if [[ "$?" -ne 0 ]]; then
-	    echoerr "
-		    $1: linea $4: Error inesperado al crear el volúmen lógico '$LINE[0]' de tamaño '$LINE[1]'
-		    ";
+	    echoerr "\n$1: linea $4: Error inesperado al crear el volúmen lógico '$LINE[0]' de tamaño '$LINE[1]'\n";
 	    exec 3<&-;
 	    exit 34;
 	fi
