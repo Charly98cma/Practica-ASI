@@ -21,6 +21,9 @@ X. *TEST* [**FICHERO/S**] -> *Código de error*
    (el número de campos no es el esperado)
 2. El dispositivo a montar no existe [**disp-doesnt-exist.txt -> disp-doesnt-exist.conf**] -> 8
 3. El dispositivo a montar no es un directorio vacío [**point-not-empty.txt -> point-not-empty.conf**] -> 9
+
+	*Antes de ejecutar el test hay que crear el dispositivo `/dev/sdb1` y meter/crear un archivo en él.*
+
 4. El punto de montaje no existe (se tiene que crear) [**point-created.txt -> point-created.conf**] -> 0
 5. El punto de montaje existe y todo funciona correctamente [**successful-config.txt -> successful-config.conf**] -> 0
 
