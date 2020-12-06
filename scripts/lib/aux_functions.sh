@@ -52,7 +52,7 @@ echoDone() {
 sshcmd() {
     # Connection to the SHH server and execution of commands
     # ssh USER@dir command1 | command2 ...
-    eval "ssh practicas@$1 ${@:2} &> /dev/null";
+    eval "ssh -t practicas@$1 ${@:2} &> /dev/null";
 }
 
 

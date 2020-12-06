@@ -39,9 +39,9 @@ mountFunc() {
 	    exit 255;
 	    ;;
 	0)
-	    # POINT dir exists, check if its empty
-	    sshcmd "$2" "test $(ls -A $POINT &> /dev/null)";
-	    if [[ "$?" -ne 1 ]]; then
+	    # POINT dir exists, check if its empty (0 if non empty, 1 if empty)
+	    sshcmd "$2" "ls -1qA $POINT | grep -q .";
+	    if [[ "$?" -eq 0 ]]; then
 		echoerr "\n$1: linea $4: Error al configurar el punto de montaje\nEl directorio '$POINT' en la máquina '$2' no es un directorio vacío\n";
 		exit 11;
 	    fi
@@ -57,16 +57,16 @@ mountFunc() {
     esac
 
     # Mount of the device
-    sshcmd "$2" "mount -t ext4 $DEVICE $POINT";
+    sshcmd "$2" "sudo mount -t ext4 $DEVICE $POINT";
     if [[ "$?" -ne 0 ]]; then
-	echoerr "\n$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'\n";
+	echoerr "\n$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'\nPosible error debido a permisos de 'root'\n";
 	exit 12;
     fi
 
     # Auto-mount on start-up ("default 0 0" are options for the mounts, which are irrelevant now)
-    sshcmd "$2" "echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab";
+    sshcmd "$2" "sudo echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab";
     if [[ "$?" -ne 0 ]]; then
-	echoerr "\n$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'\n";
+	echoerr "\n$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'\nPosible error debido a permisos de 'root'\n";
 	exit 12;
     fi
 
