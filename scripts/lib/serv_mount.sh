@@ -40,7 +40,7 @@ mountFunc() {
 	    ;;
 	0)
 	    # POINT dir exists, check if its empty
-	    sshcmd "$2" "ls -A $POINT";
+	    sshcmd "$2" "test $(ls -A $POINT &> /dev/null)";
 	    if [[ "$?" -ne 1 ]]; then
 		echoerr "\n$1: linea $4: Error al configurar el punto de montaje\nEl directorio '$POINT' en la máquina '$2' no es un directorio vacío\n";
 		exit 11;
@@ -48,7 +48,7 @@ mountFunc() {
 	    ;;
 	*)
 	    # POINT dir doesnt exist, so we create it
-	    sshcmd "$2" "mkdir $POINT";
+	    sshcmd "$2" "mkdir -p $POINT";
 	    if [[ "$?" -ne 0 ]]; then
 		echoerr "\n$1: linea $4: Error inesperado al crear el directorio '$POINT' en el host '$2'\n";
 		exit 13;
