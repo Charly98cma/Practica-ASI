@@ -17,9 +17,6 @@ mountFunc() {
     read POINT  <&3;
     exec 3<&-;
 
-    echo "DEVICE -> $DEVICE";
-    echo "POINT  -> $POINT";
-
     # Check if both lines exist
     if [[ "$DEVICE" == "" || "$POINT" == "" ]]; then
 	echoWrongParams "$1" "$4" "$3";
@@ -29,8 +26,10 @@ mountFunc() {
     # Check if DEVICE exists
     sshcmd "$2" "find $DEVICE -maxdepth 0";
     if [[ "$?" -ne 0 ]]; then
+	echoerr "";
 	echoerr "$1: linea $4: Error en el dispositivo a montar";
-	echoerr "El dispositivo '$DEVICE' en la máquina '$2' no existe."
+	echoerr "El dispositivo '$DEVICE' en la máquina '$2' no existe.";
+	echoerr "";
 	exit 10;
     fi
 
@@ -39,15 +38,19 @@ mountFunc() {
     case $? in
 	255)
 	    # SSH Error
+	    echoerr "";
 	    echoerr "ERROR - Se ha producido un error inesperado del servicio 'ssh'";
+	    echoerr "";
 	    exit 255;
 	    ;;
 	0)
 	    # POINT dir exists, check if its empty
 	    sshcmd "$2" "ls -A $POINT";
 	    if [[ "$?" -ne 1 ]]; then
+		echoerr "";
 		echoerr "$1: linea $4: Error al configurar el punto de montaje";
 		echoerr "El directorio '$POINT' en la máquina '$2' no es un directorio vacío";
+		echoerr "";
 		exit 11;
 	    fi
 	    ;;
@@ -55,7 +58,9 @@ mountFunc() {
 	    # POINT dir doesnt exist, so we create it
 	    sshcmd "$2" "mkdir $POINT";
 	    if [[ "$?" -ne 0 ]]; then
-		echoerr "$1: linea $4: Error inesperado al crear el directorio '$POINT' en el host '$2'"
+		echoerr "";
+		echoerr "$1: linea $4: Error inesperado al crear el directorio '$POINT' en el host '$2'";
+		echoerr "";
 		exit 13;
 	    fi
 	    ;;
@@ -64,14 +69,18 @@ mountFunc() {
     # Mount of the device
     sshcmd "$2" "mount -t ext4 $DEVICE $POINT";
     if [[ "$?" -ne 0 ]]; then
+	echoerr "";
 	echoerr "$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'";
+	echoerr "";
 	exit 12;
     fi
 
     # Auto-mount on start-up ("default 0 0" are options for the mounts, which are irrelevant now)
     sshcmd "$2" "echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab";
     if [[ "$?" -ne 0 ]]; then
+	echoerr "";
 	echoerr "$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'";
+	echoerr "";
 	exit 12;
     fi
 

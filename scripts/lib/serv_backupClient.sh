@@ -37,7 +37,9 @@ backupClientFunc() {
 	# SSH error
 	255)
 	    # SSH Error
+	    echoerr "";
 	    echoerr "ERROR - Se ha producido un error inesperado del servicio 'ssh'";
+	    echoerr "";
 	    exit 255;
 	    :
 	    ;;
@@ -48,16 +50,20 @@ backupClientFunc() {
 
 	*)
 	    # The BACKUP_SOURCE dir doesnt exist
+	    echoerr "";
 	    echoerr "$1: linea $4: Error en la configuración del cliente de backup";
 	    echoerr "La direccion '$BACKUP_SOURCE' no existe";
+	    echoerr "";
 	    exit 80;
 	    ;;
     esac
 
     # Check if the backup frequency is correct (greater than 0)
     if [ $((FREQ)) -eq 0 ]; then
+	echoerr "";
 	echoerr "$1: linea $4: Error en la configuración del cliente de backup";
 	echoerr "La frecuencia de los backup tiene que ser mayor de 0";
+	echoerr "";
 	exit 81;
     fi
 
@@ -65,7 +71,9 @@ backupClientFunc() {
     case $? in
 	255)
 	    # SSH Error
+	    echoerr "";
 	    echoerr "ERROR - Se ha producido un error inesperado del servicio 'ssh'";
+	    echoerr "";
 	    exit 255;
 	    :
 	    ;;
@@ -74,7 +82,9 @@ backupClientFunc() {
 	    ;;
 	*)
 	    # Error of the rsync
+	    echoerr "";
 	    echoerr "$1: linea $4: Se ha producido un error inesperado al crear el cliente de backup.";
+	    echoerr "";
 	    exit 82;
     esac
     exit 0;
