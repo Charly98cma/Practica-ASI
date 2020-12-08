@@ -52,7 +52,7 @@ echoDone() {
 sshcmd() {
     # Connection to the SHH server and execution of commands
     # ssh USER@dir command1 | command2 ...
-    eval "ssh -t practicas@$1 ${@:2} &> /dev/null";
+    eval "ssh root@$1 ${@:2} &> /dev/null";
 }
 
 
@@ -84,7 +84,7 @@ packageMng() {
 	# If the oacket isn't installed, send the command to install it
 	sshcmd "$1" "sudo apt install $PKG";
 	if [[ "$?" -ne 0 ]]; then
-	    echoerr "\nERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'\n";
+	    echoerr "\nERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'\nPosible error debido a permisos de 'root'\n";
 	    exit 1;
 	fi
     fi

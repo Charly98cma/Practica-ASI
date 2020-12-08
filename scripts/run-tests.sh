@@ -49,7 +49,8 @@ for (( i=0; i<"${#TESTS[@]}"; i++ )); do
     RES=$?
     if [[ "$RES" -ne "${TEST_EXRES[i]}" ]]; then
 	echo -e "\n\tFAILED! --> \"$CMD ${TESTS[i]} &> /dev/null\\n\tError code expected: ${TEST_EXRES[i]}\n\tError code received: $RES\n";
-	exit "$?";
+	# exit "$?";
+    else
+	echo "SUCCESS";
     fi
-    echo "SUCCESS";
 done

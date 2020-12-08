@@ -1,0 +1,4 @@
+# Configuración de un servicio RAID con un nivel raid incorrecto
+
+
+10.0.2.4 raid tests/tests-raid/wrong-raid-level-config.conf

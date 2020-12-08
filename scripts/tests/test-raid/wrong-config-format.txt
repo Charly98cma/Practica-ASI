@@ -1,0 +1,5 @@
+# Fichero que intenta configurar un servicio raid
+
+# Pero la configuración tiene un formato erróneo
+
+10.0.2.4 raid tests/tests-raid/wrong-config-format.conf
