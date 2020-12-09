@@ -18,6 +18,7 @@ TESTS=(
     "tests/tests-mount/successful-config.txt"
     "tests/tests-raid/wrong-config-format.txt"
     "tests/tests-raid/wrong-raid-level-config.txt"
+    "tests/tests-raid/disp-with-fs-config.txt"
 );
 
 # Expected results of each test
@@ -35,6 +36,7 @@ TEST_EXRES=(
     0
     6
     21
+    22
 );
 
 # Main loop

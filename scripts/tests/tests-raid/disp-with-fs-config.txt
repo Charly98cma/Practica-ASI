@@ -1,0 +1,5 @@
+# Uno de los dispositivos ya tiene sistema de ficheros :O
+
+10.0.2.4 raid tests/tests-raid/disp-with-fs-config.conf
+
+# Tendría que estar haciendo el AoC de hoy :(

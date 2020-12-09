@@ -26,7 +26,7 @@ X. *TEST*
 
 ---
 
-## Tests de 'mount' (tests/tests-mount)
+## Tests de 'mount' (tests/tests-mount/)
 
 1. El formato del fichero de config de un servicio es incorrecto
    (el número de campos no es el esperado)
@@ -46,7 +46,7 @@ X. *TEST*
 5. El punto de montaje existe y todo funciona correctamente
    [**successful-config.txt -> successful-config.conf**] -> 0
 
-## Tests de 'raid'
+## Tests de 'raid' (tests/tests-raid/)
 
 1. El formato del fichero de config de un servicio es incorrecto
    (el número de campos no es el esperado)
@@ -55,10 +55,10 @@ X. *TEST*
 2. El nivel de RAID proporcionado no está soportado (!= 0|1|5|6|10)
    [**wrong-raid-level-config.txt -> wrong-raid-level-config.conf**] -> 21
 
-3. TODO: COMPROBAR QUE LOS DISPOSITIVOS NO TIENEN YA UN SISTEMA DE FICHEROS
-   [**WIP**] -> ??
+3. Uno de los dispositivos ya posee un sistema de ficheros
+   [**disp-with-fs-config.txt -> disp-with-fs-config.conf**] -> 22
 
-4. Todos los campos son correctos y todo funciona correctamente
+4. TODO - Todos los campos son correctos y todo funciona correctamente
    [**WIP**]-> 0
 
 ## Tests de 'lvm'

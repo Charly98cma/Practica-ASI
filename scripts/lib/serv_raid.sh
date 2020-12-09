@@ -46,6 +46,15 @@ raidFunc() {
     # dev1 dev2 dev3 ... --> {dev1, dev2, dev3, ...}
     IFS=" " read -a DEVICE_ARR <<< $DEVICES;
 
+    for (( i=0; i<${#DEVICE_ARR[@]}; i++ )); do
+	RES=sshcmd $2 "df -Th | grep \"^${DEVICE_ARR[i]}\"";
+	if [[ $RES -eq 0 ]]; then
+	    echoerr "\n$1: linea $4: El dispositivo '${DEVICE_ARR[i]}' en la máquina '$2' ya tiene un sistema de ficheros\n";
+	    exit 22;
+	fi
+    done
+
+
     # Raid creation command through ssh
     sshcmd $2 "mdadm --create --level=$LEVEL --raid-devices=${#DEVICE_ARR[@]} $RAID_DEV $DEVICES";
     case $? in
