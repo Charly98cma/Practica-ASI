@@ -12,8 +12,8 @@ source lib/aux_functions.sh
 #  Error code - Otherwise
 lvmFunc() {
     # Package management
-    packageMng "$2" "lvm"
-    if [[ "$?" -ne 0 ]]; then
+    packageMng $2 "lvm"
+    if [[ $? -ne 0 ]]; then
 	exit 255;
     fi
 
@@ -24,19 +24,19 @@ lvmFunc() {
     read line <&3;
 
     # Check all parameters exist
-    if [[ "$NAME" == "" || "$DEVS" == "" || "$line" == "" ]]; then
-	echoWrongParams "$1" "$4" "$3";
+    if [[ $NAME == "" || $DEVS == "" || $line == "" ]]; then
+	echoWrongParams $1 $4 $3;
 	exec 3<&-;
 	exit 6;
     fi
 
     # Turn the DEVS string to an array
-    IFS=" " read -a DEVS_ARR <<< "$DEVS";
+    IFS=" " read -a DEVS_ARR <<< $DEVS;
 
     # Check that each of the dirs/devices exists on the host
-    for DEV in "${DEVS_ARR[@]}"; do
-	sshcmd "$2" "find $DEV -maxdepth 0";
-	if [[ "$?" -ne 0 ]]; then
+    for DEV in ${DEVS_ARR[@]}; do
+	sshcmd $2 "find $DEV -maxdepth 0";
+	if [[ $? -ne 0 ]]; then
 	    echoerr "\n$1: linea $4: El dispositivo '$DEV' en la máquina '$2' no existe\n";
 	    exec 3<&-;
 	    exit 30;
@@ -44,16 +44,16 @@ lvmFunc() {
     done;
 
     # Initialization of the physical volumes
-    sshcmd "$2" "pvcreate $DEVS"
-    if [[ "$?" -ne 0 ]]; then
+    sshcmd $2 "pvcreate $DEVS"
+    if [[ $? -ne 0 ]]; then
 	echoerr "\n$1: linea $4: Error inesperado inicializar los volúmenes físicos\n";
 	exec 3<&-;
 	exit 31;
     fi
 
     # Creation of the devices group
-    sshcmd "$2" "vgcreate $NAME $DEVS";
-    if [[ "$?" -ne 0 ]]; then
+    sshcmd $2 "vgcreate $NAME $DEVS";
+    if [[ $? -ne 0 ]]; then
 	echoerr "\n$1: linea $4: Error inesperado al crear el grupo '$NAME' de volumenes fisicos\n";
 	exec 3<&-;
 	exit 32;
@@ -70,10 +70,10 @@ lvmFunc() {
 	fi
 
 	# Read name and size of the logical volume
-	IFS=" " read -a LINE <<< "$line";
+	IFS=" " read -a LINE <<< $line;
 
 	# Creation of the logical volume
-	sshcmd "$3" "lvcreate --name $LINE[0] --size $LINE[1] $NAME";
+	sshcmd $2 "lvcreate --name $LINE[0] --size $LINE[1] $NAME";
 	if [[ "$?" -ne 0 ]]; then
 	    echoerr "\n$1: linea $4: Error inesperado al crear el volúmen lógico '$LINE[0]' de tamaño '$LINE[1]'\n";
 	    exec 3<&-;

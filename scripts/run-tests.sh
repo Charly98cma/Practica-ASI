@@ -16,7 +16,9 @@ TESTS=(
     "tests/tests-mount/point-not-empty.txt"
     "tests/tests-mount/point-created.txt"
     "tests/tests-mount/successful-config.txt"
-)
+    "tests/tests-raid/wrong-config-format.txt"
+    "tests/tests-raid/wrong-raid-level-config.txt"
+);
 
 # Expected results of each test
 TEST_EXRES=(
@@ -31,12 +33,14 @@ TEST_EXRES=(
     11
     0
     0
-)
+    6
+    21
+);
 
 # Main loop
-for (( i=0; i<"${#TESTS[@]}"; i++ )); do
+for (( i=0; i<${#TESTS[@]}; i++ )); do
     case $i in
-	0)  echo -e "\n--- TESTS COMUNES   ---\n"; ;;
+	0)  echo -e "\n--- TESTS CLIENTE   ---\n"; ;;
 	3)  echo -e "\n--- TESTS TRIVIALES ---\n"; ;;
 	6)  echo -e "\n--- TESTS DE MOUNT  ---\n"; ;;
 	11) echo -e "\n--- TESTS DE RAID   ---\n"; ;;
@@ -47,8 +51,10 @@ for (( i=0; i<"${#TESTS[@]}"; i++ )); do
 
     eval "$CMD ${TESTS[i]} &> /dev/null";
     RES=$?
-    if [[ "$RES" -ne "${TEST_EXRES[i]}" ]]; then
-	echo -e "\n\tFAILED! --> \"$CMD ${TESTS[i]} &> /dev/null\\n\tError code expected: ${TEST_EXRES[i]}\n\tError code received: $RES\n";
+    if [[ $RES -ne ${TEST_EXRES[i]} ]]; then
+	echo "FAILED!";
+	echo -e "\n$CMD ${TESTS[i]} &> /dev/null\\n\tError code expected: ${TEST_EXRES[i]}\n\tError code received: $RES\n";
+	# Uncomment next line to stop on the first failure
 	# exit "$?";
     else
 	echo "SUCCESS";

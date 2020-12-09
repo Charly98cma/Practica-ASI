@@ -12,8 +12,8 @@ source lib/aux_functions.sh
 #  Error code - Otherwise
 backupClientFunc() {
     # Package management
-    packageMng "$2" "rsync"
-    if [[ "$?" -ne 0 ]]; then
+    packageMng $2 "backupC"
+    if [[ $? -ne 0 ]]; then
 	exit -1;
     fi
 
@@ -26,8 +26,8 @@ backupClientFunc() {
     exec 3<&-;
 
     # Check all arguments appear on the file
-    if [[ "$BACKUP_SOURCE" == "" || "$DIR_SERVER" == "" || "$BACKUP_DEST" == "" || "$FREQUENCY" == "" ]]; then
-	echoWrongParams "$1" "$4" "$3";
+    if [[ $BACKUP_SOURCE == "" || $DIR_SERVER == "" || $BACKUP_DEST == "" || $FREQUENCY == "" ]]; then
+	echoWrongParams $1 $4 $3;
 	exit 6;
     fi
 
@@ -59,7 +59,7 @@ backupClientFunc() {
 	exit 81;
     fi
 
-    sshcmd "$2" "rsync --quiet --mkpath --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST"
+    sshcmd $2 "rsync --quiet --mkpath --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST"
     case $? in
 	255)
 	    # SSH Error

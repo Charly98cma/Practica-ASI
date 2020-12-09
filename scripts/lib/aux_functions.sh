@@ -67,23 +67,26 @@ sshcmd() {
 #  $2 -> Service
 packageMng() {
     # Read the service and find out the package that must be installed
-    case "$2" in
-	"raid")
+    case $2 in
+	raid)
 	    PKG="mdadm";
 	    ;;
-	"lvm")
+	lvm)
 	    PKG="lvm";
+	    ;;
+	backupC)
+	    PKG="rsync";
 	    ;;
 	*)  exit;
 	    ;;
     esac
 
     # Check if that package ins installed
-    sshcmd "$1" "dpkg -l $PKG";
-    if [[ "$?" -ne 0 ]]; then
+    sshcmd $1 "dpkg -l $PKG";
+    if [[ $? -ne 0 ]]; then
 	# If the oacket isn't installed, send the command to install it
-	sshcmd "$1" "sudo apt install $PKG";
-	if [[ "$?" -ne 0 ]]; then
+	sshcmd $1 "apt install $PKG";
+	if [[ $? -ne 0 ]]; then
 	    echoerr "\nERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'\nPosible error debido a permisos de 'root'\n";
 	    exit 1;
 	fi

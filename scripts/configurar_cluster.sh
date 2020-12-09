@@ -7,7 +7,7 @@
 source lib/aux_functions.sh
 source lib/serv_mount.sh
 source lib/serv_raid.sh
-source lib/serv_lvm.sh
+# source lib/serv_lvm.sh
 # source lib/serv_nisC.sh
 # source lib/serv_nisS.sh
 # source lib/serv_nfsC.sh
@@ -20,64 +20,67 @@ source lib/serv_lvm.sh
 #################
 
 # Argument check
-if [[ "$#" -ne 1 ]]; then
+if [[ $# -ne 1 ]]; then
     echoerr "Use: $0 fichero_configuracion";
     exit 1;
 fi
 
 # Check if the config file exists
-if [[ ! -e "$1" ]]; then
+if [[ ! -e $1 ]]; then
     echoerr "ERROR - El archivo '$1' no existe";
     exit 2;
 fi
 # Check if the config file is a file
-if [[ ! -f "$1" ]]; then
+if [[ ! -f $1 ]]; then
     echoerr "ERROR - '$1' es un directorio y no un archivo";
     exit 2;
 fi
 
 # Name of the config file and line reading
-FILE="$1";
-LINE=1;
+FILE=$1;
+NUMLINE=1;
 
 echo "=> Leyendo fichero de configuracion...";
 
 # Reading loop
 while read line; do
+
     # String --> Array of words
-    IFS=" " read -a args <<< "$line";
+    IFS=" " read -a args <<< $line;
 
     # Skip the line if it's a comment or an empty line
-    if [[ "${args[0]}" == "#" || "${args[0]}" == "" ]]; then
-	LINE=$(($LINE + 1));
+    if [[ ${args[0]} == "#" || ${args[0]} == "" ]]; then
+	NUMLINE=$(($NUMLINE + 1));
 	continue;
     fi
 
     # Check for wrong line format
-    if [[ "${#args[@]}" -ne 3 ]]; then
-	echoerr "$FILE: linea $LINE: Error de formato en linea de configuracion";
+    if [[ ${#args[@]} -ne 3 ]]; then
+	echoerr "$FILE: linea $NUMLINE: Error de formato en linea de configuracion";
 	exit 3;
     fi
 
     # Configuration parameters
-    DIR="${args[0]}";
-    SERV="${args[1]}";
-    CONFIG="${args[2]}";
+    DIR=${args[0]};
+    SERV=${args[1]};
+    CONFIG=${args[2]};
 
     # Message of service being executed
-    echoConfig "$SERV" "$DIR";
+    echoConfig $SERV $DIR;
 
     # Check if config file for that service exists
-    if [[ ! -e "$CONFIG" ]]; then
-	echoerr "$FILE: linea $LINE: El archivo '$CONFIG' no existe";
+    if [[ ! -e $CONFIG ]]; then
+	echoerr "$FILE: linea $NUMLINE: El archivo '$CONFIG' no existe";
 	exit 4;
     fi
+
+    echo "Patata"
 
     # Switch case of the service (diff services have diff behavior)
     case $SERV in
 	# MOUNT service
-	"mount")
-	    mountFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	mount)
+	    mountFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
@@ -85,8 +88,8 @@ while read line; do
 	    ;;
 
 	# RAID service
-	"raid")
-	    raidFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	raid)
+	    raidFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
@@ -94,56 +97,56 @@ while read line; do
 	    ;;
 
 
-	"lvm")
-	    lvmFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	lvm)
+	    lvmFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
 	    echoDone;
 	    ;;
 
-	"nis-server")
-	    nisServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	nis-server)
+	    nisServerFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
 	    echoDone;
 	    ;;
 
-	"nis-client")
-	    nisClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	nis-client)
+	    nisClientFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
 	    echoDone;
 	    ;;
 
-	"nfs_server")
-	    nfsServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	nfs_server)
+	    nfsServerFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
 	    echoDone;
 	    ;;
 
-	"nfs_client")
-	    nfsClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	nfs_client)
+	    nfsClientFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
 	    echoDone;
 	    ;;
 
-	"backup_server")
-	    backupServerFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	backup_server)
+	    backupServerFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
 	    echoDone;
 	    ;;
 
-	"backup_client")
-	    backupClientFunc "$FILE" "$DIR" "$CONFIG" "$LINE";
+	backup_client)
+	    backupClientFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
 	    fi
@@ -152,10 +155,10 @@ while read line; do
 
 	*)
 	    # Unknown service detected on the config file
-	    echoerr "$FILE: linea $LINE: No se reconce el servicio '$SERV'"
+	    echoerr "$FILE: linea $NUMLINE: No se reconce el servicio '$SERV'"
 	    exit 5
 	    ;;
     esac
-    LINE=$(($LINE + 1))
+    NUMLINE=$(($NUMLINE + 1))
 done < $FILE
 exit 0;
