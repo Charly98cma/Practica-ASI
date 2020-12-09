@@ -55,7 +55,7 @@ for (( i=0; i<${#TESTS[@]}; i++ )); do
 	echo "FAILED!";
 	echo -e "\n$CMD ${TESTS[i]} &> /dev/null\\n\tError code expected: ${TEST_EXRES[i]}\n\tError code received: $RES\n";
 	# Uncomment next line to stop on the first failure
-	# exit "$?";
+	# exit $RES;
     else
 	echo "SUCCESS";
     fi

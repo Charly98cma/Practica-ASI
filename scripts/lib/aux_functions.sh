@@ -74,10 +74,23 @@ packageMng() {
 	lvm)
 	    PKG="lvm";
 	    ;;
+	# nisC)
+	#   :
+	#   ;;
+	# nisS)
+	#   :
+	#   ;;
+	# nfsC)
+	#   :
+	#   ;;
+	# nfsS)
+	#   :
+	#   ;;
+
 	backupC)
 	    PKG="rsync";
 	    ;;
-	*)  exit;
+	*)  return 1;
 	    ;;
     esac
 
@@ -88,8 +101,8 @@ packageMng() {
 	sshcmd $1 "apt install $PKG";
 	if [[ $? -ne 0 ]]; then
 	    echoerr "\nERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'\nPosible error debido a permisos de 'root'\n";
-	    exit 1;
+	    return 1;
 	fi
     fi
-    exit 0;
+    return 0;
 }

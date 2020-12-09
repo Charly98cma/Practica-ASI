@@ -74,12 +74,10 @@ while read line; do
 	exit 4;
     fi
 
-    echo "Patata"
-
     # Switch case of the service (diff services have diff behavior)
     case $SERV in
 	# MOUNT service
-	mount)
+	"mount")
 	    mountFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
@@ -88,7 +86,7 @@ while read line; do
 	    ;;
 
 	# RAID service
-	raid)
+	"raid")
 	    raidFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;
@@ -96,8 +94,7 @@ while read line; do
 	    echoDone;
 	    ;;
 
-
-	lvm)
+	"lvm")
 	    lvmFunc $FILE $DIR $CONFIG $NUMLINE;
 	    if [[ $? -ne 0 ]]; then
 		exit $?;

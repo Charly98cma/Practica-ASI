@@ -5,7 +5,7 @@
 X. *TEST*
    [**FICHERO/S**] -> *Código de error*
 
-## Tests comunes (los tres primeros campos de TESTS en run-tests.sh)
+## Tests cliente (los tres primeros campos de TESTS en run-tests.sh)
 
 1. No proporcionar el fichero de config como argumento -> 1
 
