@@ -21,10 +21,9 @@ lvmFunc() {
     exec 3<> $3;
     read NAME <&3;
     read DEVS <&3;
-    read line <&3;
 
     # Check all parameters exist
-    if [[ $NAME == "" || $DEVS == "" || $line == "" ]]; then
+    if [[ $NAME == "" || $DEVS == "" ]]; then
 	echoWrongParams $1 $4 $3;
 	exec 3<&-;
 	exit 6;
@@ -60,8 +59,10 @@ lvmFunc() {
     fi
 
     I=1;
+    FIRSTL=0;
     # Creation of each logical volume
     while read line; do
+	FIRSTL=1;
 	# Check if there are more logical volumes that physical volumes on the group
 	if [[ $((I)) -gt ${#DEVS_ARR[@]} ]]; then
 	    echoerr "\n$1: linea $4: Se ha excedido el tamaño del grupo al crear los volúmenes lógicos\n";
@@ -82,6 +83,13 @@ lvmFunc() {
 
 	I=$((I+1));
     done <&3;
+
+    # Check if at least one line is read on the logical volume creation loop
+    if [[ $FIRSTL -eq 0 ]]; then
+	echoWrongParams $1 $4 $3;
+	exec 3<&-;
+	exit 6;
+    fi
 
     exec 3<&-;
     exit 0;
