@@ -19,6 +19,12 @@ TESTS=(
     "tests/tests-raid/wrong-config-format.txt"
     "tests/tests-raid/wrong-raid-level-config.txt"
     "tests/tests-raid/disp-with-fs-config.txt"
+
+    "wrong-config-format.txt"
+    "disp-doesnt-exist.txt"
+    "too-many-lvs.txt"
+
+    "successful-lvm.txt"
 );
 
 # Expected results of each test
@@ -37,6 +43,12 @@ TEST_EXRES=(
     6
     21
     22
+
+    6
+    30
+    33
+
+    0
 );
 
 # Main loop

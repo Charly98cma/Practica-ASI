@@ -1,0 +1,4 @@
+# El numero de volumenes lógicos supera
+# al de volúmenes físicos
+
+10.0.2.4 lvm tests/tests-lvm/too-many-lvs.conf

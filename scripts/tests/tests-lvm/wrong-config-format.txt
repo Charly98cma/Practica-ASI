@@ -1,0 +1,4 @@
+# Fichero de configuración inválido
+# ya que falta uno de los parámetros
+
+10.0.2.4 lvm tests/tests-lvm/wrong-config-format.conf

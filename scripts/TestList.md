@@ -61,21 +61,25 @@ X. *TEST*
 4. TODO - Todos los campos son correctos y todo funciona correctamente
    [**WIP**]-> 0
 
-## Tests de 'lvm'
+## Tests de 'lvm' (tests/tests-lvm)
 
 1. El formato del fichero de config de un servicio es incorrecto
    (el número de campos no es el esperado)
-   [**WIP**] -> 6
+   (*los volúmenes físicos y el grupo se crearán*)
+   [**wrong-config-format.txt -> wrong-config-format.conf**] -> 6
 
 2. Uno de los dispositivos a montar no existe
-   [**WIP**] -> 30
+   [**disp-doesnt-exist.txt -> disp-doesnt-exist.conf**] -> 30
 
 3. Exceder el tamaño del grupo al crear los volúmenes lógicos
    (Vol.Lógicos > Vol. Físicos)
-   [**WIP**] -> 33
+   [**too-many-lvs.txt -> too-many-lvs.conf**] -> 33
 
-4. Todo funciona correctamente
-   [**WIP**] -> 0
+4. TODO: Tamaño de volúmenes lógicos mayor del disponible (almacenamiento)
+   [**WIP**] -> 34
+
+5. Todo funciona correctamente
+   [**successful-lvm.txt ->successful-lvm.conf**] -> 0
 
 ## Tests de 'nisClient'
 ## Tests de 'nisServer'
