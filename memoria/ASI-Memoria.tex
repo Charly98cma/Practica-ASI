@@ -10,7 +10,6 @@
   pdftitle={Memoria Práctica ASI - Grupo 30},
   pdfsubject={Memoria práctica ASI}]{hyperref}
 
-
 % --- TIKZ ---
 \usepackage{tikz}
 \usepackage[edges]{forest}
@@ -115,6 +114,7 @@
 % --- INDEX ---
 
 \newpage
+
 \pagenumbering{arabic}
 \section{Introducción del proyecto}
 Este proyecto se basa en el desarrollo de un \textit{script} (o conjunto de ellos) en Bash que permitan la configuración de diferentes servicios en un \textit{cluster} formado por múltiples máquinas ejecutando un sistema Linux.\\
@@ -123,24 +123,26 @@ De esta forma, el administrador puede configurar diferentes servicios en diferen
 
 \noindent Los servicios que soportados por el \textit{script} de configuración son:
 \begin{itemize}
-\item mount
-\item raid
-\item lvm
+\item Mount
+\item Raid
+\item LVM
 \item NIS (cliente + servidor)
 \item NFS (cliente + servidor)
-\item backup (cliente + servidor)
+\item Backup (cliente + servidor)
 \end{itemize}
+
+\newpage
 
 \section{Desarrollo del proyecto}
 \subsection{Decisiones de diseño}
 
-Durante el desarrollo de la práctica, vimos que había ciertos aspectos de ella que podían realizarse de diferentes maneras, tales como la ejecución de los comandos en la máquina destino, el formato del/los \textit{script/s}, etc\ldots\\
+\noindent Durante el desarrollo de la práctica, vimos que había ciertos aspectos de ella que podían realizarse de diferentes maneras, tales como la ejecución de los comandos en la máquina destino, el formato del/los \textit{script/s}, etc\ldots\\
 
 \noindent Por ello, se han tomado la siguientes decisiones:
 \begin{itemize}
-\item Tener un \textit{script} central, que será el que ejecutará el administrador (\texttt{configurar\_cluster.sh}), que leerá línea a línea el fichero de configuración que se proporciona como argumento, y llamará a la función perteneciente a cada servicio, que están localizadas en la carpeta \texttt{lib}. Además, ciertas funciones comunes se han puesto en común el el archivo \texttt{aux\_functions.sh}, de forma que todos los ficheros que lo requieras puedan acceder a estas funciones de forma sencilla, sin tener código repetido multitud de veces.
-  \newpage
-  A continuación se especifica el árbol de directorios de los \textit{scripts} del proyecto:\\
+\item Tener un \textit{script} central que ejecutará el administrador (\texttt{configurar\_cluster.sh}) que leerá línea a línea el fichero de configuración que se proporciona como argumento, y llamará a la función perteneciente al servicio leído, que está localizada en la carpeta \texttt{lib}, cada servicio en un fichero Bash diferente. Además, ciertas funciones se han puesto en común en el archivo \texttt{aux\_functions.sh}, de forma que todos los ficheros que lo requieran puedan acceder a estas funciones de forma sencilla y sin tener código repetido multitud de veces.
+
+  A continuación se muestra el árbol de directorios de los \textit{scripts} del proyecto (no incluido directorio de tests, que se verá en la sección \textsl{Testing}):\\
   \begin{center}
     \begin{forest}
       for tree={%
@@ -167,16 +169,30 @@ Durante el desarrollo de la práctica, vimos que había ciertos aspectos de ella
   \end{center}
 
 \item Para facilitar la ejecución e implementación, se ha decidido que los comandos se ejecutarán a través de \texttt{SSH}, en vez de enviar un fichero de configuración y ejecutarlo. Esta decisión aumenta el tráfico de la red, ya que se tienen que enviar los comandos uno a uno, tanto para comprobaciones como para configuraciones, pero permite un control más preciso de la ejecución.
-
 \end{itemize}
 
+
 \section{Servicios implementados}
+\noindent A continuación se explicarán los diferentes servicio que se han implementado y su funcionamiento general, incluyendo cualquier detalle relevante a la hora de entender su funcionamiento.\\
 
-\subsection{mount}
+Las funciones de cada servicio reciben 4 argumentos, que son, el fichero de configuración (\texttt{fichero\_configuración}), la dirección del host (ya sea una dirección IP o un nombre), el fichero de configuración del servicio (e.g. \texttt{raid.conf}) y el número de línea del fichero de configuración en el que se han leído los datos anteriores.\\
 
-\subsection{raid}
+De igual forma, en todas las funciones se ha re-direccionado la lectura del fichero de configuración de cada servicio por el \textbf{descriptor de fichero 3}.\\
 
-\subsection{lvm}
+Todos los \textit{scripts} de los servicios retornarán 0 si se ha realizado satisfactoriamente la operación, y, si se ha producido algún error, un valor específico representando ese error (ver \textit{Códigos de Error}).
+
+\subsection{Mount}
+\noindent El servicio \textit{mount} leerá de su fichero de configuración dos campos, el dispositivo a montar y el punto en el que montar dicho dispositivo.\\
+
+El \textit{script} montará el dispositivo en el punto de montaje tras comprobar que se han leído todos los campos necesarios, que dicho dispositivo existe en la máquina, y que el punto de montaje es un directorio vacío. Si el punto de montaje no existe, se crea.\\
+
+\subsection{Raid}
+\noindent El servicio \textit{raid} leerá 3 campos de su fichero de configuración, el nombre del nuevo dispositivo RAID, el nivel de RAID, y los dispositivos que compondrán el RAID.\\
+
+Lo primero que se realiza es comprobar la correcta lectura de los campos, tras lo que se comprueba que el nivel de RAID leído es uno de los niveles soportados (0, 1, 5, 6 o 10). Tras esto, se comprueba que cada dispositivo leído que compondrá el RAID no tiene un sistema de ficheros previo y, si todos estos requisitos se cumplen, el \textit{script} creará de forma correcta el RAID.\\
+
+\subsection{LVM}
+
 
 \subsection{NIS}
 \subsubsection{Servidor}
@@ -186,9 +202,71 @@ Durante el desarrollo de la práctica, vimos que había ciertos aspectos de ella
 \subsubsection{Servidor}
 \subsubsection{Cliente}
 
-\subsection{backup}
+\subsection{Backup}
 \subsubsection{Servidor}
 \subsubsection{Cliente}
+
+
+\newpage
+\section{Códigos de error}
+Para facilitar el desarrollo y la implementación de todas las comprobaciones, errores y mensajes, se ha asignado a cada servicio un rango de 10 posibles códigos de error, los cuales están especificados a continuación:
+
+\subsection{Comúnes a todos los servicios}
+Rango de códigos de error: 1 - 9 y 255
+\begin{itemize}
+\item \textbf{1}: No se ha proporcionado fichero de configuración a \texttt{configurar\_cluster.sh}
+\item \textbf{2}: El fichero de configuración no existe o es un directorio
+\item \textbf{3}: Error en el formato del fichero de configuración
+\item \textbf{4}: Un fichero de configuración de un servicio no existe
+\item \textbf{5}: Servicio desconocido en el fichero de configuración
+\item \textbf{6}: Error en el formato del fichero de configuración de un servicio
+\item \textbf{255}: Error del servicio SSH
+\end{itemize}
+
+\subsection{Mount}
+Rango de códigos de error: 10 - 19
+\begin{itemize}
+\item \textbf{10}: El dispositivo a montar no existe
+\item \textbf{11}: El punto de montaje no es un directorio vacío
+\item \textbf{12}: Error inesperado durante el montaje
+\item \textbf{13}: Error inesperado al crear el directorio
+\end{itemize}
+
+\subsection{Raid}
+Rango de códigos de error: 20 - 29
+\begin{itemize}
+\item \textbf{20}: Error inesperado al configurar el RAID
+\item \textbf{21}: El nivel de RAID no es válido (no soportado)
+\end{itemize}
+
+\subsection{LVM}
+Rango de códigos de error: 30 - 39.
+
+\subsection{NIS}
+
+\subsubsection{Servidor}
+Rango de códigos de error: 40 - 49.
+\subsubsection{Cliente}
+Rango de códigos de error: 50 - 59.
+
+\subsection{NFS}
+
+\subsubsection{Servidor}
+Rango de códigos de error: 60 - 69.
+
+\subsubsection{Cliente}
+Rango de códigos de error: 70 - 79.
+
+\subsection{Backup}
+
+\subsubsection{Servidor}
+Rango de códigos de error: 80 - 89.
+
+\subsubsection{Cliente}
+Rango de códigos de error: 90 - 99.
+
+\newpage
+\section{Testing}
 
 \end{document}
 % --- DOCUMENT ---

@@ -22,7 +22,7 @@
 - [ ] Implementar backupS
 
 ## Códigos de error
-### Códigos de error triviales [0 - 6)
+### Códigos de error triviales [1 - 6)
 
 - **1**: No se proporciona el fichero de configuración como argumento
 - **2**: El fichero de configuración no existe o es un directorio
@@ -44,7 +44,7 @@
 
 ### Códigos de error de *raid* [20 - 30)
 
-- **20**: Error al inesperado configurar el servicio
+- **20**: Error inesperado al configurar el servicio
 - **21**": Error en el nivel de RAID proporcionado
 
 ### Códigos de error de *lvm* [30 - 40)

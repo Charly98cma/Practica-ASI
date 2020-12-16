@@ -24,8 +24,6 @@ raidFunc() {
     read DEVICES <&3; # List of devices -> dev1 dev2 ...
     exec 3<&-;
 
-    echoerr $DEVICES;
-
     # Check if some of the required information is missing
     if [[ $RAID_DEV == "" || $LEVEL == "" || $DEVICES == "" ]]; then
 	echoWrongParams "$1" "$4" "$3";
