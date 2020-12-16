@@ -7,7 +7,7 @@
 source lib/aux_functions.sh
 source lib/serv_mount.sh
 source lib/serv_raid.sh
-# source lib/serv_lvm.sh
+source lib/serv_lvm.sh
 # source lib/serv_nisC.sh
 # source lib/serv_nisS.sh
 # source lib/serv_nfsC.sh
@@ -76,79 +76,32 @@ while read line; do
 
     # Switch case of the service (diff services have diff behavior)
     case $SERV in
-	# MOUNT service
 	mount)
-	    mountFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    mountFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
-	# RAID service
 	raid)
-	    raidFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    raidFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	lvm)
-	    lvmFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    lvmFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	nis-server)
-	    nisServerFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    nisServerFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	nis-client)
-	    nisClientFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    nisClientFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	nfs_server)
-	    nfsServerFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    nfsServerFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	nfs_client)
-	    nfsClientFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    nfsClientFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	backup_server)
-	    backupServerFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    backupServerFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	backup_client)
-	    backupClientFunc $FILE $DIR $CONFIG $NUMLINE;
-	    if [[ $? -ne 0 ]]; then
-		exit $?;
-	    fi
-	    echoDone;
-	    ;;
+	    backupClientFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	*)
 	    # Unknown service detected on the config file
@@ -156,6 +109,7 @@ while read line; do
 	    exit 5
 	    ;;
     esac
+    echoDone;
     NUMLINE=$(($NUMLINE + 1))
 done < $FILE
 exit 0;

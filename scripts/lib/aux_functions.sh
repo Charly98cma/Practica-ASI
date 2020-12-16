@@ -53,6 +53,7 @@ sshcmd() {
     # Connection to the SHH server and execution of commands
     # ssh USER@dir command1 | command2 ...
     eval "ssh root@$1 ${@:2} &> /dev/null";
+    # eval "ssh root@$1 ${@:2}";   # Command for testing purposes only
 }
 
 
@@ -72,7 +73,7 @@ packageMng() {
 	    PKG="mdadm";
 	    ;;
 	lvm)
-	    PKG="lvm";
+	    PKG="lvm2*";
 	    ;;
 	# nisC)
 	#   :
@@ -94,15 +95,11 @@ packageMng() {
 	    ;;
     esac
 
-    # Check if that package ins installed
-    sshcmd $1 "dpkg -l $PKG";
+    # If the packet isn't installed, send the command to install it
+    sshcmd $1 "apt-get --assume-yes install $PKG";
     if [[ $? -ne 0 ]]; then
-	# If the oacket isn't installed, send the command to install it
-	sshcmd $1 "apt install $PKG";
-	if [[ $? -ne 0 ]]; then
-	    echoerr "\nERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'\nPosible error debido a permisos de 'root'\n";
-	    return 1;
-	fi
+	echoerr "\nERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'\n";
+	return 1;
     fi
     return 0;
 }
