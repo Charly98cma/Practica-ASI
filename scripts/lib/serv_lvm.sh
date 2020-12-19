@@ -59,10 +59,8 @@ lvmFunc() {
     fi
 
     I=1;
-    FIRSTL=0;
     # Creation of each logical volume
     while read line; do
-	FIRSTL=1;
 	# Check if there are more logical volumes that physical volumes on the group
 	if [[ $((I)) -gt ${#DEVS_ARR[@]} ]]; then
 	    echoerr "\n$1: linea $4: Se ha excedido el tamaño del grupo al crear los volúmenes lógicos\n";
@@ -74,9 +72,9 @@ lvmFunc() {
 	IFS=" " read -a LINE <<< $line;
 
 	# Creation of the logical volume
-	sshcmd $2 "lvcreate --name $LINE[0] --size $LINE[1] $NAME";
-	if [[ "$?" -ne 0 ]]; then
-	    echoerr "\n$1: linea $4: Error inesperado al crear el volúmen lógico '$LINE[0]' de tamaño '$LINE[1]'\n";
+	sshcmd $2 "lvcreate --name ${LINE[0]} --size ${LINE[1]} $NAME";
+	if [[ $? -ne 0 ]]; then
+	    echoerr "\n$1: linea $4: Error inesperado al crear el volúmen lógico '${LINE[0]}' de tamaño '${LINE[1]}'\n";
 	    exec 3<&-;
 	    exit 34;
 	fi
@@ -85,7 +83,7 @@ lvmFunc() {
     done <&3;
 
     # Check if at least one line is read on the logical volume creation loop
-    if [[ $FIRSTL -eq 0 ]]; then
+    if [[ $((I)) -eq 1 ]]; then
 	echoWrongParams $1 $4 $3;
 	exec 3<&-;
 	exit 6;

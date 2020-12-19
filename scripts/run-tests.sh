@@ -5,29 +5,29 @@ CMD="./configurar_cluster.sh";
 
 # Argument of each tests
 TESTS=(
-    ""
-    "fich-que-no-existe"
-    "tmp"
+    "" #0
+    "fich-que-no-existe" #1
+    "tmp" #2
 
-    "tests/tests-triviales/wrong-format.txt"
-    "tests/tests-triviales/missing-file.txt"
-    "tests/tests-triviales/unknown-service.txt"
+    "tests/tests-triviales/wrong-format.txt" #3
+    "tests/tests-triviales/missing-file.txt" #4
+    "tests/tests-triviales/unknown-service.txt" #5
 
-    "tests/tests-mount/wrong-config-format.txt"
-    "tests/tests-mount/disp-doesnt-exist.txt"
-    "tests/tests-mount/point-not-empty.txt"
-    "tests/tests-mount/point-created.txt"
-    "tests/tests-mount/successful-config.txt"
+    "tests/tests-mount/wrong-config-format.txt" #6
+    "tests/tests-mount/disp-doesnt-exist.txt" #7
+    "tests/tests-mount/point-not-empty.txt" #8
+    "tests/tests-mount/point-created.txt" #9
+    "tests/tests-mount/successful-config.txt" #10
 
-    "tests/tests-raid/wrong-config-format.txt"
-    "tests/tests-raid/wrong-raid-level-config.txt"
-    "tests/tests-raid/disp-with-fs-config.txt"
+    "tests/tests-raid/wrong-config-format.txt" #11
+    "tests/tests-raid/wrong-raid-level-config.txt" #12
+    "tests/tests-raid/disp-with-fs-config.txt" #13
 
-    "tests/tests-lvm/wrong-config-format.txt"
-    "tests/tests-lvm/disp-doesnt-exist.txt"
-    "tests/tests-lvm/too-many-lvs.txt"
+    "tests/tests-lvm/wrong-config-format.txt" #14
+    "tests/tests-lvm/disp-doesnt-exist.txt" #15
+    "tests/tests-lvm/too-many-lvs.txt" #16
 
-    "tests/tests-lvm/successful-lvm.txt"
+    "tests/tests-lvm/successful-lvm.txt" #17
 );
 
 # Expected results of each test
@@ -65,6 +65,9 @@ for (( i=0; i<${#TESTS[@]}; i++ )); do
 	6)  echo -e "\n--- TESTS DE MOUNT ---\n"; ;;
 	11) echo -e "\n--- TESTS DE RAID ---\n"; ;;
 	14) echo -e "\n--- TESTS DE LVM ---\n"; ;;
+	# XX) echo -e "\n--- TESTS DE NIS ---\n"; ;;
+	# XX) echo -e "\n--- TESTS DE NFS ---\n"; ;;
+	# XX) echo -e "\n--- TESTS DE BACKUP ---\n"; ;;
 	*)  : ;;
     esac
     echo -n "Test $i... ";

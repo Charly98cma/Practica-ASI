@@ -38,13 +38,14 @@ X. *TEST*
 3. El dispositivo a montar no es un directorio vacío
    [**point-not-empty.txt -> point-not-empty.conf**] -> 11
 
-	*Antes de ejecutar el test hay que crear el dispositivo `/dev/sdb1` con el comando `mkfifo /dev/sdb1`.*
-
 4. El punto de montaje no existe (se tiene que crear) y todo funciona correctamente
    [**point-created.txt -> point-created.conf**] -> 0
 
 5. El punto de montaje existe y todo funciona correctamente
    [**successful-config.txt -> successful-config.conf**] -> 0
+
+   *Tras estos tests hay que desmontar los dispositivos montados por el test 9 y 10 para que no den error en la siguiente ejecución*
+
 
 ## Tests de 'raid' (tests/tests-raid/)
 
@@ -60,6 +61,8 @@ X. *TEST*
 
 4. TODO - Todos los campos son correctos y todo funciona correctamente
    [**WIP**]-> 0
+
+   *Tras ejecutar los tests, hay que revertir los cambios si se quiere volver a ejecutar el test y que no falle*
 
 ## Tests de 'lvm' (tests/tests-lvm)
 

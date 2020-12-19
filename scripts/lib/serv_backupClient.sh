@@ -32,6 +32,7 @@ backupClientFunc() {
     fi
 
     # Check the dir. to backup (BACKUP_SOURCE) exists
+    # TODO: Change the next command
     eval "find $BACKUP_SOURCE -maxdepth 0"
     case $? in
 	# SSH error

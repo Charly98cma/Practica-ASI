@@ -53,7 +53,7 @@ sshcmd() {
     # Connection to the SHH server and execution of commands
     # ssh USER@dir command1 | command2 ...
     eval "ssh root@$1 ${@:2} &> /dev/null";
-    # eval "ssh root@$1 ${@:2}";   # Command for testing purposes only
+    # eval "ssh -n root@$1 ${@:2}";   # Command for testing purposes only
 }
 
 
