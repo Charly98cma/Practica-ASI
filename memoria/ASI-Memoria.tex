@@ -8,7 +8,8 @@
   pdftex,
   pdfauthor={Carlos Miguel, Antonio Ramírez, Younes Aouad},
   pdftitle={Memoria Práctica ASI - Grupo 30},
-  pdfsubject={Memoria práctica ASI}]{hyperref}
+  pdfsubject={Memoria práctica ASI}
+]{hyperref}
 
 % --- TIKZ ---
 \usepackage{tikz}
@@ -181,17 +182,28 @@ De igual forma, en todas las funciones se ha re-direccionado la lectura del fich
 
 Todos los \textit{scripts} de los servicios retornarán 0 si se ha realizado satisfactoriamente la operación, y, si se ha producido algún error, un valor específico representando ese error (ver \textit{Códigos de Error}).
 
+
 \subsection{Mount}
 \noindent El servicio \textit{mount} leerá de su fichero de configuración dos campos, el dispositivo a montar y el punto en el que montar dicho dispositivo.\\
 
 El \textit{script} montará el dispositivo en el punto de montaje tras comprobar que se han leído todos los campos necesarios, que dicho dispositivo existe en la máquina, y que el punto de montaje es un directorio vacío. Si el punto de montaje no existe, se crea.\\
 
+
 \subsection{Raid}
 \noindent El servicio \textit{raid} leerá 3 campos de su fichero de configuración, el nombre del nuevo dispositivo RAID, el nivel de RAID, y los dispositivos que compondrán el RAID.\\
 
-Lo primero que se realiza es comprobar la correcta lectura de los campos, tras lo que se comprueba que el nivel de RAID leído es uno de los niveles soportados (0, 1, 5, 6 o 10). Tras esto, se comprueba que cada dispositivo leído que compondrá el RAID no tiene un sistema de ficheros previo y, si todos estos requisitos se cumplen, el \textit{script} creará de forma correcta el RAID.\\
+Lo primero que hace el \textit{script} es comprobar si la herramienta \textit{mdadm}, que usará para la instalación del RAID, está instalada, si no, la instalará.\\
 
+Tras esto, comprueba la correcta lectura de los campos, tras lo que se comprueba que el nivel de RAID leído es uno de los niveles soportados (0, 1, 5, 6 o 10). Tras esto, se comprueba que cada dispositivo leído que compondrá el RAID no tiene un sistema de ficheros previo y, si todos estos requisitos se cumplen, el \textit{script} creará de forma correcta el RAID.\\
+
+
+\newpage
 \subsection{LVM}
+\noindent El servicio \textit{lvm} lee las dos primeras líneas, que contienen el nombre del grupo del RAID y los volúmenes físicos que lo compondrán. Tras esto, leerá, línea a línea, cada uno de los volúmenes lógicos a crear en el RAID.\\
+
+Primero comprueba que la herramienta a usar, en este caso, \textit{lvm2}, y todos sus componentes, estén instalados. Tras esto, verifica la correcta lectura de las dos primeras líneas, comprueba que cada volumen físico exista, crea el grupo y añade los volúmenes a él.\\
+
+Si no han surgido errores, el \textit{script} leerá cada uno de los volúmenes lógicos, comprobando que no se exceda el tamaño máximo ni la capacidad de almacenamiento.
 
 
 \subsection{NIS}
@@ -241,6 +253,13 @@ Rango de códigos de error: 20 - 29
 
 \subsection{LVM}
 Rango de códigos de error: 30 - 39.
+\begin{itemize}
+\item \textbf{30}: Uno de los dispositivos especificados no existe
+\item \textbf{31}: Error inesperado al inicializar los volúmenes físicos
+\item \textbf{32}: Error inesperado al crear el grupo de volúmenes físicos
+\item \textbf{33}: Se ha excedido el tamaño del grupo al crear los volúmenes lógicos
+\item \textbf{34}: Error inesperado al crear uno de los volúmenes lógicos
+\end{itemize}
 
 \subsection{NIS}
 
