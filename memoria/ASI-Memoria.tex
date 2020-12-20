@@ -118,7 +118,7 @@
 
 \pagenumbering{arabic}
 \section{Introducción del proyecto}
-Este proyecto se basa en el desarrollo de un \textit{script} (o conjunto de ellos) en Bash que permitan la configuración de diferentes servicios en un \textit{cluster} formado por múltiples máquinas ejecutando un sistema Linux.\\
+\noindent Este proyecto se basa en el desarrollo de un \textit{script} (o conjunto de ellos) en Bash que permitan la configuración de diferentes servicios en un \textit{cluster} formado por múltiples máquinas ejecutando un sistema Linux.\\
 
 De esta forma, el administrador puede configurar diferentes servicios en diferentes máquinas de forma simultánea, teniendo que escribir solo los archivos de configuración de cada servicio y el archivo de configuración general.\\
 
@@ -143,7 +143,7 @@ De esta forma, el administrador puede configurar diferentes servicios en diferen
 \begin{itemize}
 \item Tener un \textit{script} central que ejecutará el administrador (\texttt{configurar\_cluster.sh}) que leerá línea a línea el fichero de configuración que se proporciona como argumento, y llamará a la función perteneciente al servicio leído, que está localizada en la carpeta \texttt{lib}, cada servicio en un fichero Bash diferente. Además, ciertas funciones se han puesto en común en el archivo \texttt{aux\_functions.sh}, de forma que todos los ficheros que lo requieran puedan acceder a estas funciones de forma sencilla y sin tener código repetido multitud de veces.
 
-  A continuación se muestra el árbol de directorios de los \textit{scripts} del proyecto (no incluido directorio de tests, que se verá en la sección \textsl{Testing}):\\
+  A continuación se muestra el árbol de directorios de los \textit{scripts} del proyecto):\\
   \begin{center}
     \begin{forest}
       for tree={%
@@ -153,6 +153,8 @@ De esta forma, el administrador puede configurar diferentes servicios en diferen
       }
       [/scripts
         [configurar\_scripts.sh]
+        [run\_tests.sh]
+        [tests]
         [lib
           [aux\_functions.sh]
           [serv\_mount.sh]
@@ -169,6 +171,7 @@ De esta forma, el administrador puede configurar diferentes servicios en diferen
     \end{forest}
   \end{center}
 
+  \newpage
 \item Para facilitar la ejecución e implementación, se ha decidido que los comandos se ejecutarán a través de \texttt{SSH}, en vez de enviar un fichero de configuración y ejecutarlo. Esta decisión aumenta el tráfico de la red, ya que se tienen que enviar los comandos uno a uno, tanto para comprobaciones como para configuraciones, pero permite un control más preciso de la ejecución.
 \end{itemize}
 
@@ -286,6 +289,35 @@ Rango de códigos de error: 90 - 99.
 
 \newpage
 \section{Testing}
+Para testear de forma rápida y sencilla cada uno de los servicio y probar que funcionan de la forma esperada, se ha creado el fichero \texttt{run\_tests.sh}, el cual contiene un array de los nombres de cada test, un array con los resultados esperados al ejecutar cada test, y un bucle que ejecuta cada uno de ellos e informa por la salida estándar de si el test pasa o no.\\
+
+Los tests se han emplazado en el directorio \texttt{tests/} con cada servicio en su propio directorio, en el que aparecen el fichero de configuración general y el fichero de configuración del servicio.\\
+
+De esta forma, escribiendo tests para comprobar la detección de errores de cada \textit{script} y la correcta ejecución del servicio si no se encuentran errores, podemos probar cada uno de los servicios de forma instantánea.\\
+
+\noindent A continuación se muestra la estructura del directorio \texttt{tests/}
+
+\begin{center}
+  \begin{forest}
+    for tree={%
+      folder,
+      grow'=0,
+      fit=band,
+    }
+    [/tests
+      [tests\_mount]
+      [tests\_raid]
+      [tests\_lvm]
+      [tests\_nisS]
+      [tests\_nisC]
+      [tests\_nfsS]
+      [tests\_nfsC]
+      [tests\_backupS]
+      [tests\_backupC]
+    ]
+  \end{forest}
+\end{center}
+
 
 \end{document}
 % --- DOCUMENT ---
