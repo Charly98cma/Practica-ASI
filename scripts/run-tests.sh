@@ -32,16 +32,20 @@ TESTS=(
 
     "tests/tests-nisC/success.txt"#19
 
-    "tests/tests-backupC/wrong-config-format.txt"#20
-    "tests/tests-backupC/unknown-backup-source.txt"#21
-    "tests/tests-backupC/unknown-backup-destiny.txt"#22
-    "tests/tests-backupC/bad-backup-frequency.txt"#23
-    "tests/tests-backupC/successful-backup.txt"#24
+    "tests/tests-nfsS/success.txt" #20
 
-    "tests/tests-backupS/wrong-config-format.txt"#25
-    "tests/tests-backupS/backup-dir-doesnt-exist.txt"#26
-    "tests/tests-backupS/nonempty-backup-dir.txt"#27
-    "tests/tests-backupS/successful-backupS.txt"#28
+    "tests/tests-nfsC/success.txt" #21
+
+    "tests/tests-backupC/wrong-config-format.txt"#22
+    "tests/tests-backupC/unknown-backup-source.txt"#23
+    "tests/tests-backupC/unknown-backup-destiny.txt"#24
+    "tests/tests-backupC/bad-backup-frequency.txt"#25
+    "tests/tests-backupC/successful-backup.txt"#26
+
+    "tests/tests-backupS/wrong-config-format.txt"#27
+    "tests/tests-backupS/backup-dir-doesnt-exist.txt"#28
+    "tests/tests-backupS/nonempty-backup-dir.txt"#29
+    "tests/tests-backupS/successful-backupS.txt"#30
 );
 
 # Expected results of each test
@@ -72,16 +76,20 @@ TEST_EXRES=(
 
     0  #19
 
-    6  #
-    80 #
-    81 #
-    82 #
-    0  #
+    0  #20
 
-    6  #
-    90 #
-    91 #
-    0  #
+    0  #21
+
+    6  #22
+    80 #23
+    81 #24
+    82 #25
+    0  #26
+
+    6  #27
+    90 #28
+    91 #29
+    0  #30
 );
 
 # Main loop
@@ -92,10 +100,10 @@ for (( i=0; i<${#TESTS[@]}; i++ )); do
 	6)  echo -e "\n--- TESTS DE MOUNT ---\n"   ; ;;
 	11) echo -e "\n--- TESTS DE RAID ---\n"    ; ;;
 	14) echo -e "\n--- TESTS DE LVM ---\n"     ; ;;
-	18) echo -e "\n--- TESTS DE NIS-S ---\n"; ;;
-	19) echo -e "\n--- TESTS DE NIS-C ---\n"     ; ;;
-	# XX) echo -e "\n--- TESTS DE NFS-S ---\n"     ; ;;
-	# XX) echo -e "\n--- TESTS DE NFS-C ---\n"     ; ;;
+	18) echo -e "\n--- TESTS DE NIS-S ---\n"   ; ;;
+	19) echo -e "\n--- TESTS DE NIS-C ---\n"   ; ;;
+	20) echo -e "\n--- TESTS DE NFS-S ---\n"   ; ;;
+	21) echo -e "\n--- TESTS DE NFS-C ---\n"   ; ;;
 	20) echo -e "\n--- TESTS DE BACKUP-C ---\n"; ;;
 	25) echo -e "\n--- TESTS DE BACKUP-S ---\n"; ;;
 	*)  : ;;

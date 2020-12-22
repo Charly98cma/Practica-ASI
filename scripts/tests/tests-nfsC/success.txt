@@ -1,0 +1,4 @@
+# Fichero de config que crea un cliente nfs
+
+10.0.2.4 nfs_client tests/tests-nfsC/success.conf
+# Eh, este comentario no debería estar aquí

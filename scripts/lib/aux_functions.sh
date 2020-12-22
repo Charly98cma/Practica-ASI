@@ -52,6 +52,7 @@ echoDone() {
 sshcmd() {
     # Connection to the SHH server and execution of commands
     # ssh USER@dir command1 | command2 ...
+
     eval "ssh -n -o \"StrictHostKeyChecking=no\" root@$1 ${@:2} &> /dev/null";
 
     # Command for testing purposes ONLY
@@ -78,22 +79,16 @@ packageMng() {
 	    PKG="lvm2*";
 	    ;;
 	nisC)
-		PKG="nis";
+	    PKG="nis";
 	    ;;
 	nisS)
-		PKG="nis";
+	    PKG="nis";
 	    ;;
-	# nfsC)
-	#   :
-	#   ;;
-	nfsS)
+	nfsC|nfsS)
 	    PKG="nfs-kernel-server":
 	    ;;
-
 	backupC)
 	    PKG="rsync cron";
-	    ;;
-	*)  return 1;
 	    ;;
     esac
 
