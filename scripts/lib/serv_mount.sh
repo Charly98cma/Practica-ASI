@@ -11,6 +11,8 @@ source lib/aux_functions.sh
 #  0          - Success
 #  Error code - Otherwise
 mountFunc() {
+
+    echo "      -> Leyendo y comprbando fichero de configuración";
     # Read DEVICE and mount POINT using the file descriptor 3 temporarly
     exec 3<> $3;
     read DEVICE <&3;
@@ -23,6 +25,8 @@ mountFunc() {
 	exit 6;
     fi
 
+
+    echo "      -> Comprobando validez del directorio '$DEVICE'";
     # Check if DEVICE exists
     sshcmd $2 "find $DEVICE -maxdepth 0";
     if [[ $? -ne 0 ]]; then
@@ -30,6 +34,8 @@ mountFunc() {
 	exit 10;
     fi
 
+
+    echo "      -> Comprobando validez del directorio '$POINT'";
     # Check if POINT exists
     sshcmd $2 "find $POINT -maxdepth 0";
     case $? in
@@ -47,6 +53,7 @@ mountFunc() {
 	    fi
 	    ;;
 	*)
+	    echo "       -> Creando directorio";
 	    # POINT dir doesnt exist, so we create it
 	    sshcmd $2 "mkdir -p $POINT";
 	    if [[ $? -ne 0 ]]; then
@@ -56,6 +63,8 @@ mountFunc() {
 	    ;;
     esac
 
+
+    echo "      -> Montando '$DEVICE' en el punto de montaje '$POINT'";
     # Mount of the device
     sshcmd $2 "mount -t ext4 $DEVICE $POINT";
     if [[ $? -ne 0 ]]; then
@@ -63,12 +72,15 @@ mountFunc() {
 	exit 12;
     fi
 
+
+    echo "      -> Añadiendo montaje al fichero /etc/fstab";
     # Auto-mount on start-up ("default 0 0" are options for the mounts, which are irrelevant now)
     sshcmd $2 "echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab";
     if [[ $? -ne 0 ]]; then
 	echoerr "\n$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'\n";
 	exit 12;
     fi
+
     exit 0;
 }
 

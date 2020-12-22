@@ -17,6 +17,7 @@ lvmFunc() {
 	exit 255;
     fi
 
+    echo "      -> Leyendo y comprobando fichero de configuración";
     # Read the parameters of the service
     exec 3<> $3;
     read NAME <&3;
@@ -32,6 +33,7 @@ lvmFunc() {
     # Turn the DEVS string to an array
     IFS=" " read -a DEVS_ARR <<< $DEVS;
 
+    echo "      -> Comprobando validez de cada dispositivo";
     # Check that each of the dirs/devices exists on the host
     for DEV in ${DEVS_ARR[@]}; do
 	sshcmd $2 "find $DEV -maxdepth 0";
@@ -42,6 +44,7 @@ lvmFunc() {
 	fi
     done;
 
+    echo "      -> Inicializando volúmenes físicos";
     # Initialization of the physical volumes
     sshcmd $2 "pvcreate $DEVS"
     if [[ $? -ne 0 ]]; then
@@ -50,6 +53,8 @@ lvmFunc() {
 	exit 31;
     fi
 
+
+    echo "      -> Inicializando grupo de dispositivos";
     # Creation of the devices group
     sshcmd $2 "vgcreate $NAME $DEVS";
     if [[ $? -ne 0 ]]; then
@@ -58,6 +63,7 @@ lvmFunc() {
 	exit 32;
     fi
 
+    echo "      -> Creando volúmenes lógicos";
     I=1;
     # Creation of each logical volume
     while read line; do
@@ -71,6 +77,7 @@ lvmFunc() {
 	# Read name and size of the logical volume
 	IFS=" " read -a LINE <<< $line;
 
+	echo "       -> Creando volúmen lógico '${LINE[0]}'";
 	# Creation of the logical volume
 	sshcmd $2 "lvcreate --name ${LINE[0]} --size ${LINE[1]} $NAME";
 	if [[ $? -ne 0 ]]; then

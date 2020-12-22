@@ -17,6 +17,7 @@ backupClientFunc() {
 	exit -1;
     fi
 
+    echo "      -> Leyendo y comprobando fichero de configuración";
     # Read the parameters of the service
     exec 3<> $3;
     read BACKUP_SOURCE <&3; # Dir. to backup
@@ -25,12 +26,15 @@ backupClientFunc() {
     read FREQ <&3;          # Freq. of the backup (hours)
     exec 3<&-;
 
+
     # Check all arguments appear on the file
     if [[ $BACKUP_SOURCE == "" || $DIR_SERVER == "" || $BACKUP_DEST == "" || $FREQ == "" ]]; then
 	echoWrongParams $1 $4 $3;
 	exit 6;
     fi
 
+
+    echo "      -> Comprobando validez de la dirección de la que se hará backup";
     # Check the dir. to backup (BACKUP_SOURCE) exists
     sshcmd $2 "find $BACKUP_SOURCE -maxdepth 0";
     case $? in
@@ -52,6 +56,8 @@ backupClientFunc() {
 	    ;;
     esac
 
+
+    echo "      -> Comprobando la dirección en la que se gaurdarán los backups";
     # Check the dir. used fto store the backups (BACKUP_DEST) exists
     sshcmd $DIR_SERVER "find $BACKUP_DEST -maxdepth 0";
     case $? in
@@ -73,12 +79,16 @@ backupClientFunc() {
 	    ;;
     esac
 
+
+    echo "      -> Comprobando validez de la frecuencia de los backups";
     # Check if the backup frequency is correct (greater than 0)
     if [ $((FREQ)) -lt 1 ]; then
 	echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa frecuencia de los backup tiene que ser mayor de 0 horas\n";
 	exit 82;
     fi
 
+
+    echo "      -> Creando mandato de backup en /etc/crontab";
     sshcmd $2 "echo \"0 */$FREQ * * * rsync --quiet --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST\" >> /etc/crontab"
     case $? in
 	255)

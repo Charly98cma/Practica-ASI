@@ -17,6 +17,7 @@ raidFunc() {
 	exit -1;
     fi
 
+    echo "      -> Leyendo y comprobando fichero de configuración";
     # Read parameters (lines) of the config file
     exec 3<> $3;
     read RAID_DEV <&3;
@@ -30,6 +31,8 @@ raidFunc() {
 	exit 6;
     fi
 
+
+    echo "      -> Comprobando nivel de RAID";
     # Check for non-supported RAID level
     case $LEVEL in
 	0|1|5|6|10)
@@ -44,6 +47,8 @@ raidFunc() {
     # dev1 dev2 dev3 ... --> {dev1, dev2, dev3, ...}
     IFS=" " read -a DEVICE_ARR <<< $DEVICES;
 
+
+    echo "      -> Comprobando validez de cada dispositivo";
     for (( i=0; i<${#DEVICE_ARR[@]}; i++ )); do
 	RES=sshcmd $2 "df -Th | grep \"^${DEVICE_ARR[i]}\"";
 	if [[ $RES -eq 0 ]]; then
@@ -53,6 +58,7 @@ raidFunc() {
     done
 
 
+    echo "      -> Creando RAID";
     # Raid creation command through ssh
     sshcmd $2 "mdadm --create --level=$LEVEL --raid-devices=${#DEVICE_ARR[@]} $RAID_DEV $DEVICES";
     case $? in

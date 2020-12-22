@@ -28,66 +28,76 @@ TESTS=(
     "tests/tests-lvm/too-many-lvs.txt" #16
     "tests/tests-lvm/successful-lvm.txt" #17
 
-    "tests/tests-backupC/wrong-config-format.txt"
-    "tests/tests-backupC/unknown-backup-source.txt"
-    "tests/tests-backupC/unknown-backup-destiny.txt"
-    "tests/tests-backupC/bad-backup-frequency.txt"
-    "tests/tests-backupC/successful-backup.txt"
+    "tests/tests-nisS/sucess.txt"#18
 
-    "tests/tests-backupS/wrong-config-format.txt"
-    "tests/tests-backupS/backup-dir-doesnt-exist.txt"
-    "tests/tests-backupS/nonempty-backup-dir.txt"
-    "tests/tests-backupS/successful-backupS.txt"
+    "tests/tests-nisC/success.txt"#19
+
+    "tests/tests-backupC/wrong-config-format.txt"#20
+    "tests/tests-backupC/unknown-backup-source.txt"#21
+    "tests/tests-backupC/unknown-backup-destiny.txt"#22
+    "tests/tests-backupC/bad-backup-frequency.txt"#23
+    "tests/tests-backupC/successful-backup.txt"#24
+
+    "tests/tests-backupS/wrong-config-format.txt"#25
+    "tests/tests-backupS/backup-dir-doesnt-exist.txt"#26
+    "tests/tests-backupS/nonempty-backup-dir.txt"#27
+    "tests/tests-backupS/successful-backupS.txt"#28
 );
 
 # Expected results of each test
 TEST_EXRES=(
-    1
-    2
-    2
+    1  #0
+    2  #1
+    2  #2
 
-    3
-    4
-    5
+    3  #3
+    4  #4
+    5  #5
+    6  #6
+    10 #7
+    11 #8
+    0  #9
+    0  #10
 
-    6
-    10
-    11
-    0
-    0
+    6  #11
+    21 #12
+    22 #13
 
-    6
-    21
-    22
+    6  #14
+    30 #15
+    33 #16
+    0  #17
 
-    6
-    30
-    33
-    0
+    0  #18
 
-    6
-    80
-    81
-    82
-    0
+    0  #19
 
-    6
-    90
-    91
-    0
+    6  #
+    80 #
+    81 #
+    82 #
+    0  #
+
+    6  #
+    90 #
+    91 #
+    0  #
 );
 
 # Main loop
 for (( i=0; i<${#TESTS[@]}; i++ )); do
     case $i in
-	0)  echo -e "\n--- TESTS CLIENTE ---\n"; ;;
-	3)  echo -e "\n--- TESTS TRIVIALES ---\n"; ;;
-	6)  echo -e "\n--- TESTS DE MOUNT ---\n"; ;;
-	11) echo -e "\n--- TESTS DE RAID ---\n"; ;;
-	14) echo -e "\n--- TESTS DE LVM ---\n"; ;;
-	# XX) echo -e "\n--- TESTS DE NIS ---\n"; ;;
-	# XX) echo -e "\n--- TESTS DE NFS ---\n"; ;;
-	18) echo -e "\n--- TESTS DE BACKUP ---\n"; ;;
+	0)  echo -e "\n--- TESTS CLIENTE ---\n"    ; ;;
+	3)  echo -e "\n--- TESTS TRIVIALES ---\n"  ; ;;
+	6)  echo -e "\n--- TESTS DE MOUNT ---\n"   ; ;;
+	11) echo -e "\n--- TESTS DE RAID ---\n"    ; ;;
+	14) echo -e "\n--- TESTS DE LVM ---\n"     ; ;;
+	18) echo -e "\n--- TESTS DE NIS-S ---\n"; ;;
+	19) echo -e "\n--- TESTS DE NIS-C ---\n"     ; ;;
+	# XX) echo -e "\n--- TESTS DE NFS-S ---\n"     ; ;;
+	# XX) echo -e "\n--- TESTS DE NFS-C ---\n"     ; ;;
+	20) echo -e "\n--- TESTS DE BACKUP-C ---\n"; ;;
+	25) echo -e "\n--- TESTS DE BACKUP-S ---\n"; ;;
 	*)  : ;;
     esac
     echo -n "Test $i... ";
