@@ -71,3 +71,6 @@
 - **83**: Error inesperado al introducir el comando de backup en /etc/crontab
 
 ### Códigos de error de *backupServer* [90 - 100)
+
+- **90**: El directorio del servidor de backup no existe.
+- **91**: El directorio del servidor de backup no está vacío.
