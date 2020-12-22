@@ -65,8 +65,9 @@
 
 ### Códigos de error de *backupClient* [80 - 90)
 
-- **80**: La dirección de la que hacer el backup no existe
-- **81**: La frecuencia de los backups tiene que ser mayor que 0
-- **82**: Error inesperado al crear el cliente de backup
+- **80**: La dirección de la que hacer backup no existe.
+- **81**: La dirección en la que guardar los backups no existe.
+- **82**: La frecuencia de los backups tiene que ser mayor que 0
+- **83**: Error inesperado al crear el cliente de backup
 
 ### Códigos de error de *backupServer* [90 - 100)
