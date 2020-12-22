@@ -76,3 +76,5 @@ nisServerFunc() {
         exit 46;
     fi
 }
+
+export -f nisServerFunc
