@@ -89,7 +89,7 @@ packageMng() {
 	#   ;;
 
 	backupC)
-	    PKG="rsync";
+	    PKG="rsync cron";
 	    ;;
 	*)  return 1;
 	    ;;

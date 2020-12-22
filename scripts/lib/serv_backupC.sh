@@ -95,5 +95,22 @@ backupClientFunc() {
 	    echoerr "\n$1: linea $4: Se ha producido un error inesperado al crear el cliente de backup.\n";
 	    exit 83;
     esac
+
+    sshcmd $2 "echo 0 */$FREQ * * * rsync --quiet --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST >> /etc/crontab"
+    case $? in
+	255)
+	    # SSH Error
+	    echoerr "\nERROR - Se ha producido un error inesperado del servicio 'ssh'\n";
+	    exit 255;
+	    :
+	    ;;
+	0)
+	    exit 0;
+	    ;;
+	*)
+	    # Error introducng the command to /etc/crontab
+	    echoerr "\n$1: linea $4: Se ha producido un error inesperado al introducir el comando de backup en el archivo /etc/crontab\n";
+	    exit 84;
+    esac
     exit 0;
 }
