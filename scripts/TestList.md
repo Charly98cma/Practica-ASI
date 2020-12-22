@@ -13,7 +13,7 @@ X. *TEST*
 
 3. El fichero de config es un directorio (no un fichero) -> 2
 
-## Tests triviales (tests/tests-triviales)
+## Tests triviales (tests/tests-triviales/)
 
 1. Una de las líneas del fichero no sigue el formato esperado (!= 3 argumentos)
    [**wrong-format.txt**] -> 3
@@ -64,9 +64,9 @@ X. *TEST*
 
    *Tras ejecutar los tests, hay que revertir los cambios si se quiere volver a ejecutar el test y que no falle*
 
-## Tests de 'lvm' (tests/tests-lvm)
+## Tests de 'lvm' (tests/tests-lvm/)
 
-1. El formato del fichero de config de un servicio es incorrecto
+1. El formato del fichero de config del servicio es incorrecto
    (el número de campos no es el esperado)
    (*los volúmenes físicos y el grupo se crearán*)
    [**wrong-config-format.txt -> wrong-config-format.conf**] -> 6
@@ -84,9 +84,26 @@ X. *TEST*
 5. Todo funciona correctamente
    [**successful-lvm.txt ->successful-lvm.conf**] -> 0
 
-## Tests de 'nisClient'
-## Tests de 'nisServer'
-## Tests de 'nfsClient'
-## Tests de 'nfsServer'
-## Tests de 'backupClient'
-## Tests de 'backupServer'
+## Tests de 'nisClient' (tests/tests-nisc/)
+## Tests de 'nisServer' (tests/tests-niss/)
+## Tests de 'nfsClient' (tests/tests-nfsc/)
+## Tests de 'nfsServer' (tests/tests-nfss/)
+## Tests de 'backupClient' (tests/tests-backupc/)
+
+1. El formato del fichero de config del servicio es incorrecto
+   (el número de campos no es el esperado)
+   [**wrong-config-format.txt -> wrong-config-format.conf**] -> 6
+
+2. La dir del host del que hacer el backup no existe
+   [**unknown-backup-source.txt -> unknown-backup-source.conf**] -> 80
+
+3. La dir del host en el que guardar el backup no existe
+   [**unknown-backup-destiny.txt -> unknown-backup-destiny.conf**] -> 81
+
+4. La frecuencia de los backups es 0
+   [**bad-backup-frequency.txt -> bad-vackup-frequency.conf**] -> 82
+
+5. Creado el cliente de backup
+   [**successful-backup.txt -> successful-backup.conf**] -> 0
+
+## Tests de 'backupServer' (tests/tests-backups/)
