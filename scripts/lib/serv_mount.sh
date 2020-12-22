@@ -71,4 +71,5 @@ mountFunc() {
     fi
     exit 0;
 }
+
 export -f mountFunc

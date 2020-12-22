@@ -74,4 +74,5 @@ nfsServerFunc() {
     # # sshcmd $2 "ufw allow from IPSUBNET to any port nfs"
     exit 0;
 }
+
 export -f nfsServerFunc

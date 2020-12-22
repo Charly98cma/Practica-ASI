@@ -97,3 +97,5 @@ backupClientFunc() {
     esac
     exit 0;
 }
+
+export -f backupClientFunc

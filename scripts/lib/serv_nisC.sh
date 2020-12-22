@@ -26,14 +26,14 @@ nisClientFunc() {
     # Role configuration
     sshcmd $2 "echo NISCLIENT=true > /etc/default/nis";
     if [[ $? -ne 0 ]]; then
-        echoerr "\n$1 linea $4: Error al configurar el rol del servicio, no se pudo escribir en el directorio /etc/default/nis"
+        echoerr "\n$1 linea $4: Error al configurar el rol del servicio, no se pudo escribir en el directorio /etc/default/nis";
         exit 50;
     fi;
 
     echo "      -> Configurando los datos del servido en el fichero /etc/yp.conf";
     # Configure server location
     sshcmd $2 "echo 'domain $DOMAIN_NAME server $SERVER_ADDR' > /etc/yp.conf"
-    if [[ $? -ne 0 ]]; then
+    if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar el nombre y direccion del servidor NIS."
         exit 51;
     fi
@@ -41,7 +41,7 @@ nisClientFunc() {
     echo "      -> Añadiendo el servicio nis a passwd en el fichero /etc/nsswitch.conf";
     # Configure /etc/nsswitch.conf
     sshcmd $2 "sed -i 's/passwd:         compat/passwd:         compat nis/g' /etc/nsswitch.conf"
-    if [[ $? -ne 0 ]]; then
+    if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar la variable passwd en el fichero /etc/nsswitch.conf."
         exit 52;
     fi
@@ -49,7 +49,7 @@ nisClientFunc() {
     echo "      -> Añadiendo el servicio nis a group en el fichero /etc/nsswitch.conf";
     # Configure /etc/nsswitch.conf
     sshcmd $2 "sed -i 's/group:          compat/group:          compat nis/g' /etc/nsswitch.conf"
-    if [[ $? -ne 0 ]]; then
+    if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar la variable group en el fichero /etc/nsswitch.conf."
         exit 53;
     fi
@@ -57,7 +57,7 @@ nisClientFunc() {
     echo "      -> Añadiendo el servicio nis a shadow en el fichero /etc/nsswitch.conf";
     # Configure /etc/nsswitch.conf
     sshcmd $2 "sed -i 's/shadow:         compat/shadow:         compat nis/g' /etc/nsswitch.conf"
-    if [[ $? -ne 0 ]]; then
+    if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar la variable shadow en el fichero /etc/nsswitch.conf."
         exit 54;
     fi
@@ -65,7 +65,7 @@ nisClientFunc() {
     echo "      -> Añadiendo el servicio nis a host en el fichero /etc/nsswitch.conf";
     # Configure /etc/nsswitch.conf
     sshcmd $2 "sed -i 's/hosts:          files dns/hosts:          files dns nis/g' /etc/nsswitch.conf"
-    if [[ $? -ne 0 ]]; then
+    if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar la variable hosts en el fichero /etc/nsswitch.conf."
         exit 55;
     fi
@@ -73,9 +73,11 @@ nisClientFunc() {
     echo "      -> Reiniciando el servicio NIS";
     # Start service
     sshcmd $2 "service nis restart"
-    if [[ $? -ne 0 ]]; then
-        echoerr "\n$1 linea $4: Error al reiniciar el servicio NIS"
+
+    if [[ $? -ne 0 ]]; then 
+        echoerr "\n$1 linea $4: Error al reiniciar el servicio NIS";
         exit 55;
     fi
+}
 
-   export -f nisClientFunc;
+export -f nisClientFunc

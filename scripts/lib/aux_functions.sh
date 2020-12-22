@@ -77,12 +77,12 @@ packageMng() {
 	lvm)
 	    PKG="lvm2*";
 	    ;;
-	# nisC)
-	#   :
-	#   ;;
-	# nisS)
-	#   :
-	#   ;;
+	nisC)
+		PKG="nis";
+	    ;;
+	nisS)
+		PKG="nis";
+	    ;;
 	# nfsC)
 	#   :
 	#   ;;

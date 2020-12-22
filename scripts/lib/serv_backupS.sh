@@ -52,3 +52,5 @@ backupServerFunc() {
 
     exit 0;
 }
+
+export -f backupServerFunc
