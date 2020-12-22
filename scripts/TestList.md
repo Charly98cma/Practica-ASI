@@ -66,7 +66,7 @@ X. *TEST*
 
 ## Tests de 'lvm' (tests/tests-lvm/)
 
-1. El formato del fichero de config de un servicio es incorrecto
+1. El formato del fichero de config del servicio es incorrecto
    (el número de campos no es el esperado)
    (*los volúmenes físicos y el grupo se crearán*)
    [**wrong-config-format.txt -> wrong-config-format.conf**] -> 6
@@ -90,6 +90,20 @@ X. *TEST*
 ## Tests de 'nfsServer' (tests/tests-nfss/)
 ## Tests de 'backupClient' (tests/tests-backupc/)
 
+1. El formato del fichero de config del servicio es incorrecto
+   (el número de campos no es el esperado)
+   [**wrong-config-format.txt -> wrong-config-format.conf**] -> 6
 
+2. La dir del host del que hacer el backup no existe
+   [**unknown-backup-source.txt -> unknown-backup-source.conf**] -> 80
+
+3. La dir del host en el que guardar el backup no existe
+   [**unknown-backup-destiny.txt -> unknown-backup-destiny.conf**] -> 81
+
+4. La frecuencia de los backups es 0
+   [**bad-backup-frequency.txt -> bad-vackup-frequency.conf**] -> 82
+
+5. Creado el cliente de backup
+   [**successful-backup.txt -> successful-backup.conf**] -> 0
 
 ## Tests de 'backupServer' (tests/tests-backups/)
