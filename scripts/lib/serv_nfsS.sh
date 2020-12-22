@@ -11,7 +11,6 @@ source lib/aux_functions.sh
 #  0          - Success
 #  Error code - Otherwise
 nfsServerFunc() {
-	    eval "ssh -o \"StrictHostKeyChecking=no\" root@$2 \"echo $line $IP(rw,sync,no_subtree_check) >> /etc/exports\" < /dev/null &> /dev/null";
     # Package management
     packageMng $2 "nfsS"
     if [[ $? -ne 0 ]]; then
