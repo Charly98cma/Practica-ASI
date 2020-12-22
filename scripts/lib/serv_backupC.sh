@@ -22,11 +22,11 @@ backupClientFunc() {
     read BACKUP_SOURCE <&3; # Dir. to backup
     read DIR_SERVER <&3;    # Dir. of the host to store backups
     read BACKUP_DEST <&3;   # Dir. of the backup on the DIR_SERVER
-    read FREQUENCY <&3;     # Freq. of the backup (hours)
+    read FREQ <&3;     # Freq. of the backup (hours)
     exec 3<&-;
 
     # Check all arguments appear on the file
-    if [[ $BACKUP_SOURCE == "" || $DIR_SERVER == "" || $BACKUP_DEST == "" || $FREQUENCY == "" ]]; then
+    if [[ $BACKUP_SOURCE == "" || $DIR_SERVER == "" || $BACKUP_DEST == "" || $FREQ == "" ]]; then
 	echoWrongParams $1 $4 $3;
 	exit 6;
     fi
@@ -53,7 +53,7 @@ backupClientFunc() {
     esac
 
     # Check the dir. used fto store the backups (BACKUP_DEST) exists
-    sshcmd "$DIR_SERVER" "find $BACKUP_DEST -maxdepth 0";
+    sshcmd $DIR_SERVER "find $BACKUP_DEST -maxdepth 0";
     case $? in
 	255)
 	    # SSH Error
@@ -74,29 +74,12 @@ backupClientFunc() {
     esac
 
     # Check if the backup frequency is correct (greater than 0)
-    if [ $((FREQ)) -ge 1 ]; then
+    if [ $((FREQ)) -lt 1 ]; then
 	echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa frecuencia de los backup tiene que ser mayor de 0 horas\n";
 	exit 82;
     fi
 
-    sshcmd $2 "rsync --quiet --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST"
-    case $? in
-	255)
-	    # SSH Error
-	    echoerr "\nERROR - Se ha producido un error inesperado del servicio 'ssh'\n";
-	    exit 255;
-	    :
-	    ;;
-	0)
-	    exit 0;
-	    ;;
-	*)
-	    # Error of the rsync
-	    echoerr "\n$1: linea $4: Se ha producido un error inesperado al crear el cliente de backup.\n";
-	    exit 83;
-    esac
-
-    sshcmd $2 "echo 0 */$FREQ * * * rsync --quiet --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST >> /etc/crontab"
+    sshcmd $2 "echo \"0 */$FREQ * * * rsync --quiet --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST\" >> /etc/crontab"
     case $? in
 	255)
 	    # SSH Error
@@ -110,7 +93,7 @@ backupClientFunc() {
 	*)
 	    # Error introducng the command to /etc/crontab
 	    echoerr "\n$1: linea $4: Se ha producido un error inesperado al introducir el comando de backup en el archivo /etc/crontab\n";
-	    exit 84;
+	    exit 83;
     esac
     exit 0;
 }

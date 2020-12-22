@@ -26,8 +26,13 @@ TESTS=(
     "tests/tests-lvm/wrong-config-format.txt" #14
     "tests/tests-lvm/disp-doesnt-exist.txt" #15
     "tests/tests-lvm/too-many-lvs.txt" #16
-
     "tests/tests-lvm/successful-lvm.txt" #17
+
+    "tests/tests-backupC/wrong-config-format.txt"
+    "tests/tests-backupC/unknown-backup-source.txt"
+    "tests/tests-backupC/unknown-backup-destiny.txt"
+    "tests/tests-backupC/bad-backup-frequency.txt"
+    "tests/tests-backupC/successful-backup.txt"
 );
 
 # Expected results of each test
@@ -53,7 +58,12 @@ TEST_EXRES=(
     6
     30
     33
+    0
 
+    6
+    80
+    81
+    82
     0
 );
 
@@ -67,7 +77,7 @@ for (( i=0; i<${#TESTS[@]}; i++ )); do
 	14) echo -e "\n--- TESTS DE LVM ---\n"; ;;
 	# XX) echo -e "\n--- TESTS DE NIS ---\n"; ;;
 	# XX) echo -e "\n--- TESTS DE NFS ---\n"; ;;
-	# XX) echo -e "\n--- TESTS DE BACKUP ---\n"; ;;
+	18) echo -e "\n--- TESTS DE BACKUP ---\n"; ;;
 	*)  : ;;
     esac
     echo -n "Test $i... ";
