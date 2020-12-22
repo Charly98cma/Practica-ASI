@@ -1,1 +1,1 @@
-10.0.2.2 nis_client tests/tests-nisC/config.conf
+10.0.2.15 nis_client tests/tests-nisC/config.conf
