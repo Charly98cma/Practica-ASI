@@ -211,7 +211,29 @@ Si no han surgido errores, el \textit{script} leerá cada uno de los volúmenes 
 
 \subsection{NIS}
 \subsubsection{Servidor}
+El servidor del servicio \textit{NIS} se ha implementado siguiendo los pasos descritos por el profesorado, que son los siguientes:\\ 
+
+En primer lugar, configuramos el rol del servicio \textit{NIS}, para ello escribimos en el fichero \textit{/etc/default/nis} la linea \textit{NISSERVER=master}, con esto indicamos al servicio \textit{NIS} que esta maquina sera el servidor maestro del servicio.\\
+
+A continuacion, configuramos las variables \textit{MERGE\_PASSWD} y \textit{MERGE\_GROUP} del fichero \textit{/var/yp/Makefile}, asignandoles el valor \textit{true}, de esta forma conseguimos que las contraseñas tambien se almacenen en el servicio \textit{NIS}.\\
+
+Tras esto, escribrimos el nombre del dominio proporcionado por el fichero de configuracion en el fichero \textit{/etc/defaultdomain}. Ademas, tras este paso, reiniciamos el servicio utilizando el comando \textit{service nis restart}.\\
+
+En siguiente lugar, ejecutamos el comando \textit{/usr/lib/yp/ypinit -m} para actualizar la base de datos del servicio \textit{NIS} que previamente hemos reiniciado.\\
+
+Y por ultimo, reiniciamos el servicio \textit{NIS} una vez mas, utilizando el mismo comando mencionado anteriormente.\\
+
+
 \subsubsection{Cliente}
+Al igual que el servidor, el cliente del servicio \textit{NIS} se ha implementado siguiendo los pasos definidos por el material proporcionado por el profesorado, a continuacion se encuentran dichos pasos:\\
+
+En primer lugar, configuramos el rol del servicio \textit{NIS}, para ello, escribimos \textit{NISCLIENT=true} en el fichero \textit{/etc/default/nis}.\\
+
+A continuacion escribimos los datos del servidor utilizando el formato \textit{domain \$DOMAIN\_NAME server \$SERVER\_ADDR} en el fichero \textit{/etc/yp.conf}.\\
+
+Tras esto, configuramos el fichero /etc/nsswitch.conf, donde añadimos la palabra \textit{nis} a las variables \textit{passwd, group, shadow} y \textit{hosts}.
+
+Y por ultimo, reiniciamos el servicio \textit{NIS} utilizando el mismo comando detallado en el servidor (\textit{service nis restart}).\\
 
 \subsection{NFS}
 \subsubsection{Servidor}
@@ -285,6 +307,15 @@ Rango de códigos de error: 40 - 49.
 \end{itemize}
 \subsubsection{Cliente}
 Rango de códigos de error: 50 - 59.
+\begin{itemize}
+  \item \textbf{50}: Error al configurar el rol del servicio NIS.
+  \item \textbf{51}: Error al configurar el servidor NIS en el fichero /etc/yp.conf
+  \item \textbf{52}: Error al configurar la variable passwd en el fichero /etc/nsswitch.conf
+  \item \textbf{53}: Error al configurar la variable group en el fichero /etc/nsswitch.conf
+  \item \textbf{54}: Error al configurar la variable shadow en el fichero /etc/nsswitch.conf
+  \item \textbf{55}: Error al configurar la variable hosts en el fichero /etc/nsswitch.conf
+  \item \textbf{56}: Error al reiniciar el servicio NIS.
+\end{itemize}
 
 \subsection{NFS}
 
