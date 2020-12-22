@@ -12,7 +12,7 @@ source lib/aux_functions.sh
 #  Error code - Otherwise
 backupClientFunc() {
     # Package management
-    packageMng $2 "backupC"
+    packageMng $2 "backupC";
     if [[ $? -ne 0 ]]; then
 	exit -1;
     fi
@@ -22,7 +22,7 @@ backupClientFunc() {
     read BACKUP_SOURCE <&3; # Dir. to backup
     read DIR_SERVER <&3;    # Dir. of the host to store backups
     read BACKUP_DEST <&3;   # Dir. of the backup on the DIR_SERVER
-    read FREQ <&3;     # Freq. of the backup (hours)
+    read FREQ <&3;          # Freq. of the backup (hours)
     exec 3<&-;
 
     # Check all arguments appear on the file
@@ -97,3 +97,5 @@ backupClientFunc() {
     esac
     exit 0;
 }
+
+export -f backupClientFunc

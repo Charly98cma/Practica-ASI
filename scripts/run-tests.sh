@@ -33,6 +33,11 @@ TESTS=(
     "tests/tests-backupC/unknown-backup-destiny.txt"
     "tests/tests-backupC/bad-backup-frequency.txt"
     "tests/tests-backupC/successful-backup.txt"
+
+    "tests/tests-backupS/wrong-config-format.txt"
+    "tests/tests-backupS/backup-dir-doesnt-exist.txt"
+    "tests/tests-backupS/nonempty-backup-dir.txt"
+    "tests/tests-backupS/successful-backupS.txt"
 );
 
 # Expected results of each test
@@ -64,6 +69,11 @@ TEST_EXRES=(
     80
     81
     82
+    0
+
+    6
+    90
+    91
     0
 );
 

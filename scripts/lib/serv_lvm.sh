@@ -92,3 +92,5 @@ lvmFunc() {
     exec 3<&-;
     exit 0;
 }
+
+export -f lvmFunc

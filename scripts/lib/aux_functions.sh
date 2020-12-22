@@ -52,10 +52,10 @@ echoDone() {
 sshcmd() {
     # Connection to the SHH server and execution of commands
     # ssh USER@dir command1 | command2 ...
-    eval "ssh -o \"StrictHostKeyChecking=no\" root@$1 ${@:2} &> /dev/null";
+    eval "ssh -n -o \"StrictHostKeyChecking=no\" root@$1 ${@:2} &> /dev/null";
 
     # Command for testing purposes ONLY
-    # eval "ssh -o \"StrictHostKeyChecking=no\" root@$1 ${@:2}";
+    # eval "ssh -n -o \"StrictHostKeyChecking=no\" root@$1 ${@:2}";
 }
 
 
@@ -77,12 +77,12 @@ packageMng() {
 	lvm)
 	    PKG="lvm2*";
 	    ;;
-	# nisC)
-	#   :
-	#   ;;
-	# nisS)
-	#   :
-	#   ;;
+	nisC)
+		PKG="nis";
+	    ;;
+	nisS)
+		PKG="nis";
+	    ;;
 	# nfsC)
 	#   :
 	#   ;;

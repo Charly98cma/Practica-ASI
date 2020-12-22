@@ -10,11 +10,17 @@ source lib/aux_functions.sh
 # Return:
 #  0          - Success
 #  Error code - Otherwise
-backupClientFunc() {
+backupServerFunc() {
     # Read the parameters of the service
     exec 3<> $3;
     read BACKUP_DEST <&3;
     exec 3<&-;
+
+    # Check all parameters exist
+    if [[ $BACKUP_DEST == "" ]]; then
+	echoWrongParams $1 $4 $3;
+	exit 6;
+    fi
 
     sshcmd $2 "find $BACKUP_DEST -maxdepth 0";
     case $? in
@@ -46,3 +52,5 @@ backupClientFunc() {
 
     exit 0;
 }
+
+export -f backupServerFunc
