@@ -86,10 +86,10 @@ while read line; do
 	lvm)
 	    lvmFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
-	nis-server)
+	nis_server)
 	    nisServerFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
-	nis-client)
+	nis_client)
 	    nisClientFunc $FILE $DIR $CONFIG $NUMLINE; ;;
 
 	nfs_server)
