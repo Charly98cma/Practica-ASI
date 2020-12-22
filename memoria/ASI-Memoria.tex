@@ -97,10 +97,10 @@
 
   % --- DATE ---
   \vfill\vfill\vfill
-      {\large\today}
-      % --- DATE ---
+  {\large\today}
+  % --- DATE ---
 
-      % --- MAIN TITLE ---
+  % --- MAIN TITLE ---
 
 \end{titlepage}
 % --- TITLE PAGE ---
@@ -213,7 +213,7 @@ Si no han surgido errores, el \textit{script} leerá cada uno de los volúmenes 
 
 \subsection{NIS}
 \subsubsection{Servidor}
-\noindent El servidor del servicio \textit{NIS} se ha implementado siguiendo los pasos descritos por el profesorado, que son los siguientes:\\ 
+\noindent El servidor del servicio \textit{NIS} se ha implementado siguiendo los pasos descritos por el profesorado, que son los siguientes:\\
 
 En primer lugar, configuramos el rol del servicio \textit{NIS}, para ello escribimos en el fichero \textit{/etc/default/nis} la linea \textit{NISSERVER=master}, con esto indicamos al servicio \textit{NIS} que esta maquina sera el servidor maestro del servicio.\\
 
@@ -301,24 +301,24 @@ Rango de códigos de error: 30 - 39.
 \subsubsection{Servidor}
 Rango de códigos de error: 40 - 49.
 \begin{itemize}
-  \item \textbf{40}: Error al configurar el rol del servidor NIS
-  \item \textbf{41}: Error al configurar el rango de direcciones IP que tienen acceso al servidor NIS
-  \item \textbf{42}: Error al configurar la variable MERGE\_PASSWD en el fichero /var/yp/Makefile
-  \item \textbf{43}: Error al configurar la variable MERGE\_GROUP en el fichero /var/yp/Makefile
-  \item \textbf{44}: Error al añadir el servicio NIS al fichero /etc/hosts
-  \item \textbf{45}: Error al configurar la base de datos del servicio NIS
-  \item \textbf{46}: Error al reiniciar el servicio NIS
+\item \textbf{40}: Error al configurar el rol del servidor NIS
+\item \textbf{41}: Error al configurar el rango de direcciones IP que tienen acceso al servidor NIS
+\item \textbf{42}: Error al configurar la variable MERGE\_PASSWD en el fichero /var/yp/Makefile
+\item \textbf{43}: Error al configurar la variable MERGE\_GROUP en el fichero /var/yp/Makefile
+\item \textbf{44}: Error al añadir el servicio NIS al fichero /etc/hosts
+\item \textbf{45}: Error al configurar la base de datos del servicio NIS
+\item \textbf{46}: Error al reiniciar el servicio NIS
 \end{itemize}
 \subsubsection{Cliente}
 Rango de códigos de error: 50 - 59.
 \begin{itemize}
-  \item \textbf{50}: Error al configurar el rol del servicio NIS.
-  \item \textbf{51}: Error al configurar el servidor NIS en el fichero /etc/yp.conf
-  \item \textbf{52}: Error al configurar la variable passwd en el fichero /etc/nsswitch.conf
-  \item \textbf{53}: Error al configurar la variable group en el fichero /etc/nsswitch.conf
-  \item \textbf{54}: Error al configurar la variable shadow en el fichero /etc/nsswitch.conf
-  \item \textbf{55}: Error al configurar la variable hosts en el fichero /etc/nsswitch.conf
-  \item \textbf{56}: Error al reiniciar el servicio NIS.
+\item \textbf{50}: Error al configurar el rol del servicio NIS
+\item \textbf{51}: Error al configurar el servidor NIS en el fichero /etc/yp.conf
+\item \textbf{52}: Error al configurar la variable passwd en el fichero /etc/nsswitch.conf
+\item \textbf{53}: Error al configurar la variable group en el fichero /etc/nsswitch.conf
+\item \textbf{54}: Error al configurar la variable shadow en el fichero /etc/nsswitch.conf
+\item \textbf{55}: Error al configurar la variable hosts en el fichero /etc/nsswitch.conf
+\item \textbf{56}: Error al reiniciar el servicio NIS
 \end{itemize}
 
 \subsection{NFS}
@@ -334,17 +334,17 @@ Rango de códigos de error: 70 - 79.
 \subsubsection{Cliente}
 Rango de códigos de error: 80 - 89.
 \begin{itemize}
-  \item \textbf{80}: El directorio del que crear el backup no existe 
-  \item \textbf{81}: El directorio del servidor de backup no existe
-  \item \textbf{82}: La frecuencia de los backups tiene que ser mayor que 0
-  \item \textbf{83}: Error inesperado al introducir el comando de backup en \textit{/etc/crontab}
+\item \textbf{80}: El directorio del que crear el backup no existe
+\item \textbf{81}: El directorio del servidor de backup no existe
+\item \textbf{82}: La frecuencia de los backups tiene que ser mayor que 0
+\item \textbf{83}: Error inesperado al introducir el comando de backup en \textit{/etc/crontab}
 \end{itemize}
 
 \subsubsection{Servidor}
 Rango de códigos de error: 90 - 99.
 \begin{itemize}
-  \item \textbf{90}: El directorio del servidor de backup no existe
-  \item \textbf{91}: El directorio del servidor de backup no está vacío
+\item \textbf{90}: El directorio del servidor de backup no existe
+\item \textbf{91}: El directorio del servidor de backup no está vacío
 \end{itemize}
 
 \newpage
