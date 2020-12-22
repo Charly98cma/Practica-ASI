@@ -239,8 +239,22 @@ Y por último, reiniciamos el servicio \textit{NIS} utilizando el mismo comando 
 
 \subsection{NFS}
 \subsubsection{Servidor}
-\subsubsection{Cliente}
+\noindent Para la implementación de este servicio servidor, se han seguido las instrucciones dadas en clase. Esto es:
 
+Instalamos el paquete \textit{nfs-kernel-server} y, tras realizar las comprobaciones pertinentes en cuanto a los formatos de los ficheros y su contenido, procedemos con la concatenación al fichero \textit{/etc/exports} de los distintos directorios a exportar de la forma: \textit{DirExportado dirSubred(rw,sync,no\_subtree\_check)}.
+
+A excepción de la instalación del paquete, esto se realiza tantas veces como líneas tenga el fichero de configuración. Y la escritura en el fichero puede llegar a realizarse más de una vez, dependiendo de la cantidad de subredes a las que esté conectado el host.
+
+Tras esto, continuamos con la aplicación de los cambios realizados en el fichero mencionado mediante el comando \textit{exportfs -ra} y finalizamos la configuración reinciando el servicio de nfs.
+
+\subsubsection{Cliente}
+\noindent A la hora de configurar el cliente nfs, y teniendo como referencia las instrucciones dadas, se siguen los siguientes pasos:
+
+Instalamos el paquete \textit{nfs-common} y se procede con el montaje del directorio indicado. Claro está que entre esos dos pasos, se pasa por una serie de comprobaciones para así, en el caso de que el fichero de configuración o alguno de los datos proporcionados no son correctos, finalizar la ejecución retornando con un código y mensaje de error asignados al caso.
+
+Finalmente, editamos el fichero \textit{/etc/fstab} para hacer que los cambios realizados sean persistentes.
+
+Todo esto, a excepción de la instalación del paquete, se realiza tantas veces como líneas tenga el fichero de configuración dado como argumento. De esta forma se pueden montar todos los directorios que se queiran.
 
 \subsection{Backup}
 
@@ -325,9 +339,23 @@ Rango de códigos de error: 50 - 59.
 
 \subsubsection{Servidor}
 Rango de códigos de error: 60 - 69.
+\begin{itemize}
+\item \textbf{60}: El directorio que se quiere exportar no existe
+\item \textbf{61}: El fichero /etc/exports no existe
+\item \textbf{62}: Error inesperado al añadir el directorio a exportar en /etc/exports
+\item \textbf{63}: Error inesperado al aplicar los cambios en /etc/exports
+\item \textbf{64}: Error inesperado al reiniciar el servicio nfs-kernel-service
+\end{itemize}
 
 \subsubsection{Cliente}
 Rango de códigos de error: 70 - 79.
+\begin{itemize}
+\item \textbf{70}: La dirección del host no es válida
+\item \textbf{71}: El directorio indicado no está exportado en el servidor dado
+\item \textbf{72}: Error al configurar el punto de montaje, el directorio indicado para el montaje en la máquina dada no es un directorio vacío
+\item \textbf{73}: Error inesperado al crear el directorio dado como punto de montaje en el host indicado
+\item \textbf{74}: Error inesperado durante el montaje
+\end{itemize}
 
 \subsection{Backup}
 
