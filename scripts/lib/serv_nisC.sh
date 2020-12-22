@@ -40,7 +40,7 @@ nisClientFunc() {
 
     echo "      -> Añadiendo el servicio nis a passwd en el fichero /etc/nsswitch.conf";
     # Configure /etc/nsswitch.conf
-    sshcmd $2 "sed -i 's/passwd:         compat/passwd:         compat nis/g' /etc/nsswitch.conf"
+    sshcmd $2 "\"sed -i 's/passwd:         compat/passwd:         compat nis/g' /etc/nsswitch.conf\""
     if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar la variable passwd en el fichero /etc/nsswitch.conf."
         exit 52;
@@ -48,7 +48,7 @@ nisClientFunc() {
 
     echo "      -> Añadiendo el servicio nis a group en el fichero /etc/nsswitch.conf";
     # Configure /etc/nsswitch.conf
-    sshcmd $2 "sed -i 's/group:          compat/group:          compat nis/g' /etc/nsswitch.conf"
+    sshcmd $2 "\"sed -i 's/group:          compat/group:          compat nis/g' /etc/nsswitch.conf\""
     if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar la variable group en el fichero /etc/nsswitch.conf."
         exit 53;
@@ -56,7 +56,7 @@ nisClientFunc() {
 
     echo "      -> Añadiendo el servicio nis a shadow en el fichero /etc/nsswitch.conf";
     # Configure /etc/nsswitch.conf
-    sshcmd $2 "sed -i 's/shadow:         compat/shadow:         compat nis/g' /etc/nsswitch.conf"
+    sshcmd $2 "\"sed -i 's/shadow:         compat/shadow:         compat nis/g' /etc/nsswitch.conf\""
     if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar la variable shadow en el fichero /etc/nsswitch.conf."
         exit 54;
@@ -64,7 +64,7 @@ nisClientFunc() {
 
     echo "      -> Añadiendo el servicio nis a host en el fichero /etc/nsswitch.conf";
     # Configure /etc/nsswitch.conf
-    sshcmd $2 "sed -i 's/hosts:          files dns/hosts:          files dns nis/g' /etc/nsswitch.conf"
+    sshcmd $2 "\"sed -i 's/hosts:          files dns/hosts:          files dns nis/g' /etc/nsswitch.conf\""
     if [[ $? -ne 0 ]]; then 
         echoerr "\n$1 linea $4: Error al configurar la variable hosts en el fichero /etc/nsswitch.conf."
         exit 55;
