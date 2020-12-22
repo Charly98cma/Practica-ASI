@@ -52,7 +52,7 @@ echoDone() {
 sshcmd() {
     # Connection to the SHH server and execution of commands
     # ssh USER@dir command1 | command2 ...
-    eval "ssh -o -n \"StrictHostKeyChecking=no\" root@$1 ${@:2} &> /dev/null";
+    eval "ssh -o \"StrictHostKeyChecking=no\" root@$1 ${@:2} &> /dev/null";
     # eval "ssh -n root@$1 ${@:2}";   # Command for testing purposes only
 }
 
