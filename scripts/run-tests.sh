@@ -28,16 +28,20 @@ TESTS=(
     "tests/tests-lvm/too-many-lvs.txt" #16
     "tests/tests-lvm/successful-lvm.txt" #17
 
-    "tests/tests-backupC/wrong-config-format.txt"
-    "tests/tests-backupC/unknown-backup-source.txt"
-    "tests/tests-backupC/unknown-backup-destiny.txt"
-    "tests/tests-backupC/bad-backup-frequency.txt"
-    "tests/tests-backupC/successful-backup.txt"
+    "tests/tests-nisS/sucess.txt"#18
 
-    "tests/tests-backupS/wrong-config-format.txt"
-    "tests/tests-backupS/backup-dir-doesnt-exist.txt"
-    "tests/tests-backupS/nonempty-backup-dir.txt"
-    "tests/tests-backupS/successful-backupS.txt"
+    "tests/tests-nisC/success.txt"#19
+
+    "tests/tests-backupC/wrong-config-format.txt"#20
+    "tests/tests-backupC/unknown-backup-source.txt"#21
+    "tests/tests-backupC/unknown-backup-destiny.txt"#22
+    "tests/tests-backupC/bad-backup-frequency.txt"#23
+    "tests/tests-backupC/successful-backup.txt"#24
+
+    "tests/tests-backupS/wrong-config-format.txt"#25
+    "tests/tests-backupS/backup-dir-doesnt-exist.txt"#26
+    "tests/tests-backupS/nonempty-backup-dir.txt"#27
+    "tests/tests-backupS/successful-backupS.txt"#28
 );
 
 # Expected results of each test
@@ -65,6 +69,9 @@ TEST_EXRES=(
     33
     0
 
+    0
+    0
+
     6
     80
     81
@@ -85,9 +92,9 @@ for (( i=0; i<${#TESTS[@]}; i++ )); do
 	6)  echo -e "\n--- TESTS DE MOUNT ---\n"; ;;
 	11) echo -e "\n--- TESTS DE RAID ---\n"; ;;
 	14) echo -e "\n--- TESTS DE LVM ---\n"; ;;
-	# XX) echo -e "\n--- TESTS DE NIS ---\n"; ;;
+	18) echo -e "\n--- TESTS DE NIS ---\n"; ;;
 	# XX) echo -e "\n--- TESTS DE NFS ---\n"; ;;
-	18) echo -e "\n--- TESTS DE BACKUP ---\n"; ;;
+	20) echo -e "\n--- TESTS DE BACKUP ---\n"; ;;
 	*)  : ;;
     esac
     echo -n "Test $i... ";
