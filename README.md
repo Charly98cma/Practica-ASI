@@ -10,16 +10,9 @@
 - [ ] nfs => YOUNES
   + [ ] server
   + [ ] client
-- [ ] backup => CARLOS
-  + [ ] server
+- [x] backup => CARLOS
+  + [x] server
   + [x] client
-
-## TODOs
-
-- [ ] Implementar NisS y NisC
-- [ ] Implementar NfsS y NfsC
-- [ ] Terminar de implementar backupC
-- [ ] Implementar backupS
 
 ## Códigos de error
 ### Códigos de error triviales [1 - 6)

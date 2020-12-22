@@ -1,0 +1,3 @@
+# Fichero de config de un servidor de backup cuya dir no está vacía
+
+10.0.2.4 backup_server tests/tests-backupS/nonempty-backup-dir.conf

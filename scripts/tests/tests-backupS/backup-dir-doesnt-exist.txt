@@ -1,0 +1,3 @@
+# Fichero de config de un servidor backup cuya dir no existe
+
+10.0.2.4 backup_server tests/tests-backupS/backup-dir-doesnt-exist.conf

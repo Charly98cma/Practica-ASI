@@ -107,3 +107,16 @@ X. *TEST*
    [**successful-backup.txt -> successful-backup.conf**] -> 0
 
 ## Tests de 'backupServer' (tests/tests-backups/)
+
+1. El formato del fichero de config del servicio es incorrecto
+   (el número de campos no es el esperado)
+   [**wrong-config-format.txt -> wrong-config-format.conf**] -> 6
+
+2. Dirección de backup no existe
+   [**backup-dir-doesnt-exist.txt -> backup-dir-doesnt-exist.conf**] -> 90
+
+3. Dir de backup no vacía
+   [**nonempty-backup-dir.txt -> nonempty-backup-dir.conf**] -> 91
+
+4. Successful backup server
+   [**successful-backupS.txt -> successful-backupS.conf**] -> 0
