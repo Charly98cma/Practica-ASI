@@ -1,0 +1,3 @@
+# Fichero de un servidor de backup que si funcionara
+
+10.0.2.4 backup_server tests/tests-backupS/successful-backup.conf

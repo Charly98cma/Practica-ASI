@@ -53,7 +53,9 @@ sshcmd() {
     # Connection to the SHH server and execution of commands
     # ssh USER@dir command1 | command2 ...
     eval "ssh -o \"StrictHostKeyChecking=no\" root@$1 ${@:2} &> /dev/null";
-    # eval "ssh -n root@$1 ${@:2}";   # Command for testing purposes only
+
+    # Command for testing purposes ONLY
+    # eval "ssh -o \"StrictHostKeyChecking=no\" root@$1 ${@:2}";
 }
 
 
@@ -86,7 +88,7 @@ packageMng() {
 	#   ;;
 	nfsS)
 	    PKG="nfs-kernel-server":
-	  ;;
+	    ;;
 
 	backupC)
 	    PKG="rsync cron";
@@ -98,7 +100,7 @@ packageMng() {
     # If the packet isn't installed, send the command to install it
     sshcmd $1 "apt-get --assume-yes install $PKG";
     if [[ $? -ne 0 ]]; then
-	echoerr "\nERROR - Error inesperado al intentar instalar el paquete '$PKG' en el host '$1'\n";
+	echoerr "\nERROR - Error inesperado al intentar instalar el/los paquete/s '$PKG' en el host '$1'\n";
 	return 1;
     fi
     return 0;
