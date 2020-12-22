@@ -12,8 +12,8 @@ source lib/serv_lvm.sh
 # source lib/serv_nisS.sh
 # source lib/serv_nfsC.sh
 # source lib/serv_nfsS.sh
-# source lib/serv_backupC.sh
-# source lib/serv_backupS.sh
+source lib/serv_backupC.sh
+source lib/serv_backupS.sh
 
 #################
 # MAIN FUNCTION #

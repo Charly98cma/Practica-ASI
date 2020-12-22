@@ -32,10 +32,8 @@ backupClientFunc() {
     fi
 
     # Check the dir. to backup (BACKUP_SOURCE) exists
-    # TODO: Change the next command
-    eval "find $BACKUP_SOURCE -maxdepth 0"
+    sshcmd $2 "find $BACKUP_SOURCE -maxdepth 0";
     case $? in
-	# SSH error
 	255)
 	    # SSH Error
 	    echoerr "\nERROR - Se ha producido un error inesperado del servicio 'ssh'\n";
@@ -49,18 +47,39 @@ backupClientFunc() {
 
 	*)
 	    # The BACKUP_SOURCE dir doesnt exist
-	    echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa direccion '$BACKUP_SOURCE' no existe\n";
+	    echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa direccion '$BACKUP_SOURCE' en el host '$2' no existe\n";
 	    exit 80;
 	    ;;
     esac
 
+    # Check the dir. used fto store the backups (BACKUP_DEST) exists
+    sshcmd "$DIR_SERVER" "find $BACKUP_DEST -maxdepth 0";
+    case $? in
+	255)
+	    # SSH Error
+	    echoerr "\nERROR - Se ha producido un error inesperado del servicio 'ssh'\n";
+	    exit 255;
+	    :
+	    ;;
+
+	0)
+	    : # The BACKUP_SOURCE exists => no error
+	    ;;
+
+	*)
+	    # The BACKUP_SOURCE dir doesnt exist
+	    echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa direccion '$BACKUP_DEST' en el host '$DIR_SERVER' no existe\n";
+	    exit 81;
+	    ;;
+    esac
+
     # Check if the backup frequency is correct (greater than 0)
-    if [ $((FREQ)) -eq 0 ]; then
-	echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa frecuencia de los backup tiene que ser mayor de 0\n";
-	exit 81;
+    if [ $((FREQ)) -ge 1 ]; then
+	echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa frecuencia de los backup tiene que ser mayor de 0 horas\n";
+	exit 82;
     fi
 
-    sshcmd $2 "rsync --quiet --mkpath --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST"
+    sshcmd $2 "rsync --quiet --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST"
     case $? in
 	255)
 	    # SSH Error
@@ -74,7 +93,7 @@ backupClientFunc() {
 	*)
 	    # Error of the rsync
 	    echoerr "\n$1: linea $4: Se ha producido un error inesperado al crear el cliente de backup.\n";
-	    exit 82;
+	    exit 83;
     esac
     exit 0;
 }
