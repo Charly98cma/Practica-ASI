@@ -76,3 +76,5 @@ nisClientFunc() {
     echoerr "\n$1 linea $4: Error al reiniciar el servicio NIS"
     exit 55;
     fi
+
+    export -f nisClientFunc
