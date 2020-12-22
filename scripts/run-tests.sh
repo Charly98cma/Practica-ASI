@@ -68,19 +68,20 @@ TEST_EXRES=(
     33 #16
     0  #17
 
-    0
-    0
+    0  #18
 
-    6
-    80
-    81
-    82
-    0
+    0  #19
 
-    6
-    90
-    91
-    0
+    6  #
+    80 #
+    81 #
+    82 #
+    0  #
+
+    6  #
+    90 #
+    91 #
+    0  #
 );
 
 # Main loop
@@ -91,13 +92,12 @@ for (( i=0; i<${#TESTS[@]}; i++ )); do
 	6)  echo -e "\n--- TESTS DE MOUNT ---\n"   ; ;;
 	11) echo -e "\n--- TESTS DE RAID ---\n"    ; ;;
 	14) echo -e "\n--- TESTS DE LVM ---\n"     ; ;;
-	18) echo -e "\n--- TESTS DE NIS ---\n"; ;;
-	# XX) echo -e "\n--- TESTS DE NIS-S ---\n"     ; ;;
+	18) echo -e "\n--- TESTS DE NIS-S ---\n"; ;;
+	19) echo -e "\n--- TESTS DE NIS-C ---\n"     ; ;;
+	# XX) echo -e "\n--- TESTS DE NFS-S ---\n"     ; ;;
 	# XX) echo -e "\n--- TESTS DE NFS-C ---\n"     ; ;;
-	# XX) echo -e "\n--- TESTS DE NIS-S ---\n"     ; ;;
-	# XX) echo -e "\n--- TESTS DE NFS-C ---\n"     ; ;;
-	18) echo -e "\n--- TESTS DE BACKUP-C ---\n"; ;;
-	23) echo -e "\n--- TESTS DE BACKUP-S ---\n"; ;;
+	20) echo -e "\n--- TESTS DE BACKUP-C ---\n"; ;;
+	25) echo -e "\n--- TESTS DE BACKUP-S ---\n"; ;;
 	*)  : ;;
     esac
     echo -n "Test $i... ";
