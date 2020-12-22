@@ -98,6 +98,7 @@ packageMng() {
     esac
 
     # If the packet isn't installed, send the command to install it
+    echo "      -> Instalando paquete '$PKG' del servicio '$2'";
     sshcmd $1 "apt-get --assume-yes install $PKG";
     if [[ $? -ne 0 ]]; then
 	echoerr "\nERROR - Error inesperado al intentar instalar el/los paquete/s '$PKG' en el host '$1'\n";

@@ -11,10 +11,12 @@ source lib/aux_functions.sh
 #  0          - Success
 #  Error code - Otherwise
 backupServerFunc() {
+    echo "      -> Leyendo y comprobando fichero de configuración";
     # Read the parameters of the service
     exec 3<> $3;
     read BACKUP_DEST <&3;
     exec 3<&-;
+
 
     # Check all parameters exist
     if [[ $BACKUP_DEST == "" ]]; then
@@ -22,6 +24,8 @@ backupServerFunc() {
 	exit 6;
     fi
 
+
+    echo "      -> Comprobando validez de la dirección del servidor de backup";
     sshcmd $2 "find $BACKUP_DEST -maxdepth 0";
     case $? in
 	255)
@@ -41,7 +45,6 @@ backupServerFunc() {
 	    exit 90;
 	    ;;
     esac
-
 
     # BACKUP_DEST  exists, check if its empty (0 if non empty, 1 if empty)
     sshcmd $2 "ls -1qA $BACKUP_DEST | grep -q .";
