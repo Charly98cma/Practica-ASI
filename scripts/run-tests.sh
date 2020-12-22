@@ -46,28 +46,27 @@ TESTS=(
 
 # Expected results of each test
 TEST_EXRES=(
-    1
-    2
-    2
+    1  #0
+    2  #1
+    2  #2
 
-    3
-    4
-    5
+    3  #3
+    4  #4
+    5  #5
+    6  #6
+    10 #7
+    11 #8
+    0  #9
+    0  #10
 
-    6
-    10
-    11
-    0
-    0
+    6  #11
+    21 #12
+    22 #13
 
-    6
-    21
-    22
-
-    6
-    30
-    33
-    0
+    6  #14
+    30 #15
+    33 #16
+    0  #17
 
     0
     0
@@ -87,14 +86,18 @@ TEST_EXRES=(
 # Main loop
 for (( i=0; i<${#TESTS[@]}; i++ )); do
     case $i in
-	0)  echo -e "\n--- TESTS CLIENTE ---\n"; ;;
-	3)  echo -e "\n--- TESTS TRIVIALES ---\n"; ;;
-	6)  echo -e "\n--- TESTS DE MOUNT ---\n"; ;;
-	11) echo -e "\n--- TESTS DE RAID ---\n"; ;;
-	14) echo -e "\n--- TESTS DE LVM ---\n"; ;;
+	0)  echo -e "\n--- TESTS CLIENTE ---\n"    ; ;;
+	3)  echo -e "\n--- TESTS TRIVIALES ---\n"  ; ;;
+	6)  echo -e "\n--- TESTS DE MOUNT ---\n"   ; ;;
+	11) echo -e "\n--- TESTS DE RAID ---\n"    ; ;;
+	14) echo -e "\n--- TESTS DE LVM ---\n"     ; ;;
 	18) echo -e "\n--- TESTS DE NIS ---\n"; ;;
-	# XX) echo -e "\n--- TESTS DE NFS ---\n"; ;;
-	20) echo -e "\n--- TESTS DE BACKUP ---\n"; ;;
+	# XX) echo -e "\n--- TESTS DE NIS-S ---\n"     ; ;;
+	# XX) echo -e "\n--- TESTS DE NFS-C ---\n"     ; ;;
+	# XX) echo -e "\n--- TESTS DE NIS-S ---\n"     ; ;;
+	# XX) echo -e "\n--- TESTS DE NFS-C ---\n"     ; ;;
+	18) echo -e "\n--- TESTS DE BACKUP-C ---\n"; ;;
+	23) echo -e "\n--- TESTS DE BACKUP-S ---\n"; ;;
 	*)  : ;;
     esac
     echo -n "Test $i... ";

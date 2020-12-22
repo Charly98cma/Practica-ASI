@@ -154,7 +154,9 @@ De esta forma, el administrador puede configurar diferentes servicios en diferen
       [/scripts
         [configurar\_scripts.sh]
         [run\_tests.sh]
-        [tests]
+        [tests
+          [...]
+        ]
         [lib
           [aux\_functions.sh]
           [serv\_mount.sh]
@@ -231,7 +233,7 @@ En primer lugar, configuramos el rol del servicio \textit{NIS}, para ello, escri
 
 A continuación escribimos los datos del servidor utilizando el formato \textit{domain \$DOMAIN\_NAME server \$SERVER\_ADDR} en el fichero \textit{/etc/yp.conf}.\\
 
-Tras esto, configuramos el fichero \textit{/etc/nsswitch.conf}, donde añadimos la palabra \textit{nis} a las variables \textit{passwd, group, shadow} y \textit{hosts}.
+Tras esto, configuramos el fichero \textit{/etc/nsswitch.conf}, donde añadimos la palabra \textit{nis} a las variables \textit{passwd, group, shadow} y \textit{hosts}.\\
 
 Y por último, reiniciamos el servicio \textit{NIS} utilizando el mismo comando detallado en el servidor (\texttt{service nis restart}).\\
 
@@ -246,13 +248,13 @@ Y por último, reiniciamos el servicio \textit{NIS} utilizando el mismo comando 
 \subsubsection{Servidor}
 \subsubsection{Cliente}
 
-En el lado del cliente del servicio \textit{backup}, el \textit{script} comprobará que la herramienta \textit{rsync} está instalada en la máquina host, y no si, lo instala. Luego, comprueba que todos los campos se hayan leído correctamente y que el directorio del que hacer backup, y en el que se van a guardar los backups (cada uno en su respectivo host) existan. Por último, comprueba que la frecuencia de los backups dada es mayor o igual a 1 (e.g. realizar el backup cada 1 hora).\\
+\noindent En el lado del cliente del servicio \textit{backup}, el \textit{script} comprobará que la herramienta \textit{rsync} está instalada en la máquina host, y no si, lo instala. Luego, comprueba que todos los campos se hayan leído correctamente y que el directorio del que hacer backup, y en el que se van a guardar los backups (cada uno en su respectivo host) existan. Por último, comprueba que la frecuencia de los backups dada es mayor o igual a 1 (e.g. realizar el backup cada 1 hora).\\
 
 Si se cumplen todos los anteriores requisitos/comprobaciones, el \textit{script} creará el servicio \textit{backup} en el host dado de forma satisfactoria.
 
 \newpage
 \section{Códigos de error}
-Para facilitar el desarrollo y la implementación de todas las comprobaciones, errores y mensajes, se ha asignado a cada servicio un rango de 10 posibles códigos de error, los cuales están especificados a continuación:
+\noindent Para facilitar el desarrollo y la implementación de todas las comprobaciones, errores y mensajes, se ha asignado a cada servicio un rango de 10 posibles códigos de error, los cuales están especificados a continuación:
 
 \subsection{Comúnes a todos los servicios}
 Rango de códigos de error: 1 - 9 y 255
@@ -327,21 +329,31 @@ Rango de códigos de error: 70 - 79.
 
 \subsection{Backup}
 
-\subsubsection{Servidor}
-Rango de códigos de error: 80 - 89.
-
 \subsubsection{Cliente}
+Rango de códigos de error: 80 - 89.
+\begin{itemize}
+  \item \textbf{80}: El directorio del que crear el backup no existe 
+  \item \textbf{81}: El directorio del servidor de backup no existe
+  \item \textbf{82}: La frecuencia de los backups tiene que ser mayor que 0
+  \item \textbf{83}: Error inesperado al introducir el comando de backup en \textit{/etc/crontab}
+\end{itemize}
+
+\subsubsection{Servidor}
 Rango de códigos de error: 90 - 99.
+\begin{itemize}
+  \item \textbf{90}: El directorio del servidor de backup no existe
+  \item \textbf{91}: El directorio del servidor de backup no está vacío
+\end{itemize}
 
 \newpage
 \section{Testing}
-Para testear de forma rápida y sencilla cada uno de los servicio y probar que funcionan de la forma esperada, se ha creado el fichero \texttt{run\_tests.sh}, el cual contiene un array de los nombres de cada test, un array con los resultados esperados al ejecutar cada test, y un bucle que ejecuta cada uno de ellos e informa por la salida estándar de si el test pasa o no.\\
+\noindent Para testear de forma rápida y sencilla cada uno de los servicio y probar que funcionan de la forma esperada, se ha creado el fichero \textit{run\_tests.sh}, el cual contiene un array de los nombres de cada test, un array con los resultados esperados al ejecutar cada test, y un bucle que ejecuta cada uno de ellos e informa por la salida estándar de si el test pasa o no.\\
 
-Los tests se han emplazado en el directorio \texttt{tests/} con cada servicio en su propio directorio, en el que aparecen el fichero de configuración general y el fichero de configuración del servicio.\\
+Los tests se han emplazado en el directorio \textit{tests/} con cada servicio en su propio directorio, en el que aparecen el fichero de configuración general y el fichero de configuración del servicio.\\
 
 De esta forma, escribiendo tests para comprobar la detección de errores de cada \textit{script} y la correcta ejecución del servicio si no se encuentran errores, podemos probar cada uno de los servicios de forma instantánea.\\
 
-\noindent A continuación se muestra la estructura del directorio \texttt{tests/}
+\noindent A continuación se muestra la estructura del directorio \textit{tests/}
 
 \begin{center}
   \begin{forest}
@@ -364,6 +376,9 @@ De esta forma, escribiendo tests para comprobar la detección de errores de cada
   \end{forest}
 \end{center}
 
+
+\newpage
+\section{Conclusiones}
 
 \end{document}
 % --- DOCUMENT ---
