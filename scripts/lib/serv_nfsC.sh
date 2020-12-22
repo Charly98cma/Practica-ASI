@@ -26,21 +26,21 @@ nfsClientFunc() {
 	# Check if all arguments exists
 	if [[ $serverIP == "" || $exportedDir == "" || $mntPoint == "" ]]; then
 	    echoWrongParams $1 $4 $3;
-	    exit 60;
+	    exit 6;
 	fi
 
 	# Check if host is valid
 	eval ping -c 2 $serverIP > /dev/null
 	if [[ $? -ne 0 ]]; then
 	    echoerr "\n$1: linea $4: La dirección del host no es válida\n";
-	    exit 61;
+	    exit 70;
 	fi
 
 	# Check if the directory is actually exported
 	eval showmount -e $serverIP | grep $exportedDir
 	if [[ $? -ne 0 ]]; then
 	    echoerr "\n$1: linea $4: El directorio $exportedDir no está exportado en el servidor $serverIP\n";
-	    exit 62;
+	    exit 71;
 	fi
 
 	# Check if mntPoint exists
@@ -57,7 +57,7 @@ nfsClientFunc() {
 		sshcmd $2 "ls -1qA $mntPoint | grep -q .";
 		if [[ $? -eq 0 ]]; then
 		    echoerr "\n$1: linea $4: Error al configurar el punto de montaje\nEl directorio '$mntPoint' en la máquina '$2' no es un directorio vacío\n";
-		    exit 63;
+		    exit 72;
 		fi
 		;;
 	    *)
@@ -66,7 +66,7 @@ nfsClientFunc() {
 		sshcmd $2 "mkdir -p $mntPoint";
 		if [[ $? -ne 0 ]]; then
 		    echoerr "\n$1: linea $4: Error inesperado al crear el directorio '$mntPoint' en el host '$2'\n";
-		    exit 64;
+		    exit 73;
 		fi
 		;;
 	esac
@@ -74,8 +74,8 @@ nfsClientFunc() {
 	# Mount of the exported directory
 	sshcmd $2 "mount -t nfs $serverIP:$exportedDir $mntPoint";
 	if [[ $? -ne 0 ]]; then
-	    echoerr "\n$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'\n";
-	    exit 12;
+	    echoerr "\n$1: linea $4: Error inesperado durante el montaje en '$mntPoint'\n";
+	    exit 74;
 	fi
 
 	# Edit /etc/fstab file in order to make it persistent

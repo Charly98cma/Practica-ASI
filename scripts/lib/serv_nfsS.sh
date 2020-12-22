@@ -23,13 +23,13 @@ nfsServerFunc() {
         sshcmd $2 "[[ -d $line ]]" < /dev/null
         if [[ $? -ne 0 ]]; then
             echoerr "$1: linea $4: El directorio '$line' no existe";
-            exit 70;
+            exit 60;
         fi
         # Check if the /etc/exports file exists
         sshcmd $2 "[[ -f /etc/exports ]]" < /dev/null
         if [[ $? -ne 0 ]]; then
-            echoerr "$1: linea $4: Error El fichero /etc/exports no existe";
-            exit 71;
+            echoerr "$1: linea $4: El fichero /etc/exports no existe";
+            exit 61;
         fi
 
         # Get all host subnet IP's
@@ -46,7 +46,7 @@ nfsServerFunc() {
             eval "ssh -o \"StrictHostKeyChecking=no\" root@$2 \"echo '$line $IP(rw,sync,no_subtree_check)' >> /etc/exports\" < /dev/null &> /dev/null";
             if [[ $? -ne 0 ]]; then
                 echoerr "$1: linea $4: Error inesperado al añadir el directorio $line en /etc/exports";
-                exit 72;
+                exit 62;
             fi
             echo "      -> Directorio añadido correctamente."
         done <<< "$hostIPs";
@@ -57,7 +57,7 @@ nfsServerFunc() {
     sshcmd $2 "exportfs -ra"
     if [[ $? -ne 0 ]]; then
         echoerr "$1: linea $4: Error inesperado al aplicar los cambios en /etc/exports";
-        exit 73;
+        exit 63;
     fi
 
     # Reset the server
@@ -65,7 +65,7 @@ nfsServerFunc() {
     sshcmd $2 "service nfs-kernel-server restart"
     if [[ $? -ne 0 ]]; then
         echoerr "$1: linea $4: Error inesperado al reiniciar el servicio nfs-kernel-service";
-        exit 74;
+        exit 64;
     fi
     
     exit 0;
