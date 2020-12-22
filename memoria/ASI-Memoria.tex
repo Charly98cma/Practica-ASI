@@ -97,10 +97,10 @@
 
   % --- DATE ---
   \vfill\vfill\vfill
-  {\large\today}
-  % --- DATE ---
+      {\large\today}
+      % --- DATE ---
 
-  % --- MAIN TITLE ---
+      % --- MAIN TITLE ---
 
 \end{titlepage}
 % --- TITLE PAGE ---
@@ -261,6 +261,11 @@ Todo esto, a excepción de la instalación del paquete, se realiza tantas veces 
 \noindent Para la implementación del servicio \textit{backup}, se ha elegido la herramienta \textit{rsync}, principalmente por su sencillez. Como \textit{rsync} no requiere de servidor dedicado, lo único que tendría que hacer el servicio \textit{backup} en su parte de servidor es comprobar que exista y esté vacío el directorio que se va a usar para almacenar los backups.\\
 
 \subsubsection{Servidor}
+
+\noindent El \textit{script} del servidor de \textit{backup} lo único que hará será leer del fichero de configuración del servicio, el directorio en el que se almacenarán los backups, y comprobará que sea un directorio válido, es decir, que exista y que esté vacío.\\
+
+Este comportamiento se debe al uso de la herramienta \textit{rsync}, que no requiere de servidor dedicado, permitiendo un despliegue más sencillo y rápido.
+
 \subsubsection{Cliente}
 
 \noindent En el lado del cliente del servicio \textit{backup}, el \textit{script} comprobará que la herramienta \textit{rsync} está instalada en la máquina host, y no si, lo instala. Luego, comprueba que todos los campos se hayan leído correctamente y que el directorio del que hacer backup, y en el que se van a guardar los backups (cada uno en su respectivo host) existan. Por último, comprueba que la frecuencia de los backups dada es mayor o igual a 1 (e.g. realizar el backup cada 1 hora).\\
@@ -323,6 +328,7 @@ Rango de códigos de error: 40 - 49.
 \item \textbf{45}: Error al configurar la base de datos del servicio NIS
 \item \textbf{46}: Error al reiniciar el servicio NIS
 \end{itemize}
+
 \subsubsection{Cliente}
 Rango de códigos de error: 50 - 59.
 \begin{itemize}
