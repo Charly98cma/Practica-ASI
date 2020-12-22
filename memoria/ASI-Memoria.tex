@@ -225,7 +225,6 @@ En siguiente lugar, ejecutamos el comando \texttt{/usr/lib/yp/ypinit -m} para ac
 
 Y por ultimo, reiniciamos el servicio \textit{NIS} una vez mas, utilizando el mismo comando mencionado anteriormente.\\
 
-
 \subsubsection{Cliente}
 \noindent Al igual que el servidor, el cliente del servicio \textit{NIS} se ha implementado siguiendo los pasos definidos por el material proporcionado por el profesorado, a continuación se encuentran dichos pasos:\\
 
@@ -237,9 +236,11 @@ Tras esto, configuramos el fichero \textit{/etc/nsswitch.conf}, donde añadimos 
 
 Y por último, reiniciamos el servicio \textit{NIS} utilizando el mismo comando detallado en el servidor (\texttt{service nis restart}).\\
 
+
 \subsection{NFS}
 \subsubsection{Servidor}
 \subsubsection{Cliente}
+
 
 \subsection{Backup}
 
@@ -251,6 +252,7 @@ Y por último, reiniciamos el servicio \textit{NIS} utilizando el mismo comando 
 \noindent En el lado del cliente del servicio \textit{backup}, el \textit{script} comprobará que la herramienta \textit{rsync} está instalada en la máquina host, y no si, lo instala. Luego, comprueba que todos los campos se hayan leído correctamente y que el directorio del que hacer backup, y en el que se van a guardar los backups (cada uno en su respectivo host) existan. Por último, comprueba que la frecuencia de los backups dada es mayor o igual a 1 (e.g. realizar el backup cada 1 hora).\\
 
 Si se cumplen todos los anteriores requisitos/comprobaciones, el \textit{script} creará el servicio \textit{backup} en el host dado de forma satisfactoria.
+
 
 \newpage
 \section{Códigos de error}
