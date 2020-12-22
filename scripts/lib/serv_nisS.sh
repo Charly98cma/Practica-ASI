@@ -4,7 +4,7 @@ source lib/aux_functions.sh
 nisServerFunc() {
     echo "      -> Instalando el paquete NIS";
     # Package management
-    packageMng $2 "nis";
+    packageMng $2 "nisS";
     if [[ $? -ne 0 ]]; then
         exit -1
     fi
