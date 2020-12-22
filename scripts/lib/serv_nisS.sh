@@ -26,31 +26,31 @@ nisServerFunc() {
     exit 40;
     fi
 
-    #Configure which devices have access to the NIS server
-    sshcmd $2 "echo '255.255.255.0   10.0.0.0' >> /etc/ypserv.securenets"
+    # Store passwords on the NIS server too
+    sshcmd $2 "sed -i 's/MERGE_PASSWD=false/MERGE_PASSWD=true/g' /var/yp/Makefile"
     if [[ $? -ne 0]]; then 
-    echoerr "\n$1 linea $4: Error al configurar el rango de direcciones ip que tienen acceso al servidor NIS"
+    echoerr "\n$1 linea $4: Error al configurar el fichero /var/yp/Makefile"
     exit 41;
     fi
 
-    # Store passwords on the NIS server too
-    sshcmd $2 "sed -i 's/MERGE_PASSWD=false/MERGE_PASSWD=true/' /var/yp/Makefile"
+    sshcmd $2 "sed -i 's/MERGE_GROUP=false/MERGE_GROUP=true/g' /var/yp/Makefile"
     if [[ $? -ne 0]]; then 
     echoerr "\n$1 linea $4: Error al configurar el fichero /var/yp/Makefile"
     exit 42;
     fi
 
-    sshcmd $2 "sed -i 's/MERGE_GROUP=false/MERGE_GROUP=true/' /var/yp/Makefile"
+    # Configure Domain
+    sshcmd $2 "echo '$DOMAIN_NAME' >> /etc/defaultdomain"
     if [[ $? -ne 0]]; then 
-    echoerr "\n$1 linea $4: Error al configurar el fichero /var/yp/Makefile"
+    echoerr "\n$1 linea $4: Error al configurar /etc/defaultdomain"
     exit 43;
     fi
 
-    # Configure /etc/hosts
-    sshcmd $2 "echo '$2     $DOMAIN_NAME' >> /etc/hosts"
+    # Start service
+    sshcmd $2 "service nis restart"
     if [[ $? -ne 0]]; then 
-    echoerr "\n$1 linea $4: Error al configurar /etc/hosts para añadir el servicio NIS"
-    exit 44;
+    echoerr "\n$1 linea $4: Error al reiniciar el servicio NIS"
+    exit 46;
     fi
 
     #Update NIS database
