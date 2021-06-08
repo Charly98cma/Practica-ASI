@@ -88,7 +88,7 @@ packageMng() {
 	    PKG="nfs-kernel-server":
 	    ;;
 	backupC)
-	    PKG="rsync cron";
+	    PKG="rsync";
 	    ;;
     esac
 
