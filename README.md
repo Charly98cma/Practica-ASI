@@ -138,7 +138,7 @@ Buena estructuración del código. Buena colección de tests.
 
 #### S
 
-- [ ] No se instala "rsync", que también es necesario para el servidor.
+- [x] No se instala "rsync", que también es necesario para el servidor.
 
 ## Marks
 

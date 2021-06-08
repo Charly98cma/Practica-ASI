@@ -11,6 +11,12 @@ source lib/aux_functions.sh
 #  0          - Success
 #  Error code - Otherwise
 backupServerFunc() {
+    # Package management
+    packageMng $2 "backupC";
+    if [[ $? -ne 0 ]]; then
+	exit -1;
+    fi
+
     echo "      -> Leyendo y comprobando fichero de configuración";
     # Read the parameters of the service
     exec 3<> $3;

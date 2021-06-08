@@ -87,7 +87,7 @@ packageMng() {
 	nfsC|nfsS)
 	    PKG="nfs-kernel-server":
 	    ;;
-	backupC)
+	backupC|backupS)
 	    PKG="rsync";
 	    ;;
     esac
