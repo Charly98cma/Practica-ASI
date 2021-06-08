@@ -67,3 +67,86 @@
 
 - **90**: El directorio del servidor de backup no existe.
 - **91**: El directorio del servidor de backup no está vacío.
+
+
+## Correction
+
+Buena estructuración del código. Buena colección de tests.
+
+- [ ] Hay un problema CRÍTICO en la implementación, y es que la función "sshcmd"
+	  introduce fallos en aquellas llamadas que trabajan con redirecciones,
+	  haciendo que los ficheros de destino no se modifiquen. Se hubiese
+	  solucionado con un doble entrecomillado en la mayoría de los casos. Esto
+	  da lugar a que muchos de los servicios no funcionen como se esperen. No lo
+	  tendré en cuenta en la valoración de los servicios, pero sí en el apartado
+	  de código.
+
+### LVM
+
+- [ ] Al instalar el paquete "lvm2" como "lvm2*" (con asterisco) podríamos estar
+	  instalando más paquetes de lo deseado. De hecho, así es, puesto que
+	  instala numerosos paquetes y librerías que tarda minutos.
+
+- [ ] No se trata de controlar que haya más volúmenes lógicos que dispositivos
+	  físicos (eso no es un problema), sino que el tamaño asignado a los
+	  volúmenes lógicos supere el total del grupo de volúmenes mediante el
+	  mandato "vgs" o "vgdisplay".
+
+### RAID
+
+- [ ] Se reporta un error en la línea 53 ante perfiles de configuración
+	  correctos.
+
+- [ ] Falta modificar el fichero "/etc/mdadm/mdadm.conf" para que el RAID se
+	  autoensamble tras cada reinicio.
+
+### Mount
+
+- [ ] El fichero /etc/fstab no se ve modificado en realidad.
+
+
+### NFS
+#### C
+
+- [ ] Para el cliente basta con el paquete "nfs-common".
+
+#### S
+
+- [ ] Se debía exportar para todas las redes posibles (con *).
+
+### NIS
+#### C
+
+- [ ] No se establece nombre de dominio NIS. El fichero /etc/yp.conf no se ve
+	  modificado.
+
+- [ ] El fichero /etc/default/nis no se ve modificado.
+
+#### S
+
+- [ ] El fichero /etc/default/nis no se ve modificado.
+
+### Backup
+
+- [x] No es necesario instalar "cron".
+
+#### C
+
+- [ ] El fichero /etc/crontab no se ve modificado. En todo caso, sobra el
+	  "practicas@", puesto que no pretendemos conectarnos como tal usuario en
+	  destino a la hora de hacer el backup.
+
+#### S
+
+- [ ] No se instala "rsync", que también es necesario para el servidor.
+
+## Marks
+
+- LVM: 8.5
+- Mount: 6.0 -> 10.0
+- RAID: 7.0
+- NFS: 9.8 (C), 10.0 (S). 9.9 (Total)
+- NIS: 4.5 (C), 7.0 (S). 5.75 (Total) -> 7.5 (C), 10.0 (S). 8.75 (Total)
+- Backup: 6.5
+- Código: 10.0 -> 7.0
+- Memoria: 10.0
