@@ -45,7 +45,7 @@ nfsClientFunc() {
 
 	# Check if mntPoint exists
 	echo "      -> Comprobando si existe el punto de montaje..."
-	sshcmd $2 "find $mntPoint -maxdepth 0";
+	sshcmd $2 "find \"$mntPoint\" -maxdepth 0";
 	case $? in
 	    255)
 		# SSH Error
@@ -54,7 +54,7 @@ nfsClientFunc() {
 		;;
 	    0)
 		# mntPoint dir exists, check if its empty (0 if non empty, 1 if empty)
-		sshcmd $2 "ls -1qA $mntPoint | grep -q .";
+		sshcmd $2 "ls -1qA \"$mntPoint\" | grep -q .";
 		if [[ $? -eq 0 ]]; then
 		    echoerr "\n$1: linea $4: Error al configurar el punto de montaje\nEl directorio '$mntPoint' en la máquina '$2' no es un directorio vacío\n";
 		    exit 72;
@@ -63,7 +63,7 @@ nfsClientFunc() {
 	    *)
 		# mntPoint dir doesnt exist, so we create it
 		echo "      -> Creando el punto de montaje..."
-		sshcmd $2 "mkdir -p $mntPoint";
+		sshcmd $2 "mkdir -p \"$mntPoint\"";
 		if [[ $? -ne 0 ]]; then
 		    echoerr "\n$1: linea $4: Error inesperado al crear el directorio '$mntPoint' en el host '$2'\n";
 		    exit 73;

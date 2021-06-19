@@ -84,7 +84,10 @@ packageMng() {
 	nisS)
 	    PKG="nis";
 	    ;;
-	nfsC|nfsS)
+	nfsC)
+	    PKG="nfs-common"
+	    ;;
+	nfsS)
 	    PKG="nfs-kernel-server":
 	    ;;
 	backupC|backupS)

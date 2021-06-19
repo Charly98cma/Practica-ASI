@@ -108,7 +108,7 @@ Buena estructuración del código. Buena colección de tests.
 ### NFS
 #### C
 
-- [ ] Para el cliente basta con el paquete "nfs-common".
+- [x] Para el cliente basta con el paquete "nfs-common".
 
 #### S
 
