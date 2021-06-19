@@ -102,7 +102,7 @@ Buena estructuración del código. Buena colección de tests.
 
 ### Mount
 
-- [ ] El fichero /etc/fstab no se ve modificado en realidad.
+- [x] El fichero /etc/fstab no se ve modificado en realidad.
 
 
 ### NFS

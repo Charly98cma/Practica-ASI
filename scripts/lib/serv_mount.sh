@@ -28,7 +28,7 @@ mountFunc() {
 
     echo "      -> Comprobando validez del directorio '$DEVICE'";
     # Check if DEVICE exists
-    sshcmd $2 "find $DEVICE -maxdepth 0";
+    sshcmd $2 "find \"$DEVICE\" -maxdepth 0";
     if [[ $? -ne 0 ]]; then
 	echoerr "\n$1: linea $4: Error en el dispositivo a montar\nEl dispositivo '$DEVICE' en la máquina '$2' no existe.\n";
 	exit 10;
@@ -37,7 +37,7 @@ mountFunc() {
 
     echo "      -> Comprobando validez del directorio '$POINT'";
     # Check if POINT exists
-    sshcmd $2 "find $POINT -maxdepth 0";
+    sshcmd $2 "find \"$POINT\" -maxdepth 0";
     case $? in
 	255)
 	    # SSH Error
@@ -46,7 +46,7 @@ mountFunc() {
 	    ;;
 	0)
 	    # POINT dir exists, check if its empty (0 if non empty, 1 if empty)
-	    sshcmd $2 "ls -1qA $POINT | grep -q .";
+	    sshcmd $2 "ls -1qA \"$POINT\" | grep -q .";
 	    if [[ $? -eq 0 ]]; then
 		echoerr "\n$1: linea $4: Error al configurar el punto de montaje\nEl directorio '$POINT' en la máquina '$2' no es un directorio vacío\n";
 		exit 11;
@@ -55,7 +55,7 @@ mountFunc() {
 	*)
 	    echo "       -> Creando directorio";
 	    # POINT dir doesnt exist, so we create it
-	    sshcmd $2 "mkdir -p $POINT";
+	    sshcmd $2 "mkdir -p \"$POINT\"";
 	    if [[ $? -ne 0 ]]; then
 		echoerr "\n$1: linea $4: Error inesperado al crear el directorio '$POINT' en el host '$2'\n";
 		exit 13;
@@ -66,7 +66,7 @@ mountFunc() {
 
     echo "      -> Montando '$DEVICE' en el punto de montaje '$POINT'";
     # Mount of the device
-    sshcmd $2 "mount -t ext4 $DEVICE $POINT";
+    sshcmd $2 "mount -t ext4 \"$DEVICE\" \"$POINT\"";
     if [[ $? -ne 0 ]]; then
 	echoerr "\n$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'\n";
 	exit 12;
@@ -75,7 +75,7 @@ mountFunc() {
 
     echo "      -> Añadiendo montaje al fichero /etc/fstab";
     # Auto-mount on start-up ("default 0 0" are options for the mounts, which are irrelevant now)
-    sshcmd $2 "echo \"$DEVICE $POINT ext4 defaults 0 0\" >> /etc/fstab";
+    sshcmd $2 "echo \"\"$DEVICE\" \"$POINT\" ext4 defaults 0 0\" >> \"/etc/fstab\"";
     if [[ $? -ne 0 ]]; then
 	echoerr "\n$1: linea $4: Error inesperado durante el montaje de '$DEVICE' en '$POINT'\n";
 	exit 12;
