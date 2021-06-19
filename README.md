@@ -132,7 +132,7 @@ Buena estructuración del código. Buena colección de tests.
 
 #### C
 
-- [ ] El fichero /etc/crontab no se ve modificado. En todo caso, sobra el
+- [x] El fichero /etc/crontab no se ve modificado. En todo caso, sobra el
 	  "practicas@", puesto que no pretendemos conectarnos como tal usuario en
 	  destino a la hora de hacer el backup.
 

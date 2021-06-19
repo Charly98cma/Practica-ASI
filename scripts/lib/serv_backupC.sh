@@ -36,7 +36,7 @@ backupClientFunc() {
 
     echo "      -> Comprobando validez de la dirección de la que se hará backup";
     # Check the dir. to backup (BACKUP_SOURCE) exists
-    sshcmd $2 "find $BACKUP_SOURCE -maxdepth 0";
+    sshcmd $2 "find \"$BACKUP_SOURCE\" -maxdepth 0";
     case $? in
 	255)
 	    # SSH Error
@@ -59,7 +59,7 @@ backupClientFunc() {
 
     echo "      -> Comprobando la dirección en la que se gaurdarán los backups";
     # Check the dir. used fto store the backups (BACKUP_DEST) exists
-    sshcmd $DIR_SERVER "find $BACKUP_DEST -maxdepth 0";
+    sshcmd $DIR_SERVER "find \"$BACKUP_DEST\" -maxdepth 0";
     case $? in
 	255)
 	    # SSH Error
@@ -74,7 +74,7 @@ backupClientFunc() {
 
 	*)
 	    # The BACKUP_SOURCE dir doesnt exist
-	    echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa direccion '$BACKUP_DEST' en el host '$DIR_SERVER' no existe\n";
+	    echoerr "\n$1: linea $4: Error en la configuración del cliente de backup\nLa direccion '$BACKUP_DEST' en el host \"$DIR_SERVER\" no existe\n";
 	    exit 81;
 	    ;;
     esac
@@ -89,7 +89,7 @@ backupClientFunc() {
 
 
     echo "      -> Creando mandato de backup en /etc/crontab";
-    sshcmd $2 "echo \"0 */$FREQ * * * rsync --quiet --update --executability --owner --group --recursive $BACKUP_SOURCE practicas@$DIR_SERVER:$BACKUP_DEST\" >> /etc/crontab"
+    sshcmd $2 "echo \"0 */$FREQ * * * rsync --quiet --update --executability --owner --group --recursive \"$BACKUP_SOURCE\" $DIR_SERVER:$BACKUP_DEST\" >> \"/etc/crontab\""
     case $? in
 	255)
 	    # SSH Error
@@ -102,7 +102,7 @@ backupClientFunc() {
 	    ;;
 	*)
 	    # Error introducng the command to /etc/crontab
-	    echoerr "\n$1: linea $4: Se ha producido un error inesperado al introducir el comando de backup en el archivo /etc/crontab\n";
+	    echoerr "\n$1: linea $4: Se ha producido un error inesperado al introducir el comando de backup en el archivo \"/etc/crontab\"\n";
 	    exit 83;
     esac
     exit 0;
