@@ -69,7 +69,7 @@
 - **91**: El directorio del servidor de backup no está vacío.
 
 
-## Correction
+## Correcci
 
 Buena estructuración del código. Buena colección de tests.
 
@@ -140,7 +140,7 @@ Buena estructuración del código. Buena colección de tests.
 
 - [x] No se instala "rsync", que también es necesario para el servidor.
 
-## Marks
+## Notas
 
 - LVM: 8.5
 - Mount: 6.0 -> 10.0
@@ -150,3 +150,9 @@ Buena estructuración del código. Buena colección de tests.
 - Backup: 6.5
 - Código: 10.0 -> 7.0
 - Memoria: 10.0
+
+# DISCLAIMER
+
+Los autores no se hacen responsables del mal uso de los contenidos de este repositorio, así como de las posibles consecuencias de copiar esta práctica con fines de presentarla como propia.
+
+Es la práctica de una optativa MUY útil y sencilla, no cuesta nada hacerla por cuenta propia.
